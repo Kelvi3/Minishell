@@ -6,7 +6,7 @@
 #    By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 09:57:15 by tcazenav          #+#    #+#              #
-#    Updated: 2023/01/31 10:22:35 by tcazenav         ###   ########.fr        #
+#    Updated: 2023/01/31 10:47:58 by lulaens          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ CFLAGS = -Wall -Wextra -Werror -g3
 OBJ = $(SRC:.c=.o)
 
 $(NAME): $(OBJ)
-			clang $(OBJ) -o $(NAME) -lreadline
+		@make -C libft -s && echo "LIBFT COMPILED"
+		@clang -s $(CFLAGS) $(OBJ) libft/libft.a -lreadline -o $(NAME) | echo "OBJ COMPILED"
 
 all: $(NAME)
 
