@@ -6,11 +6,12 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:57:57 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/01/31 10:54:53 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/01/31 11:38:40 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <readline/history.h>
 #include <readline/readline.h>
 
 int	main(void)
@@ -20,9 +21,12 @@ int	main(void)
 
 	line = NULL;
 	path = current_path();
+	ft_signal();
 	while (1)
 	{
-		line = readline("$>");
+		line = readline(">$");
+		add_history(line);
+		ft_check_line(line);
 		printf("%s", line);
 	}
 	free(path);

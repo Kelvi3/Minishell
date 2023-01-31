@@ -6,14 +6,15 @@
 #    By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 09:57:15 by tcazenav          #+#    #+#              #
-#    Updated: 2023/01/31 10:47:58 by lulaens          ###   ########.fr        #
+#    Updated: 2023/01/31 11:02:31 by lulaens          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRC = ./src/main.c\
-	  	./src/current_path.c
+	  ./src/current_path.c \
+	  ./src/signal.c 
 
 CFLAGS = -Wall -Wextra -Werror -g3
 
