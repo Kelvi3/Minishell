@@ -6,11 +6,17 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:57:57 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/01/27 09:58:22 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/01/31 10:18:55 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(int argc, char *argv[])
-{	
+#include "../include/minishell.h"
+
+int	main(void)
+{
+	char	*path;
+
+	path = current_path();
+	free(path);
 	return (0);
 }
