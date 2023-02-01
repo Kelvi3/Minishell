@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:57:57 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/01/31 10:54:53 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/01/31 14:10:23 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,19 @@
 
 int	main(void)
 {
-	char	*path;
-	char	*line;
+	char		*path;
+	char		*line;
 
 	line = NULL;
 	path = current_path();
 	while (1)
 	{
 		line = readline("$>");
-		printf("%s", line);
+		parse_cmd(line);
+		free(line);
+		line = NULL;
 	}
+	free(line);
 	free(path);
 	return (0);
 }
