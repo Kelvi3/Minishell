@@ -6,7 +6,7 @@
 #    By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 09:57:15 by tcazenav          #+#    #+#              #
-#    Updated: 2023/02/01 08:01:55 by tcazenav         ###   ########.fr        #
+#    Updated: 2023/02/01 08:57:57 by tcazenav         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ SRC = ./src/main.c\
 		./src/condition_prompt.c\
 		./src/parse_cmd.c\
 		./src/parse_cmd_bis.c\
+	  	./src/current_path.c \
+	  	./src/signal.c 
 
 CFLAGS = -Wall -Wextra -Werror -g3
 
