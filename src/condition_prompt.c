@@ -1,50 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   condition_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 09:57:57 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/01 14:25:11 by tcazenav         ###   ########.fr       */
+/*   Created: 2023/01/31 11:10:13 by tcazenav          #+#    #+#             */
+/*   Updated: 2023/01/31 14:19:49 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+static int	is_pipe(char *line)
 {
-	char		*path;
-	char		*line;
-	char		**cmd;
-	int			i;
+	int	i;
 
 	i = 0;
-	(void) argc;
-	(void) argv;
-	line = NULL;
-	path = current_path();
-	line = NULL;
-	cmd = NULL;
-	ft_signal();
-	while (1)
+	while (line[i] != '\0')
 	{
-		i = 0;
-		line = readline("$>");
-		cmd = parse_cmd(line, cmd);
-		free(line);
-		line = NULL;
-		add_history(line);
-		ft_check_line(line);
-	}
-	i = 0;
-	while (cmd[i] != NULL)
-	{
-		free(cmd[i]);
+		if (line[i] == '|' || line[i] == '>' || line[i] == '<'
+			|| (line[i] == '<' && line[i + 1] == '<'))
+			return (0);
 		i++;
 	}
-	free(cmd);
-	free(line);
-	free(path);
-	return (0);
+	return (1);
+}
+
+void	condition_prompt(char *line)
+{
+	if (is_pipe(line) == 0)
+		return ;
+		//pipex(line);
 }
