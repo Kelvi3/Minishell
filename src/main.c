@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:57:57 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/01 08:26:06 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/01 09:07:57 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*path;
-	char	*line;
+	char		*path;
+	char		*line;
 
 	(void) argc;
 	(void) argv;
@@ -24,13 +24,15 @@ int	main(int argc, char **argv, char **env)
 	ft_signal();
 	while (1)
 	{
-		line = readline(">$");
-		if (line)
-			ft_env(env, line);
+		line = readline("$>");
+		parse_cmd(line);
+		free(line);
+		line = NULL;
 		add_history(line);
 		ft_check_line(line);
 		printf("%s", line);
 	}
+	free(line);
 	free(path);
 	return (0);
 }

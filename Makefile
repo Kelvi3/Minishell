@@ -6,7 +6,7 @@
 #    By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 09:57:15 by tcazenav          #+#    #+#              #
-#    Updated: 2023/02/01 08:08:30 by lulaens          ###   ########.fr        #
+#    Updated: 2023/02/01 09:07:14 by lulaens          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,12 @@ SRC = ./src/main.c\
 	  ./src/env.c \
 	  ./src/init_path.c \
 	  ./src/strtok.c
+	  ./src/current_path.c\
+	  ./src/condition_prompt.c\
+	  ./src/parse_cmd.c\
+	  ./src/parse_cmd_bis.c\
+	  ./src/current_path.c \
+	  ./src/signal.c 
 
 CFLAGS = -Wall -Wextra -Werror -g3
 
