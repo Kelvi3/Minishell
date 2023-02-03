@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:47:12 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/01 14:21:51 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/03 14:27:51 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	count_squote(char *line, int i)
 
 	j = 1;
 	i++;
-	while (line[i] != 39 && line[i] != '\0')
+	while (line[i] != ' ' && line[i] != '\0')
 	{
 		i++;
 		j++;
@@ -43,7 +43,7 @@ int	count_dquote(char *line, int i)
 
 	i++;
 	j = 1;
-	while (line[i] != '"' && line[i] != '\0')
+	while (line[i] != ' ' && line[i] != '\0')
 	{
 		i++;
 		j++;
@@ -122,6 +122,8 @@ char	**parse_cmd(char *line, char **cmd)
 	len = 0;
 	if (check_quotes(line) == 1)
 		return (NULL);
+	while (line[i] == ' ')
+		i++;
 	while (line[i] != '\0')
 	{
 		if (line[i] == 39)
