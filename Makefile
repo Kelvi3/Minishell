@@ -6,7 +6,7 @@
 #    By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 09:57:15 by tcazenav          #+#    #+#              #
-#    Updated: 2023/02/03 13:38:52 by lulaens          ###   ########.fr        #
+#    Updated: 2023/02/03 15:07:56 by lulaens          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,17 @@ NAME = minishell
 
 SRC = ./src/main.c\
 	  ./src/signal.c \
-	  ./src/ft_export.c \
 	  ./src/current_path.c \
 	  ./src/parse_cmd.c \
 	  ./src/parse_cmd_bis.c \
-	  ./src/utils_builtins.c
+	  ./src/utils_builtins.c \
+	  ./src/builtins.c \
+	  ./src/ft_echo.c \
+	  ./src/ft_cd.c \
+	  ./src/ft_pwd.c \
+	  ./src/ft_export.c \
+	  ./src/ft_env.c \
+	  ./src/ft_exit.c
 
 CFLAGS = -Wall -Wextra -Werror -g3
 

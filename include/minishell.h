@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:58:47 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/03 13:08:24 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/03 15:03:37 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,29 @@ typedef struct s_element
 	char	**cmd;
 	char	**envcp;
 }				t_element;
-//test
-void	ft_export(char **env);
+
+// ALL BUILTINS
+void	ft_builtins(char **cmd, char **env);
+// echo
+void	ft_echo(char **cmd);
+
+//cd 
+void	ft_cd(char **cmd);
+
+//pwd
+void	ft_pwd(char **cmd);
+
+// export
+void	ft_export(char **env, char **args);
+
+// unset
+void	ft_unset(char **env, t_list **lst, char *key);
+
+// env
+void	ft_env(char **env, char **cmd);
+
+//exit
+int		ft_exit(char **cmd);
 
 char		*current_path(void);
 void		condition_prompt(char *line);
@@ -45,8 +66,6 @@ void		ft_signal(void);
 void		ft_check_line(char *line);
 
 // built
-// env
-void	ft_env(char **env, char **cmd);
 
 char		*current_path(void);
 

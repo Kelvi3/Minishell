@@ -1,46 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/31 10:56:46 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/03 15:16:11 by lulaens          ###   ########.fr       */
+/*   Created: 2023/02/02 16:28:11 by lulaens           #+#    #+#             */
+/*   Updated: 2023/02/02 16:37:57 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <readline/readline.h>
-#include <signal.h>
 
-void	ft_ctrl_c(int signum)
-{
-	(void)signum;
-	ft_putstr_fd("\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
-/*
-void	ft_ctrl_d(int signum)
-{
-	(void)signum;
-	exit(0);
-}*/
 
-void	ft_signal(void)
-{
-	signal(SIGINT, &ft_ctrl_c);
-//	signal(SIGTSTP, &ft_ctrl_d);
-	signal(SIGQUIT, SIG_IGN);
-}
+// key = variable a supprimer
 
-void	ft_check_line(char *line)
+void	ft_unset(char **env, t_list **lst, char *key)
 {
-	if (!line)
+	t_list	*head;
+	t_list	*cpy;
+
+	cpy = NULL;
+	head = *lst;
+	while (head)
 	{
-		printf("\n");
-		exit(1);
+		if (ft_strncmp(head->value, key, ft_strlen(key)) != 0)
+			head = head->next;
+		cpy->content = head->content;
+		cpy = cpy->next;
+		head = head->next;
 	}
 }

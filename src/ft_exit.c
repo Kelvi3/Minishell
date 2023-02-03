@@ -1,46 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/31 10:56:46 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/03 15:16:11 by lulaens          ###   ########.fr       */
+/*   Created: 2023/02/01 11:43:07 by lulaens           #+#    #+#             */
+/*   Updated: 2023/02/02 09:40:40 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <readline/readline.h>
-#include <signal.h>
 
-void	ft_ctrl_c(int signum)
+int	ft_exit(char **cmd)
 {
-	(void)signum;
-	ft_putstr_fd("\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
-/*
-void	ft_ctrl_d(int signum)
-{
-	(void)signum;
-	exit(0);
-}*/
+	int	j;
+	int	digit;
 
-void	ft_signal(void)
-{
-	signal(SIGINT, &ft_ctrl_c);
-//	signal(SIGTSTP, &ft_ctrl_d);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	ft_check_line(char *line)
-{
-	if (!line)
+	j = 0;
+	digit = 0;
+	if (ft_len(cmd) > 2)
 	{
-		printf("\n");
-		exit(1);
+		printf("exit\n");
+		ft_putstr_fd("exit : too many arguments\n", 2);
+		return (0);
 	}
+	while (cmd[1][j])
+	{
+		if (ft_isdigit(cmd[1][j]) == 0)
+		{
+			printf("exit\n");
+			ft_putstr_fd("exit : numeric argument required\n", 2);
+			exit(2);
+		}
+		j++;
+	}
+	digit = ft_atoi(cmd[1]);
+	printf("exit\n");
+	exit (digit % 256);
 }

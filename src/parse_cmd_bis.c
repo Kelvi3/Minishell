@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 07:59:06 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/01 13:27:40 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/03 14:14:12 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	**parse_cmd_bis(char **cmd, char *line, int word)
 	cmd = malloc(sizeof(char *) * (word + 1));
 	if (!cmd)
 		return (NULL);
+	while (line[i] == ' ')
+		i++;
 	while (line[i] != '\0')
 	{
 		if (line[i] == 39)
