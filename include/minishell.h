@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:58:47 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/01 09:06:19 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/02 10:28:09 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <limits.h>
 # include "../libft/libft.h"
 
 typedef struct s_element
 {
-	char	**cmd;	
+	char	**cmd;
+	char	**envcp;
 }				t_element;
+//test
+void	ft_export(char **env);
 
 char		*current_path(void);
 void		condition_prompt(char *line);
@@ -39,8 +43,7 @@ void	ft_check_line(char *line);
 
 // built
 // env
-void	ft_env(char **env, char *line);
-
+void	ft_env(char **env, char **cmd);
 
 char	*current_path(void);
 
@@ -48,4 +51,5 @@ char	**ft_init_env(char **env);
 
 // utils
 char	*ft_strtok(char *str, const char *delim);
+int		ft_len(char **str);
 #endif
