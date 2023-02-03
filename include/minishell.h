@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:58:47 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/02 10:28:09 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/03 13:08:24 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,23 @@ char		*current_path(void);
 void		condition_prompt(char *line);
 
 //parse cmd
-t_element	*parse_cmd(char *line);
-char		**parse_cmd_bis(t_element arr, char *line);
+char		**parse_cmd(char *line, char **cmd);
+char		**parse_cmd_bis(char **cmd, char *line, int word);
+int			count_no_delim(char *line, int i);
+int			count_squote(char *line, int i);
+int			count_dquote(char *line, int i);
 
 // signal
-void	ft_signal(void);
-void	ft_check_line(char *line);
+void		ft_signal(void);
+void		ft_check_line(char *line);
 
 // built
 // env
 void	ft_env(char **env, char **cmd);
 
-char	*current_path(void);
+char		*current_path(void);
 
-char	**ft_init_env(char **env);
+char		**ft_init_env(char **env);
 
 // utils
 char	*ft_strtok(char *str, const char *delim);
