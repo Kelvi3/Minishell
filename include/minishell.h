@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:58:47 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/06 13:09:33 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/06 13:37:02 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <limits.h>
 # include "../libft/libft.h"
-#include <fcntl.h>
+# include <fcntl.h>
 
 typedef struct s_element
 {
-	char	**cmd;	
+	char	**cmd;
+	char	**envcp;
 }				t_element;
 
 typedef struct s_pipe {
@@ -32,6 +34,28 @@ typedef struct s_pipe {
 	int		outfile;
 	int		nb_cmd;
 }				t_pipe;
+// ALL BUILTINS
+void		ft_builtins(char **cmd, char **env);
+// echo
+void		ft_echo(char **cmd);
+
+//cd 
+void		ft_cd(char **cmd);
+
+//pwd
+void		ft_pwd(char **cmd);
+
+// export
+void		ft_export(char **env, char **args);
+
+// unset
+void		ft_unset(char **env, t_list **lst, char *key);
+
+// env
+void		ft_env(char **env, char **cmd);
+
+//exit
+int			ft_exit(char **cmd);
 
 char		*current_path(void);
 void		condition_prompt(char *line);
@@ -49,8 +73,6 @@ void		ft_signal(void);
 void		ft_check_line(char *line);
 
 // built
-// env
-void		ft_env(char **env, char *line);
 
 char		*current_path(void);
 
@@ -66,5 +88,8 @@ char		*if_dir(char *car, char *str);
 char		*parse_pipe(char **cmd, char **env);
 void		exec_no_pipe_infile(t_pipe args, char **env);
 void		exec_no_pipe_infile(t_pipe args, char **env);
+
+char		*ft_strtok(char *str, const char *delim);
+int			ft_len(char **str);
 
 #endif

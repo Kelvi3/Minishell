@@ -1,46 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/31 10:56:46 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/03 15:16:11 by lulaens          ###   ########.fr       */
+/*   Created: 2023/02/01 09:51:49 by lulaens           #+#    #+#             */
+/*   Updated: 2023/02/02 09:40:50 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <readline/readline.h>
-#include <signal.h>
 
-void	ft_ctrl_c(int signum)
+void	ft_pwd(char **cmd)
 {
-	(void)signum;
-	ft_putstr_fd("\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
-/*
-void	ft_ctrl_d(int signum)
-{
-	(void)signum;
-	exit(0);
-}*/
+	char	*line;
 
-void	ft_signal(void)
-{
-	signal(SIGINT, &ft_ctrl_c);
-//	signal(SIGTSTP, &ft_ctrl_d);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	ft_check_line(char *line)
-{
-	if (!line)
-	{
-		printf("\n");
-		exit(1);
-	}
+	if (ft_len(cmd) > 1)
+		ft_putstr_fd("pwd : too many arguments\n", 2);
+	line = malloc(sizeof(char) * (PATH_MAX + 1));
+	line[PATH_MAX + 1] = '\0';
+	line = getcwd(line, PATH_MAX);
+	if (line == NULL)
+		ft_putstr_fd("Error getcwd\n", 2);
+	printf("%s\n", line);
+	free(line);
 }
