@@ -6,19 +6,19 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 07:59:06 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/03 14:14:12 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/06 13:28:09 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*ft_inc(char *cmd, int len, char *line, int i)
+static char	*ft_inc(char *cmd, int len, char *line, int i)
 {
 	int		j;
 	int		size;
 
 	size = i;
-	while (line[size])
+	while (line[size] && line[size] != ' ')
 	{
 		if (line[size] == '"' || line[size] == 39)
 			len--;
@@ -41,6 +41,17 @@ char	*ft_inc(char *cmd, int len, char *line, int i)
 	return (cmd);
 }
 
+int	ft_sep(char *line, int i, int len)
+{
+	if (line[i] == 39)
+		len = count_squote(line, i);
+	else if (line[i] == '"')
+		len = count_dquote(line, i);
+	else
+		len = count_no_delim(line, i);
+	return (len);
+}
+
 char	**parse_cmd_bis(char **cmd, char *line, int word)
 {
 	int			i;
@@ -56,16 +67,14 @@ char	**parse_cmd_bis(char **cmd, char *line, int word)
 		i++;
 	while (line[i] != '\0')
 	{
-		if (line[i] == 39)
-			len = count_squote(line, i);
-		else if (line[i] == '"')
-			len = count_dquote(line, i);
-		else
-			len = count_no_delim(line, i);
+		len = ft_sep(line, i, len);
 		if (len == -1)
 			return (NULL);
-		cmd[word] = ft_inc(cmd[word], len, line, i);
-		word++;
+		if (len != 0)
+		{	
+			cmd[word] = ft_inc(cmd[word], len, line, i);
+			word++;
+		}
 		i = i + len + 1;
 	}
 	cmd[word] = NULL;
