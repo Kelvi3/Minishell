@@ -6,14 +6,14 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/03 14:34:10 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/06 14:09:05 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 // print copy env
-
+/*
 static void	ft_print_envcp(t_list **envcp)
 {
 	t_list	*tmp;
@@ -84,7 +84,7 @@ void	ft_sort_ascii(t_list **lst)
 	}
 }
 
-/*void	ft_add_env(t_list **lst, char **args)
+void	ft_add_env(t_list **lst, char **args)
 {
 	int		i;
 	t_list	*var;
@@ -97,19 +97,20 @@ void	ft_sort_ascii(t_list **lst)
 		var->next = NULL;
 		i++;
 	}
-}*/
-
+}
+*/
 // export sans argument
 
 void	ft_export(char **env, char **args)
 {
-	t_list		*envcp;
+	//t_list		*envcp;
 	(void) args;
-	envcp = NULL;
-	ft_cpy_env(&envcp, env);
+	(void) env;
+	//envcp = NULL;
+	//ft_cpy_env(&envcp, env);
 //	if (nb_args > 1)
 //		ft_add_env(&envcp, args);
-	ft_sort_ascii(&envcp);
+	//ft_sort_ascii(&envcp);
 //	if (nb args == 1)
-	ft_print_envcp(&envcp);
+	//ft_print_envcp(&envcp);
 }
