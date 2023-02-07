@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:57:57 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/03 15:22:04 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/06 11:22:29 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ int	main(int argc, char **argv, char **env)
 		if (line == NULL)
 			break ;
 		cmd = parse_cmd(line, cmd);
-		ft_builtins(cmd, env);
+		printf("cmd[0] == %s\n", cmd[0]);
+		printf("cmd[1] == %s\n", cmd[1]);
+		if (cmd[0] && line)
+			ft_builtins(cmd, env);
 		add_history(line);
 	}
 	i = 0;
@@ -44,7 +47,7 @@ int	main(int argc, char **argv, char **env)
 		i++;
 	}
 	free(cmd);*/
-	free(line);
-	free(path);
+//	free(line);
+//	free(path);
 	return (0);
 }
