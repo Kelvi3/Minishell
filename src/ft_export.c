@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/07 13:17:09 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/07 13:40:20 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,9 @@ void	ft_add_lst(t_list **env_lst, char *name, char *value)
 		*env_lst = new_var;
 	}
 }
-	/*	if (args[i][0] == '_' && tmp->name[0] == '_')
-			{
-				printf("name tmp == %s\n", tmp->name);
-				printf("name arg == %s\n", args[i]);
-				if (ft_strncmp(args[i], tmp->name, ft_strlen(args[i])) != 0)
-				{
-					printf("strncmp == %d\n", ft_strncmp(args[i], tmp->name, ft_strlen(args[i])));
-					if (!ft_strchr(args[i], '='))
-						return (1);
-					//new_env = ft_add_param_env(new_env, args);
-					return (5);
-				}
-			}*/
 
 // if double replace value and return 1
-char	*ft_name(char *args)
+char	*ft_cpy_name(char *args)
 {
 	int		i;
 	int		j;
@@ -104,6 +91,7 @@ char	*ft_name(char *args)
 	tmp[j] = '\0';
 	return (tmp);
 }
+
 int	ft_check_double(t_list *new_env, char **args)
 {
 	int		i;
@@ -114,7 +102,7 @@ int	ft_check_double(t_list *new_env, char **args)
 	i = 1;
 	while (tmp && args[i])
 	{
-		name = ft_name(args[i]);
+		name = ft_cpy_name(args[i]);
 		if (ft_strncmp(args[i], tmp->name, ft_strlen(name)) == 0)
 		{
 			if (!ft_strchr(args[i], '='))
@@ -231,35 +219,6 @@ void	ft_print_envcp(t_list **lst, char **env)
 		i++;
 	}
 }
-// export sans argument
-/*
-int	ft_check_double_underscore(t_list *new_env, char **args)
-{
-	int		i;
-	char	*value;
-	char	*name;
-	t_list	*tmp;
-
-	i = 0;
-	tmp = new_env;
-	while (tmp && args[i])
-	{
-		value = ft_strchr(args[i], '=');
-		if (args[i][0] == '_')
-		{
-			value = '\0';
-			name = args[i];
-			// ft_strlen(args[i]) est trop grand, prendre que le name
-			if (ft_strncmp(args[i], tmp->name, ft_strlen(name)) == 0)
-			{
-				if (!ft_strchr(args[i], '='))
-					return (1);
-				tmp->value = value + 1;
-				return (1);
-			}
-		}
-	}
-}*/
 
 // probleme name avec underscore avec le checkdouble
 // ne pas replace un export a=3 avec un export a

@@ -6,13 +6,13 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:10:13 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/01/31 14:19:49 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:47:55 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	is_pipe(char *line)
+static int	is_pipex(char *line)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ static int	is_pipe(char *line)
 
 void	condition_prompt(char *line)
 {
-	if (is_pipe(line) == 0)
+	if (is_pipex(line) == 0)
 		return ;
 		//pipex(line);
 }

@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:47:12 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/03 14:32:29 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/06 13:39:54 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	count_no_delim(char *line, int i)
 		printf("Syntaxe: error\n");
 		return (-1);
 	}
+	if (j == 1)
+		return (0);
 	return (j);
 }
 
@@ -126,12 +128,7 @@ char	**parse_cmd(char *line, char **cmd)
 		i++;
 	while (line[i] != '\0')
 	{
-		if (line[i] == 39)
-			len = count_squote(line, i);
-		else if (line[i] == '"')
-			len = count_dquote(line, i);
-		else
-			len = count_no_delim(line, i);
+		len = ft_sep(line, i, len);
 		if (len == -1)
 			return (NULL);
 		word++;

@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:43:07 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/02 09:40:40 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/03 16:51:07 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	ft_exit(char **cmd)
 		}
 		j++;
 	}
-	digit = ft_atoi(cmd[1]);
+	if (cmd[1])
+		digit = ft_atoi(cmd[1]);
 	printf("exit\n");
 	exit (digit % 256);
 }

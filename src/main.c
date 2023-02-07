@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:57:57 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/06 11:22:29 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/07 13:31:51 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
-	(void) env;
 	line = NULL;
 	path = current_path();
 	cmd = NULL;
@@ -34,20 +33,28 @@ int	main(int argc, char **argv, char **env)
 		if (line == NULL)
 			break ;
 		cmd = parse_cmd(line, cmd);
-		printf("cmd[0] == %s\n", cmd[0]);
-		printf("cmd[1] == %s\n", cmd[1]);
 		if (cmd[0] && line)
 			ft_builtins(cmd, env);
+		printf("cmd[0] = %s / cmd[1] = %s\n", cmd[0], cmd[1]);
+		if (is_pipe(cmd) == 1)
+			parse_pipe(cmd, env);
+		/*exec = is_executable(cmd[0], env);
+		if (exec != NULL)
+			printf("%s\n", exec);*/
+		ft_check_line(line);
+		free(line);
+		line = NULL;
+		ft_builtins(cmd, env);
 		add_history(line);
 	}
 	i = 0;
-/*	while (cmd[i] != NULL)
+	while (cmd[i] != NULL)
 	{
 		free(cmd[i]);
 		i++;
 	}
-	free(cmd);*/
-//	free(line);
-//	free(path);
+	free(cmd);
+	free(line);
+	free(path);
 	return (0);
 }
