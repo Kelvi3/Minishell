@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 09:32:19 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/08 11:10:20 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/08 13:18:00 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	exec_simple_cmd(char **env, char **cmd)
 		free(path);
 		return ;
 	}
-	if (cmd[1][0] == '-')
+	if (cmd[1] && cmd[1][0] == '-')
 		arg = strdup_arg_execve_flag(cmd[0], cmd[1], cmd[2]);
 	else
 		arg = strdup_arg_execve(cmd[0], cmd[1]);

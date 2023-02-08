@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:41:22 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/08 10:10:23 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/08 13:11:32 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	no_pipe(char **cmd, char **env)
 	t_pipe	args;
 
 	i = 0;
+	printf("'%s'\n", cmd[0]);
 	while (cmd[i])
 		i++;
 	if (cmd[0][0] == '<')
