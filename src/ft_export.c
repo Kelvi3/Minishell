@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/07 13:40:20 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/08 15:23:46 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,42 +169,60 @@ t_list	*ft_add_param_env(t_list *new_env, char **args)
 			name = args[i];
 			ft_add_lst(&new_env, name, value);
 		}
-		else
-			ft_putstr_fd("errrrrror aplha\n", 2);
 		i++;
 	}
 	return (new_env);
 }
 
+char	*ft_cpy(char *tmp)
+{
+	int		i;
+	char	*name;
+
+	name = malloc(sizeof(char) * (ft_strlen(tmp) + 1));
+	if (!name)
+		return (NULL);
+	i = 0;
+	while (tmp[i] != '=')
+	{
+		name[i] = tmp[i];
+		i++;
+	}
+	return (name);
+}
+
 t_list	*init_lst(t_list *env_lst, char **env)
 {
-	char	*name;
-	char	*value;
 	int		i;
+	int		j;
+	char	*value;
+	char	*tmp;
+	char	*name;
 
 	i = 0;
+	j = 0;
+	tmp = NULL;
+	name = NULL;
 	while (env[i])
 	{
-		value = ft_strchr(env[i], '=');
-		if (value)
-		{
-			*value = '\0';
-			name = env[i];
-			ft_add_lst(&env_lst, name, value + 1);
-		}
+		tmp = ft_strdup(env[i]);
+		value = ft_strchr(tmp, '=');
+		name = ft_cpy(tmp);
+		ft_add_lst(&env_lst, name, value + 1);
+		free(name);
+		free(tmp);
 		i++;
 	}
 	return (env_lst);
 }
 
-void	ft_print_envcp(t_list **lst, char **env)
+void	ft_print_envcp(t_list **lst)
 {
 	int		i;
 	t_list	*tmp;
 
 	tmp = *lst;
 	i = 0;
-	(void) env;
 	while (tmp)
 	{
 		if (tmp->name[0] == '_' && tmp->value)
@@ -223,24 +241,20 @@ void	ft_print_envcp(t_list **lst, char **env)
 // probleme name avec underscore avec le checkdouble
 // ne pas replace un export a=3 avec un export a
 
-void	ft_export(char **env, char **args)
+void	ft_export(char **env, char **args, t_list *envcp)
 {
-	static t_list		*envcp = NULL;
-
-	if (envcp == NULL)
-		envcp = init_lst(envcp, env);
+	(void) env;
 	if (ft_check_name(args) == 1)
 	{	
 		printf("error\n");
-		return ;  
+		return ;
 	}
 	if (ft_len(args) > 1)
 	{
-		// if no double, add env
 		if (ft_check_double(envcp, args) == 0)
 			envcp = ft_add_param_env(envcp, args);
 	}
 	ft_sort_ascii(&envcp);
 	if (ft_len(args) == 1)
-		ft_print_envcp(&envcp, env);
+		ft_print_envcp(&envcp);
 }

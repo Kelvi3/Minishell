@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 08:56:40 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/01 12:17:56 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/07 15:15:26 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ void	ft_echo(char **cmd)
 {
 	int	i;
 
+	(void) cmd;
 	i = 0;
 	if (ft_check_param(cmd) == 1) // si pas de -n
 		printf("%s\n", cmd[1]);
 	else
 		printf("%s", cmd[2]);
+	return ;
 }
