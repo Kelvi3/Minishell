@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:47:12 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/06 13:39:54 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/08 10:44:53 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,20 @@ int	count_no_delim(char *line, int i)
 	int	j;
 
 	j = 1;
-	i++;
 	while (line[i] != ' ' && line[i] != '\0')
 	{
+		if (line[i] == '<' && line[i + 1] != '<')
+			return (j);
 		i++;
 		j++;
-		if (line[i] != ' ' && line[i + 1] != ' ' && line[i + 1] != '\0')
-		{
-			i += 2;
-			j += 2;
-		}
 	}
-	if (line[i] != ' ' && line[i] != 39 && line[i] != '"' && line[i] != '\0')
+	if (line[i] != ' ' && line[i] != 39 && line[i] != '"' && line[i] != '\0'
+		&& line[i] != '<')
 	{
 		printf("Syntaxe: error\n");
 		return (-1);
 	}
-	if (j == 1)
+	if (j == 1 && line[i] != '<')
 		return (0);
 	return (j);
 }
@@ -107,7 +104,7 @@ static int	check_quotes(char *line)
 	}
 	if (c_dquote % 2 != 0 || c_squote % 2 != 0)
 	{	
-		printf("Syntaxe: error\n");
+		perror("Syntaxe: ");
 		return (1);
 	}
 	return (0);
@@ -126,13 +123,15 @@ char	**parse_cmd(char *line, char **cmd)
 		return (NULL);
 	while (line[i] == ' ')
 		i++;
-	while (line[i] != '\0')
+	while (line && line[i] != '\0')
 	{
 		len = ft_sep(line, i, len);
 		if (len == -1)
 			return (NULL);
 		word++;
-		i = i + len + 1;
+		if (len == 0)
+			i++;
+		i = i + len;
 	}
 	cmd = parse_cmd_bis(cmd, line, word);
 	return (cmd);
