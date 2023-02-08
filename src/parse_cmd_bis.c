@@ -6,24 +6,35 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 07:59:06 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/08 14:29:57 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/08 16:03:36 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static char	*ft_inc(char *cmd, int len, char *line, int i)
+static int	ft_count_size(char *line, int len, int i)
 {
-	int		j;
 	int		size;
 
 	size = i;
+	if (len == 1)
+		return (len);
 	while (line[size] && line[size] != ' ')
 	{
 		if (line[size] == '"' || line[size] == 39)
 			len--;
 		size++;
 	}
+	if (line[size] == ' ')
+		len--;
+	return (len);
+}
+
+static char	*ft_inc(char *cmd, int len, char *line, int i)
+{
+	int		j;
+
+	len = ft_count_size(line, len, i);
 	cmd = malloc(sizeof(char) * (len + 1));
 	if (!cmd)
 		return (NULL);
@@ -52,12 +63,21 @@ int	ft_sep(char *line, int i, int len)
 	return (len);
 }
 
+static int	count_len(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] == ' ')
+		i++;
+	return (i);
+}
+
 char	**parse_cmd_bis(char **cmd, char *line, int word)
 {
 	int			i;
 	int			len;
 
-	i = 0;
 	len = 0;
 	cmd = malloc(sizeof(char *) * (word + 1));
 	word = 0;
@@ -65,17 +85,21 @@ char	**parse_cmd_bis(char **cmd, char *line, int word)
 		return (NULL);
 	while (line[i] && line[i] == ' ')
 		i++;
+	word = 0;
+	i = count_len(line);
 	while (line[i] != '\0')
 	{
 		len = ft_sep(line, i, len);
 		if (len == -1)
 			return (NULL);
+		if (len == 0)
+			i++;
 		if (len != 0)
-		{	
+		{
 			cmd[word] = ft_inc(cmd[word], len, line, i);
 			word++;
 		}
-		i = i + len + 1;
+		i = i + len;
 	}
 	cmd[word] = NULL;
 	return (cmd);

@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   condition_prompt.c                                 :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/31 11:10:13 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/08 11:18:40 by tcazenav         ###   ########.fr       */
+/*   Created: 2023/02/07 11:13:57 by tcazenav          #+#    #+#             */
+/*   Updated: 2023/02/07 11:16:32 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	is_pipex(char *line)
+void	free_double_char(char **arg)
 {
 	int	i;
 
 	i = 0;
-	while (line[i] != '\0')
+	while (arg[i])
 	{
-		if (line[i] == '|' || line[i] == '>' || line[i] == '<'
-			|| (line[i] == '<' && line[i + 1] == '<'))
-			return (0);
+		free(arg[i]);
+		arg[i] = NULL;
 		i++;
 	}
-	return (1);
-}
-
-void	condition_prompt(char *line)
-{
-	if (is_pipex(line) == 0)
-		return ;
-		//pipex(line);
+	free(arg);
+	arg = NULL;
 }

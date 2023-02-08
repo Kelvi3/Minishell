@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:57:57 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/08 11:31:01 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/08 16:04:26 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int argc, char **argv, char **env)
 	i = 0;
 	while (1)
 	{
+		i = 0;
 		line = readline("$>");
 		if (line == NULL)
 			break ;
@@ -48,20 +49,15 @@ int	main(int argc, char **argv, char **env)
 		/*exec = is_executable(cmd[0], env);
 		if (exec != NULL)
 			printf("%s\n", exec);*/
+		if (is_pipe(cmd) == 1)
+			parse_pipe(cmd, env);
 		ft_check_line(line);
-		free(line);
-		line = NULL;
 		ft_builtins(cmd, env);
 		add_history(line);
+		free_double_char(cmd);
+		free(line);
+		line = NULL;
 	}
-	i = 0;
-	while (cmd[i] != NULL)
-	{
-		free(cmd[i]);
-		i++;
-	}
-	free(cmd);
-	free(line);
 	free(path);
 	return (0);
 }
