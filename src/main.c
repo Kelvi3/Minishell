@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:57:57 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/08 11:10:28 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:17:28 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	main(int argc, char **argv, char **env)
 		if (line == NULL)
 			break ;
 		cmd = parse_cmd(line, cmd);
+		if (cmd[0] && line)
+			ft_builtins(cmd, env);
 		if (is_pipe(cmd) == 1)
 			parse_pipe(cmd, env);
 		ft_check_line(line);

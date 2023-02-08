@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:58:47 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/07 16:16:03 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:21:04 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ typedef struct s_element
 	char	**cmd;
 	char	**envcp;
 }				t_element;
+/// TEST
+
+void	ft_add_envv(char **env);
+
 
 typedef struct s_pipe {
 	int		infile;
@@ -48,7 +52,13 @@ void		ft_cd(char **cmd);
 void		ft_pwd(char **cmd);
 
 // export
-void		ft_export(char **env, char **args);
+void	ft_export(char **env, char **args);
+void	ft_print_envcp(t_list **lst, char **env);
+t_list	*init_lst(t_list *env_lst, char **env);
+t_list	*ft_add_param_env(t_list *new_env, char **args);
+int		ft_check_name(char **args);
+void	ft_add_lst(t_list **env_lst, char *name, char *value);
+void	ft_sort_ascii(t_list **lst);
 
 // unset
 void		ft_unset(char **env, t_list **lst, char *key);
@@ -81,8 +91,10 @@ char		*current_path(void);
 char		**ft_init_env(char **env);
 
 // utils
-char		*ft_strtok(char *str, const char *delim);
 void		free_double_char(char **arg);
+char	*ft_strtok(char *str, const char *delim);
+int		ft_len(char **str);
+int		ft_check_alpha_export(char *args);
 
 // pipe
 int			is_pipe(char **cmd);
@@ -96,7 +108,5 @@ char		*fix_str(char *cmd, char c);
 int			ft_strlento(char *str, char c);
 char		*ft_strcat_cmd(char *s1, int size, char *s2);
 int			ft_strchr_cmd(char *cmd, char c);
-
-int			ft_len(char **str);
 
 #endif

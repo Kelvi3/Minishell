@@ -6,19 +6,19 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:01:44 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/02 15:54:42 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/07 13:52:20 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-#include <unistd.h>
-#include <stdlib.h>
+# include <unistd.h>
+# include <stdlib.h>
 
 typedef struct s_list
 {
-	void			*name;
+	char			*name;
 	char			*value;
 	void			*content;
 	struct s_list	*next;
