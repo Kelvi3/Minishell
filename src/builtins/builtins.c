@@ -6,11 +6,11 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:51:31 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/16 10:41:41 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/09 14:42:27 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	ft_builtins(char **cmd, char **env)
 {
@@ -32,10 +32,6 @@ void	ft_builtins(char **cmd, char **env)
 		ft_env(envcp, cmd);
 	else if (ft_strncmp(cmd[0], "exit", 4) == 0)
 		ft_exit(cmd);
-	else
-		return ;
-//	if (ft_strncmp(cmd[0], "unset", 5) == 0)
-//		ft_unset();
 //	else
 //		printf("bug\n");
 }

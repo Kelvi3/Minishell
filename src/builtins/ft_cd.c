@@ -6,13 +6,11 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:28:05 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/08 14:37:10 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/09 14:47:32 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include <stdlib.h>
-#include <unistd.h>
+#include "../../include/minishell.h"
 
 // chemin absolu : depuis la racine ~
 // chemin relatif : depuis le repertoire courant

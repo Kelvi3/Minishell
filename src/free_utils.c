@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:13:57 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/07 11:16:32 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:40:57 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,17 @@ void	free_double_char(char **arg)
 	}
 	free(arg);
 	arg = NULL;
+}
+
+void	free_double_int(int **arg, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		free(arg[i]);
+		i++;
+	}
+	free(arg);
 }

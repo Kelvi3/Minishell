@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/31 14:08:10 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/07 14:28:53 by lulaens          ###   ########.fr       */
+/*   Created: 2023/02/01 09:51:49 by lulaens           #+#    #+#             */
+/*   Updated: 2023/02/07 15:30:17 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-void	ft_env(t_list *envcp, char **cmd)
+void	ft_pwd(char **cmd)
 {
-	t_list	*tmp;
+	char	*line;
 
-	tmp = envcp;
 	if (ft_len(cmd) > 1)
 	{
-		ft_putstr_fd("env : error too many arguments\n", 2);
+		ft_putstr_fd("pwd : too many arguments\n", 2);
 		return ;
 	}
-	while (tmp)
-	{
-		printf("%s=%s\n", tmp->name, tmp->value);
-		tmp = tmp->next;
-	}
+	line = malloc(sizeof(char) * (PATH_MAX + 1));
+	if (!line)
+		return ;
+	line[PATH_MAX + 1] = '\0';
+	line = getcwd(line, PATH_MAX);
+	if (line == NULL)
+		ft_putstr_fd("Error getcwd\n", 2);
+	printf("%s\n", line);
+// si free probleme de segfault
+//	if (line)
+//		free(line);
 }

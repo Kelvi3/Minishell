@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/31 14:08:10 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/07 14:28:53 by lulaens          ###   ########.fr       */
+/*   Created: 2023/02/08 13:27:04 by tcazenav          #+#    #+#             */
+/*   Updated: 2023/02/08 13:30:35 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_env(t_list *envcp, char **cmd)
+void	ft_put_error(char *str, char *cmd)
 {
-	t_list	*tmp;
+	int	i;
 
-	tmp = envcp;
-	if (ft_len(cmd) > 1)
+	i = 0;
+	while (cmd[i])
 	{
-		ft_putstr_fd("env : error too many arguments\n", 2);
-		return ;
+		write(2, &cmd[i], 1);
+		i++;
 	}
-	while (tmp)
+	i = 0;
+	while (str[i])
 	{
-		printf("%s=%s\n", tmp->name, tmp->value);
-		tmp = tmp->next;
+		write(2, &str[i], 1);
+		i++;
 	}
 }

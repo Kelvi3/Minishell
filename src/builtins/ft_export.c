@@ -6,12 +6,11 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/08 15:23:46 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/09 14:43:01 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include <string.h>
+#include "../../include/minishell.h"
 
 // sort list ascii
 

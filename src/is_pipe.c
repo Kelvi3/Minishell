@@ -6,18 +6,40 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:41:22 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/08 13:11:32 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/14 10:59:51 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*multi_pipe(char **cmd, char **env, int nb_pipe)
+void	multi_pipe(char **cmd, char **env, int nb_pipe)
 {
-	(void) cmd;
-	(void) env;
-	(void) nb_pipe;
-	return (NULL);
+	int		i;
+	t_pipe	args;
+
+	i = 0;
+	args.nb_pipe = nb_pipe;
+	while (cmd[i])
+		i++;
+	if (cmd[0][0] == '<')
+		args.infile = open(cmd[1], O_RDONLY);
+	if (i - 2 >= 0 && cmd[i - 2][0] == '>')
+		args.outfile = open(cmd[i - 1], O_RDWR | O_CREAT | O_TRUNC, 0664);
+	if (i - 2 >= 0 && cmd[i - 2][0] == '>' && cmd[0][0] == '<'
+		&& args.infile >= 0 && args.outfile >= 0)
+		printf("MULTI PIPE INFILE OUTFILE\n");
+	else if (cmd[2] && cmd[0][0] == '<' && args.infile >= 0 && cmd[2] != NULL)
+		printf("MULTI PIPE INFILE\n");
+	else if (i - 2 >= 0 && cmd[i - 2][0] == '>' && args.outfile >= 0)
+		printf("MULTI PIPE OUTFILE\n");
+	else
+		exec_multi_cmd(env, cmd, args);
+	i = 0;
+	while (i < args.nb_pipe)
+	{
+		waitpid(-1, NULL, 0);
+		i++;
+	}
 }
 
 void	no_pipe(char **cmd, char **env)
@@ -26,21 +48,22 @@ void	no_pipe(char **cmd, char **env)
 	t_pipe	args;
 
 	i = 0;
-	printf("'%s'\n", cmd[0]);
 	while (cmd[i])
 		i++;
 	if (cmd[0][0] == '<')
 		args.infile = open(cmd[1], O_RDONLY);
-	if (cmd[i - 1][0] == '>')
-		args.outfile = open(cmd[i], O_RDWR | O_CREAT | O_TRUNC, 0664);
-	if (cmd[i - 1][0] == '>' && cmd[0][0] == '<')
-		printf("no pipe && infile && outfile\n");
-	else if (cmd[0][0] == '<' && args.infile >= 0 && cmd[2] != NULL)
+	if (i - 2 >= 0 && cmd[i - 2][0] == '>')
+		args.outfile = open(cmd[i - 1], O_RDWR | O_CREAT | O_TRUNC, 0664);
+	if (i - 2 >= 0 && cmd[i - 2][0] == '>' && cmd[0][0] == '<'
+		&& args.infile >= 0 && args.outfile >= 0)
+		exec_no_pipe_outfile_infile(args, env, cmd);
+	else if (cmd[2] && cmd[0][0] == '<' && args.infile >= 0 && cmd[2] != NULL)
 		exec_no_pipe_infile(args, env, cmd);
-	else if (cmd[i - 1][0] == '>')
-		printf("no pipe && outfile\n");
-	else if (cmd[0][0] != '<')
+	else if (i - 2 >= 0 && cmd[i - 2][0] == '>' && args.outfile >= 0)
+		exec_no_pipe_outfile(args, env, cmd);
+	else
 		exec_simple_cmd(env, cmd);
+
 }
 
 void	parse_pipe(char **cmd, char **env)

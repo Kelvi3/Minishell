@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:47:12 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/16 10:25:30 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/16 10:41:00 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char	**parse_cmd(char *line, char **cmd)
 	len = 0;
 	if (check_quotes(line) == 1)
 		return (NULL);
-	while (line[i] == ' ')
+	while (line[i] && line[i] == ' ')
 		i++;
 	while (line && line[i] != '\0')
 	{

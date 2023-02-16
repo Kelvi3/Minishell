@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/31 14:08:10 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/07 14:28:53 by lulaens          ###   ########.fr       */
+/*   Created: 2023/02/02 16:28:11 by lulaens           #+#    #+#             */
+/*   Updated: 2023/02/09 14:43:11 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-void	ft_env(t_list *envcp, char **cmd)
+// key = variable a supprimer
+// key = lst->name
+t_list	*ft_unset(t_list *envcp, char **key)
 {
+	int		i;
+	t_list	*t_tmp;
 	t_list	*tmp;
 
+	i = 1;
+
 	tmp = envcp;
-	if (ft_len(cmd) > 1)
-	{
-		ft_putstr_fd("env : error too many arguments\n", 2);
-		return ;
-	}
-	while (tmp)
-	{
-		printf("%s=%s\n", tmp->name, tmp->value);
+	if (ft_len(key) == 1)
+		return (NULL);
+	while (ft_strncmp(key[i], tmp->next->name, ft_strlen(tmp->name)) != 0)
 		tmp = tmp->next;
-	}
+	t_tmp = tmp->next;
+	tmp->next = t_tmp->next;
+	return (envcp);
 }

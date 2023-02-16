@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/01/27 09:57:15 by tcazenav          #+#    #+#              #
-#    Updated: 2023/02/10 10:14:37 by tcazenav         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = minishell
 
 SRC = ./src/builtins.c \
@@ -34,8 +22,11 @@ SRC = ./src/builtins.c \
 	  ./src/free_utils.c \
 	  ./src/error.c \
 	  ./src/no_pipe_bis.c \
-	  ./src/multi_pipe.c 
-		
+	  ./src/multi_pipe.c \
+	  ./src/utils_builtins.c \
+	  ./src/strtok.c \
+	  ./src/signal.c 
+
 CFLAGS = -Wall -Wextra -Werror -g3
 
 OBJ = $(SRC:.c=.o)

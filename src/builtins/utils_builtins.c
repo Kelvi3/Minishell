@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   utils_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/31 14:08:10 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/07 14:28:53 by lulaens          ###   ########.fr       */
+/*   Created: 2023/02/02 09:38:58 by lulaens           #+#    #+#             */
+/*   Updated: 2023/02/09 14:43:19 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-void	ft_env(t_list *envcp, char **cmd)
+int	ft_len(char **str)
 {
-	t_list	*tmp;
+	int	i;
 
-	tmp = envcp;
-	if (ft_len(cmd) > 1)
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	ft_check_alpha_export(char *args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i] != '=')
 	{
-		ft_putstr_fd("env : error too many arguments\n", 2);
-		return ;
+		if (!(args[i] >= 'A' && args[i] <= 'Z')
+			|| !(args[i] >= 'a' && args[i] <= 'z'))
+			return (1);
+		i++;
 	}
-	while (tmp)
-	{
-		printf("%s=%s\n", tmp->name, tmp->value);
-		tmp = tmp->next;
-	}
+	return (0);
 }

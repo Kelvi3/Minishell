@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 09:58:47 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/15 15:41:32 by tcazenav         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -50,14 +38,14 @@ void		ft_builtins(char **cmd, char **env);
 void		ft_echo(char **cmd);
 
 //cd 
-void		ft_cd(char **cmd);
+void		ft_cd(char **cmd, char **env);
 
 //pwd
 void		ft_pwd(char **cmd);
 
 // export
-void	ft_export(char **env, char **args);
-void	ft_print_envcp(t_list **lst, char **env);
+void	ft_export(char **env, char **args, t_list *envcp);
+void	ft_print_envcp(t_list **lst);
 t_list	*init_lst(t_list *env_lst, char **env);
 t_list	*ft_add_param_env(t_list *new_env, char **args);
 int		ft_check_name(char **args);
@@ -65,10 +53,10 @@ void	ft_add_lst(t_list **env_lst, char *name, char *value);
 void	ft_sort_ascii(t_list **lst);
 
 // unset
-void		ft_unset(char **env, t_list **lst, char *key);
+t_list	*ft_unset(t_list *envcp, char **key);
 
 // env
-void		ft_env(char **env, char **cmd);
+void		ft_env(t_list *envcp, char **cmd);
 
 //exit
 int			ft_exit(char **cmd);
