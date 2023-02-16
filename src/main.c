@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:57:57 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/08 11:17:28 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/16 10:25:46 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **env)
 			parse_pipe(cmd, env);
 		ft_check_line(line);
 		ft_builtins(cmd, env);
-		add_history(line);
+		add_history(line);	
 		free_double_char(cmd);
 		free(line);
 		line = NULL;

@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:51:31 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/08 11:18:52 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/08 13:09:58 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_builtins(char **cmd, char **env)
 	else if (ft_strncmp(cmd[0], "exit", 4) == 0)
 		ft_exit(cmd);
 	else
-		printf("bug\n");
+		return ;
 //	if (ft_strncmp(cmd[0], "unset", 5) == 0)
 //		ft_unset();
 }

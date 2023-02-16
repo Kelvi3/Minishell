@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 07:59:06 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/08 11:18:01 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:46:24 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@ char	**parse_cmd_bis(char **cmd, char *line, int word)
 	int			len;
 
 	len = 0;
+	printf("word = %i\n", word);
 	cmd = malloc(sizeof(char *) * (word + 1));
-	word = 0;
 	if (!cmd)
 		return (NULL);
 	word = 0;
 	i = count_len(line);
-	while (line[i] != '\0')
+	while (line && line[i] != '\0')
 	{
 		len = ft_sep(line, i, len);
 		if (len == -1)
@@ -93,10 +93,9 @@ char	**parse_cmd_bis(char **cmd, char *line, int word)
 		if (len == 0)
 			i++;
 		if (len != 0)
-		{
 			cmd[word] = ft_inc(cmd[word], len, line, i);
+		if (len != 0)
 			word++;
-		}
 		i = i + len;
 	}
 	cmd[word] = NULL;

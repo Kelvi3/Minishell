@@ -6,7 +6,7 @@
 #    By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 09:57:15 by tcazenav          #+#    #+#              #
-#    Updated: 2023/02/08 11:10:59 by tcazenav         ###   ########.fr        #
+#    Updated: 2023/02/10 10:14:37 by tcazenav         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,10 @@ SRC = ./src/builtins.c \
 	  ./src/ft_echo.c \
 	  ./src/check_cmd.c \
 	  ./src/check_cmd_bis.c \
-	  ./src/free_utils.c
+	  ./src/free_utils.c \
+	  ./src/error.c \
+	  ./src/no_pipe_bis.c \
+	  ./src/multi_pipe.c 
 		
 CFLAGS = -Wall -Wextra -Werror -g3
 
