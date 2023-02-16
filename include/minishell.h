@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:58:47 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/08 16:05:31 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/16 09:31:33 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_pipe {
 	char	*path;
 }				t_pipe;
 // ALL BUILTINS
-void		ft_builtins(char **cmd, char **env);
+void		ft_builtins(char **cmd, char **env, t_list **envcp, t_list **export);
 // echo
 void		ft_echo(char **cmd);
 
@@ -52,22 +52,26 @@ void		ft_cd(char **cmd, char **env);
 void		ft_pwd(char **cmd);
 
 // export
-void	ft_export(char **env, char **args, t_list *envcp);
-void	ft_print_envcp(t_list **lst);
+void	ft_export(char **args, t_list **envcpp, t_list **export);
+void	ft_print_envcp(t_list *lst);
+void	ft_swap_lst(t_list **tmp_i, t_list **tmp_j);
+char	*ft_cpy_name(char *args);
+char	*ft_cpy_value(char *args);
 t_list	*init_lst(t_list *env_lst, char **env);
-t_list	*ft_add_param_env(t_list *new_env, char **args);
 int		ft_check_name(char **args);
-void	ft_add_lst(t_list **env_lst, char *name, char *value);
-void	ft_sort_ascii(t_list **lst);
+int		ft_check_double(t_list *new_env, t_list *envcp,  char **args);
 
 // unset
-t_list	*ft_unset(t_list *envcp, char **key);
-
+void	ft_unset(char **key, t_list **export);
+void	ft_unset_env(char **key, t_list **envcp);
+int		ft_check_len(char *key, t_list **lst);
+int		ft_check_lst_name(char *key, t_list **lst);
+void	ft_swp(t_list **tmp, t_list **t_tmp, int flag);
 // env
-void		ft_env(t_list *envcp, char **cmd);
+void		ft_env(t_list **envcp, char **cmd);
 
 //exit
-int			ft_exit(char **cmd);
+int			ft_exit(char **cmd, t_list **envcp, t_list **export);
 
 char		*current_path(void);
 void		condition_prompt(char *line);
@@ -92,6 +96,7 @@ char		**ft_init_env(char **env);
 
 // utils
 void		free_double_char(char **arg);
+void		free_lst(t_list **lst);
 char	*ft_strtok(char *str, const char *delim);
 int		ft_len(char **str);
 int		ft_check_alpha_export(char *args);

@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 08:56:40 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/09 14:42:42 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/16 09:57:06 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,18 @@
 
 int	ft_check_param(char **cmd)
 {
+	int	i;
 	int	j;
 
-	j = 1;
-	if (cmd[1][0] && cmd[1][0] == '-')
-	{
-		while (cmd[1][j] && cmd[1][j] != ' ')
+	i = 1;
+	while (cmd[i])
+	{	
+		j = 0;
+		while (cmd[i][j])
 		{
-			if (cmd[1][j] != 'n')
-				return (1);
-			j++;
+
 		}
+		i++;
 	}
 	return (0);
 }
@@ -39,9 +40,7 @@ void	ft_echo(char **cmd)
 
 	(void) cmd;
 	i = 0;
-	if (ft_check_param(cmd) == 1) // si pas de -n
+//	if (ft_check_param(cmd) == 1) /* PAS DE -N */
 		printf("%s\n", cmd[1]);
-	else
-		printf("%s", cmd[2]);
 	return ;
 }
