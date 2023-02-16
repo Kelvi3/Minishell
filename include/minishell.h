@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 09:58:47 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/16 09:31:33 by lulaens          ###   ########.fr       */
+/*   Created: 2023/02/16 11:00:26 by lulaens           #+#    #+#             */
+/*   Updated: 2023/02/16 11:00:28 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,14 @@ void	ft_add_envv(char **env);
 
 
 typedef struct s_pipe {
+	int		**pipefd;
 	int		infile;
 	int		outfile;
-	int		nb_cmd;
 	char	*path;
+	int		nb_pipe;
+	int		nb_cmd;
+	int		c_index;
+	char	**arg;
 }				t_pipe;
 // ALL BUILTINS
 void		ft_builtins(char **cmd, char **env, t_list **envcp, t_list **export);
@@ -100,7 +104,7 @@ void		free_lst(t_list **lst);
 char	*ft_strtok(char *str, const char *delim);
 int		ft_len(char **str);
 int		ft_check_alpha_export(char *args);
-
+void	free_double_int(int **arg, int len);
 // pipe
 int			is_pipe(char **cmd);
 char		*is_executable(char *cmd, char **env);
@@ -113,5 +117,12 @@ char		*fix_str(char *cmd, char c);
 int			ft_strlento(char *str, char c);
 char		*ft_strcat_cmd(char *s1, int size, char *s2);
 int			ft_strchr_cmd(char *cmd, char c);
+void		exec_no_pipe_outfile(t_pipe args, char **env, char **cmd);
+char		**strdup_arg_execve(char *cmd1, char *cmd2);
+void		exec_no_pipe_outfile_infile(t_pipe args, char **env, char **cmd);
+void		exec_multi_cmd(char **env, char **cmd, t_pipe args);
+//error
+void	ft_put_error(char *str, char *cmd);
+
 
 #endif

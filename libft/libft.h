@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:01:44 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/15 16:26:45 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/16 11:02:09 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-t_list	*ft_lstnew(char *value, char *name);
+t_list	*ft_lstnew(void	*content);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list	*ft_lstlast(t_list *lst);
 int		ft_lstsize(t_list *lst);

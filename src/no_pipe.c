@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 09:32:19 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/08 13:18:00 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/14 08:41:36 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**strdup_arg_execve(char *cmd1, char *cmd2)
 		return (NULL);
 	arg[0] = ft_strdup(cmd1);
 	arg[1] = NULL;
-	if (cmd2 != NULL)
+	if (cmd2 != NULL && cmd2[0] == '-')
 	{		
 		arg[1] = malloc(sizeof(char) * (ft_strlen(cmd2) + 1));
 		if (!arg[1])
@@ -102,10 +102,11 @@ void	exec_simple_cmd(char **env, char **cmd)
 	path = check_cmd(cmd[0], env);
 	if (!path)
 	{
+		ft_put_error(": command not found\n", cmd[0]);
 		free(path);
 		return ;
 	}
-	if (cmd[1] && cmd[1][0] == '-')
+	if (cmd[1] && cmd[2] && cmd[1][0] == '-')
 		arg = strdup_arg_execve_flag(cmd[0], cmd[1], cmd[2]);
 	else
 		arg = strdup_arg_execve(cmd[0], cmd[1]);

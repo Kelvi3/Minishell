@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:47:12 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/08 16:03:54 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/16 10:41:00 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	count_dquote(char *line, int i)
 		}
 	}
 	j++;
-	if (line[i] != 39 && line[i] != '"' && line[i] != '\0')
+	if (line[i] != 39 && line[i] != '"' && line[i] != '\0' && line[i] != ' ')
 	{
 		printf("Syntaxe: error\n");
 		return (-1);
@@ -104,7 +104,7 @@ static int	check_quotes(char *line)
 	}
 	if (c_dquote % 2 != 0 || c_squote % 2 != 0)
 	{	
-		perror("Syntaxe: ");
+		printf("Syntaxe: error\n");
 		return (1);
 	}
 	return (0);

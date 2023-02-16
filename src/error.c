@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 10:14:45 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/16 11:01:55 by lulaens          ###   ########.fr       */
+/*   Created: 2023/02/08 13:27:04 by tcazenav          #+#    #+#             */
+/*   Updated: 2023/02/08 13:30:35 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-t_list	*ft_lstnew(void	*content)
+void	ft_put_error(char *str, char *cmd)
 {
-	t_list	*tmp;
+	int	i;
 
-	tmp = malloc(sizeof(t_list));
-	if (!tmp)
-		return (NULL);
-	tmp->value = content;
-	tmp->next = NULL;
-	return (tmp);
+	i = 0;
+	while (cmd[i])
+	{
+		write(2, &cmd[i], 1);
+		i++;
+	}
+	i = 0;
+	while (str[i])
+	{
+		write(2, &str[i], 1);
+		i++;
+	}
 }

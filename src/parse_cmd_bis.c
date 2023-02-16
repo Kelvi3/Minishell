@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 07:59:06 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/08 16:12:37 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/16 10:40:40 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,13 @@ char	**parse_cmd_bis(char **cmd, char *line, int word)
 	len = 0;
 	i = 0;
 	cmd = malloc(sizeof(char *) * (word + 1));
-	word = 0;
 	if (!cmd)
 		return (NULL);
 	while (line[i] && line[i] == ' ')
 		i++;
 	word = 0;
 	i = count_len(line);
-	while (line[i] != '\0')
+	while (line && line[i] != '\0')
 	{
 		len = ft_sep(line, i, len);
 		if (len == -1)
@@ -96,10 +95,9 @@ char	**parse_cmd_bis(char **cmd, char *line, int word)
 		if (len == 0)
 			i++;
 		if (len != 0)
-		{
 			cmd[word] = ft_inc(cmd[word], len, line, i);
+		if (len != 0)
 			word++;
-		}
 		i = i + len;
 	}
 	cmd[word] = NULL;
