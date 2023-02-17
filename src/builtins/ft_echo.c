@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 08:56:40 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/16 09:57:06 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/17 11:31:32 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,18 @@
 int	ft_check_param(char **cmd)
 {
 	int	i;
-	int	j;
 
 	i = 1;
-	while (cmd[i])
-	{	
-		j = 0;
-		while (cmd[i][j])
+	if (cmd[1][0] == '-')
+	{
+		while (cmd[1][i])
 		{
-
+			if (cmd[1][i] != 'n')
+				return (1);
+			i++;
 		}
-		i++;
+		if (cmd[1][i] == '\0')
+			return (2);
 	}
 	return (0);
 }
@@ -39,8 +40,29 @@ void	ft_echo(char **cmd)
 	int	i;
 
 	(void) cmd;
-	i = 0;
-//	if (ft_check_param(cmd) == 1) /* PAS DE -N */
-		printf("%s\n", cmd[1]);
+	i = 1;
+	g_exit_code = 0;
+	/* echo -nnnn bonjour */
+	if (ft_len(cmd) >= 2 && ft_check_param(cmd) == 2)
+	{
+		i = 2;
+		while (cmd[i])
+		{
+			printf("%s", cmd[i]);
+			i++;
+		}
+	}
+	/* echo bonjour */
+	else if (ft_len(cmd) >= 2 && (ft_check_param(cmd) == 0 || ft_check_param(cmd) == 1))
+	{
+		i = 1;
+		while (cmd[i])
+		{
+			printf("%s ", cmd[i]);
+			i++;
+			if (i == ft_len(cmd))
+				printf("\n");
+		}
+	}
 	return ;
 }

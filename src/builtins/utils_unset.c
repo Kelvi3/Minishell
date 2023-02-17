@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:00:45 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/15 15:32:13 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/17 11:27:27 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	ft_check_len(char *key, t_list **lst)
 			if (ft_strncmp(ft_strchr(key, '=') + 1, tmp->value,
 					ft_strlen(tmp->value)) == 0)
 			{
+				g_exit_code = 1;
 				ft_putstr_fd("bash: unset: not a valid identifier\n", 2);
 				return (1);
 			}

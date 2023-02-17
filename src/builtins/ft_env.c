@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:08:10 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/16 09:25:14 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/17 11:24:24 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ft_env(t_list **envcp, char **cmd)
 	tmp = *envcp;
 	if (ft_len(cmd) > 1)
 	{
+		g_exit_code = 127;
 		ft_putstr_fd("env : error too many arguments\n", 2);
 		return ;
 	}

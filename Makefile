@@ -6,7 +6,7 @@
 #    By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 09:57:15 by tcazenav          #+#    #+#              #
-#    Updated: 2023/02/16 11:12:01 by lulaens          ###   ########.fr        #
+#    Updated: 2023/02/17 13:41:00 by lulaens          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRC =	./src/builtins/export/ft_check_export.c \
 		./src/parse_cmd_bis.c \
 		./src/signal.c \
 		./src/strtok.c \
+		./src/exec_var_value.c \
 
 CFLAGS = -Wall -Wextra -Werror -g3
 

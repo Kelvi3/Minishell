@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/16 10:49:18 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/17 11:29:11 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,17 +117,18 @@ void	ft_export(char **args, t_list **envcpp, t_list **export)
 	copy = *export;
 	envcp = *envcpp;
 	if (ft_check_name(args) == 1)
-	{	
+	{
+		g_exit_code = 1;
 		ft_putstr_fd("bash: export: not a valid identifier\n", 2);
 		return ;
 	}
 	if (ft_len(args) > 1)
 	{
-		if (ft_check_double(copy, envcp, args) == 0)
-		{	
+		g_exit_code = 0;
+		if (ft_check_double(copy, args) == 0)
 			*export = ft_add_param_env(copy, args);
+		if (ft_check_double(envcp, args) == 0)
 			*envcpp = ft_add_param_env(envcp, args);
-		}
 	}
 	ft_sort_ascii(copy);
 	if (ft_len(args) == 1)
