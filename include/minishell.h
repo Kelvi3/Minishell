@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:00:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/17 13:17:51 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/20 17:44:06 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,9 @@
 
 extern int	g_exit_code;
 
-typedef struct s_element
-{
-	char	**cmd;
-	char	**envcp;
-}				t_element;
-/// TEST
-char	*ft_check_doll(char **cmd, t_list **envcp);
+/* TEST */
+char	*ft_check_doll(char **cmd, t_list **envcp, int j);
 void	ft_add_envv(char **env);
-
 
 typedef struct s_pipe {
 	int		**pipefd;
@@ -47,86 +41,92 @@ typedef struct s_pipe {
 	char	**arg;
 }				t_pipe;
 /* TEST */
-int	check_pipe(char **cmd);
+int		check_pipe(char **cmd);
 // ALL BUILTINS
-void		ft_builtins(char **cmd, char **env, t_list **envcp, t_list **export);
-// echo
-void		ft_echo(char **cmd);
+void	ft_builtins(char **cmd, char *line, t_list **envcp, t_list **export);
 
-//cd 
-void		ft_cd(char **cmd, char **env);
+/* ECHO */
+void	ft_echo(char **cmd, t_list **envcp, char *line);
+void	ft_print_var(char **cmd, t_list **envcp);
+int		check_cote_echo(char *line);
+int		ft_check_n(char *cmd);
+int		ft_pass_n(char *line, int i);
+int		ft_len_var(char *line);
+int		ft_value_k(char **cmd);
 
-//pwd
-void		ft_pwd(char **cmd);
+/* CD */
+void	ft_cd(char **cmd, t_list **envcp);
 
-// export
-void	ft_export(char **args, t_list **envcpp, t_list **export);
+/* PWD */
+void	ft_pwd(char **cmd);
+
+/* EXPORT */
+void	ft_export(char **args, char *line, t_list **envcpp, t_list **export);
 void	ft_print_envcp(t_list *lst);
 void	ft_swap_lst(t_list **tmp_i, t_list **tmp_j);
 char	*ft_cpy_name(char *args);
 char	*ft_cpy_value(char *args);
-t_list	*init_lst(t_list *env_lst, char **env);
 int		ft_check_name(char **args);
 int		ft_check_double(t_list *lst, char **args);
+t_list	*init_lst(t_list *env_lst, char **env);
 
-// unset
+/* UNSET */
 void	ft_unset(char **key, t_list **export);
 void	ft_unset_env(char **key, t_list **envcp);
+void	ft_swp(t_list **tmp, t_list **t_tmp, int flag);
 int		ft_check_len(char *key, t_list **lst);
 int		ft_check_lst_name(char *key, t_list **lst);
-void	ft_swp(t_list **tmp, t_list **t_tmp, int flag);
-// env
-void		ft_env(t_list **envcp, char **cmd);
 
-//exit
-int			ft_exit(char **cmd, t_list **envcp, t_list **export);
+/* ENV */
+void	ft_env(t_list **envcp, char **cmd);
 
-char		*current_path(void);
-void		condition_prompt(char *line);
+/* EXIT */
+int		ft_exit(char **cmd, t_list **envcp, t_list **export);
+char	*current_path(void);
+void	condition_prompt(char *line);
 
-//parse cmd
-char		**parse_cmd(char *line, char **cmd);
-char		**parse_cmd_bis(char **cmd, char *line, int word);
-int			count_no_delim(char *line, int i);
-int			count_squote(char *line, int i);
-int			count_dquote(char *line, int i);
-int			ft_sep(char *line, int i, int len);
+/* PARSE CMD */
+char	**parse_cmd(char *line, char **cmd);
+char	**parse_cmd_bis(char **cmd, char *line, int word);
+int		count_no_delim(char *line, int i);
+int		count_squote(char *line, int i);
+int		count_dquote(char *line, int i);
+int		ft_sep(char *line, int i, int len);
 
-// signal
-void		ft_signal(void);
-void		ft_check_line(char *line);
+/* SIGNAL */
+void	ft_signal(void);
+void	ft_check_line(char *line, t_list *envcp, t_list *export);
 
-// built
+//////
+char	*current_path(void);
 
-char		*current_path(void);
-
-char		**ft_init_env(char **env);
-
-// utils
-void		free_double_char(char **arg);
-void		free_lst(t_list **lst);
+/* UTILS */
+void	free_double_int(int **arg, int len);
+void	free_double_char(char **arg);
+void	free_lst(t_list **lst);
 char	*ft_strtok(char *str, const char *delim);
 int		ft_len(char **str);
 int		ft_check_alpha_export(char *args);
-void	free_double_int(int **arg, int len);
-// pipe
-int			is_pipe(char **cmd);
-char		*is_executable(char *cmd, char **env);
-char		*if_dir(char *car, char *str);
-void		parse_pipe(char **cmd, char **env);
-void		exec_no_pipe_infile(t_pipe args, char **env, char **cmd);
-void		exec_simple_cmd(char **env, char **cmd);
-char		*check_cmd(char *cmd, char *const *envp);
-char		*fix_str(char *cmd, char c);
-int			ft_strlento(char *str, char c);
-char		*ft_strcat_cmd(char *s1, int size, char *s2);
-int			ft_strchr_cmd(char *cmd, char c);
-void		exec_no_pipe_outfile(t_pipe args, char **env, char **cmd);
-char		**strdup_arg_execve(char *cmd1, char *cmd2);
-void		exec_no_pipe_outfile_infile(t_pipe args, char **env, char **cmd);
-void		exec_multi_cmd(char **env, char **cmd, t_pipe args);
-//error
+
+/* PIPE */
+int		is_pipe(char **cmd);
+int		ft_strlento(char *str, char c);
+int		ft_strchr_cmd(char *cmd, char c);
+char	*is_executable(char *cmd, char **env);
+char	*if_dir(char *car, char *str);
+char	*check_cmd(char *cmd, char *const *envp);
+char	*fix_str(char *cmd, char c);
+char	*ft_strcat_cmd(char *s1, int size, char *s2);
+char	**strdup_arg_execve(char *cmd1, char *cmd2);
+void	exec_no_pipe_outfile(t_pipe args, char **env, char **cmd);
+void	exec_simple_cmd(char **env, char **cmd);
+void	parse_pipe(char **cmd, char **env);
+void	exec_no_pipe_infile(t_pipe args, char **env, char **cmd);
+void	exec_no_pipe_outfile_infile(t_pipe args, char **env, char **cmd);
+void	exec_multi_cmd(char **env, char **cmd, t_pipe args);
+
+/* ERROR */
 void	ft_put_error(char *str, char *cmd);
 
-
+char	*ft_strtok(char *str, const char *delim);
 #endif

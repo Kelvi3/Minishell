@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 14:48:52 by lulaens           #+#    #+#             */
-/*   Updated: 2022/10/18 12:49:28 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/15 16:38:58 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 		return ;
 	}
 	if (new != NULL && lst != NULL)
-	{	
+	{
 		last = ft_lstlast(*lst);
 		last->next = new;
 	}

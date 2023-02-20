@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:43:07 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/17 11:25:41 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/17 15:17:41 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_check_digit(char *cmd)
 	i = 0;
 	while (cmd[i])
 	{
-		if (cmd[0] != '-' && ft_isdigit(cmd[i]) == 0)
+		if (cmd[0] != '+' && cmd[0] != '-' && ft_isdigit(cmd[i]) == 0)
 			return (1);
 		i++;
 	}
@@ -71,9 +71,8 @@ int	ft_last_char(char *cmd)
 	{
 		if (cmd[i + 1] == '\0')
 		{
-			printf("%c\n", cmd[i]);
-		//	if (cmd[i] == '8')
-		//		return (2);
+			if (cmd[i] == '9')
+				return (2);
 			if (cmd[i] >= '8')
 				return (1);
 		}
@@ -95,6 +94,7 @@ int	ft_exit(char **cmd, t_list **envcp, t_list **export)
 			&& ft_check_digit(cmd[2]) == 1))
 	{
 		ft_error_exit(2, envcp, export);
+		g_exit_code = 1;
 		return (0);
 	}
 	else if (ft_len(cmd) > 2 && ft_check_digit(cmd[1]) == 1)
@@ -106,8 +106,8 @@ int	ft_exit(char **cmd, t_list **envcp, t_list **export)
 	else if ((ft_len(cmd) == 2 && ft_check_digit(cmd[1]) == 1))
 		ft_error_exit(0, envcp, export);
 	digit = test(cmd[1], digit, envcp, export);
-	if ((ft_strlen(cmd[1]) >= 20 && ft_last_char(cmd[1]) == 1)
-		|| (ft_strlen(cmd[1]) >= 19 && ft_last_char(cmd[1]) == 1))
+	if ((ft_strlen(cmd[1]) >= 20 && ft_last_char(cmd[1]) == 2)
+		|| (ft_strlen(cmd[1]) == 19 && ft_last_char(cmd[1]) == 1))
 		ft_error_exit(0, envcp, export);
 	exit(digit % 256);
 }

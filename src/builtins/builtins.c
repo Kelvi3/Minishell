@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:51:31 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/17 13:37:36 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/20 14:43:21 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	ft_check_pipe(char **cmd)
 	}
 	return (0);
 }
-int ft_check_redirection(char **cmd)
+
+int	ft_check_redirection(char **cmd)
 {
 	int	i;
 
@@ -44,31 +45,34 @@ int ft_check_redirection(char **cmd)
 	}
 	return (0);
 }
-void	ft_builtins(char **cmd, char **env, t_list **envcp, t_list **export)
+
+void	ft_builtins(char **cmd, char *line, t_list **envcp, t_list **export)
 {
-	if (ft_check_pipe(cmd) == 0 || ft_check_redirection(cmd) == 0)
-	{
+//	if (ft_check_pipe(cmd) == 0 || ft_check_redirection(cmd) == 0)
+//	{
 		if (ft_strncmp(cmd[0], "$", 1) == 0)
-			cmd[0] = ft_strdup(ft_check_doll(cmd, envcp));
-		if (ft_strncmp(cmd[0], "echo", 5) == 0) /* rien faire si pipe apres sauf redirection */
-			ft_echo(cmd);
-		else if (ft_strncmp(cmd[0], "cd", 3) == 0) /* rien faire si un pipe apres  */ 
-			ft_cd(cmd, env);
-		else if (ft_strncmp(cmd[0], "pwd", 4) == 0 ) /* rien faire si pipe apres sauf redirection */
+			cmd[0] = ft_strdup(ft_check_doll(cmd, envcp, 0));
+		if (ft_strncmp(cmd[0], "echo", 5) == 0)
+			ft_echo(cmd, envcp, line);
+		else if (ft_strncmp(cmd[0], "cd", 3) == 0)
+			ft_cd(cmd, envcp);
+		else if (ft_strncmp(cmd[0], "pwd", 4) == 0)
 			ft_pwd(cmd);
-		else if (ft_strncmp(cmd[0], "export", 7) == 0) /* rien faire si pipe apres sauf si redirection sans argument a export */
-			ft_export(cmd, envcp, export);
-		else if (ft_strncmp(cmd[0], "unset", 6) == 0) /* ne rien faire si pipe apres */
+		else if (ft_strncmp(cmd[0], "export", 7) == 0)
+			ft_export(cmd, line, envcp, export);
+		else if (ft_strncmp(cmd[0], "unset", 6) == 0)
 		{
 			ft_unset(cmd, export);
 			ft_unset_env(cmd, envcp);
 		}
-		else if (ft_strncmp(cmd[0], "env", 4) == 0) /* rien faire si pipe apres sauf redirection */
+		else if (ft_strncmp(cmd[0], "env", 4) == 0)
 			ft_env(envcp, cmd);
-		else if (ft_strncmp(cmd[0], "exit", 5) == 0) /* rien faire si pipe apres */
+		else if (ft_strncmp(cmd[0], "exit", 5) == 0)
 			ft_exit(cmd, envcp, export);
-	}
-	else 
-		return ;
+//	}
+//	else
+//	{
+//		return ;
+//	}
 	/* else exec les redirection si checkredirection == 1 */
 }
