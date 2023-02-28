@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 09:32:19 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/14 08:41:36 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:29:13 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,25 @@ char	**strdup_arg_execve(char *cmd1, char *cmd2)
 	return (arg);
 }
 
-char	**strdup_arg_execve_flag(char *cmd1, char *cmd2, char *cmd3)
+char	**strdup_arg_execve_flag(char *cmd, int index)
 {
 	char	**arg;
+	int		i;
 
-	arg = malloc(sizeof(char *) * 4);
+	i = 0;
+	arg = NULL;
+	while (cmd[i] != '\0')
+		i++;
+	arg[index] = malloc(sizeof(char) * (i + 1));
 	if (!arg)
 		return (NULL);
-	arg[0] = malloc(sizeof(char) * (ft_strlen(cmd1) + 1));
-	if (!arg[0])
-		return (NULL);
-	arg[0] = ft_strdup(cmd1);
-	arg[1] = malloc(sizeof(char) * (ft_strlen(cmd2) + 1));
-	if (!arg[1])
-		return (NULL);
-	arg[1] = ft_strdup(cmd2);
-	arg[2] = malloc(sizeof(char) * (ft_strlen(cmd3) + 1));
-	if (!arg[2])
-		return (NULL);
-	arg[2] = ft_strdup(cmd3);
-	arg[3] = NULL;
+	i = 0;
+	while (cmd[i] != '\0')
+	{
+		arg[index][i] = cmd[i];
+		i++;
+	}
+	arg[index][i] = '\0';
 	return (arg);
 }
 
@@ -96,9 +95,11 @@ void	exec_no_pipe_infile(t_pipe args, char **env, char **cmd)
 void	exec_simple_cmd(char **env, char **cmd)
 {
 	int		pid;
-	char	**arg;
+	//char	**arg;
 	char	*path;
+	int		i;
 
+	i = 0;
 	path = check_cmd(cmd[0], env);
 	if (!path)
 	{
@@ -106,18 +107,28 @@ void	exec_simple_cmd(char **env, char **cmd)
 		free(path);
 		return ;
 	}
+	/*while (cmd[i] != NULL)
+		i++;
+	i = 0;
 	if (cmd[1] && cmd[2] && cmd[1][0] == '-')
-		arg = strdup_arg_execve_flag(cmd[0], cmd[1], cmd[2]);
+	{
+		arg = 
+		while (cmd[i] != NULL)
+		{
+			arg = strdup_arg_execve_flag(cmd[i], i);
+			i++;
+		}
+	}
 	else
 		arg = strdup_arg_execve(cmd[0], cmd[1]);
 	if (!arg)
-		return ;
+		return ;*/
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork "));
 	if (pid == 0)
-		execve(path, arg, env);
+		execve(path, cmd, env);
 	wait(0);
-	free_double_char(arg);
+	//free_double_char(arg);
 	free(path);
 }
