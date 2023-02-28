@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 09:32:19 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/23 11:29:13 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/28 12:08:58 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	exec_no_pipe_infile(t_pipe args, char **env, char **cmd)
 void	exec_simple_cmd(char **env, char **cmd)
 {
 	int		pid;
-	//char	**arg;
 	char	*path;
 	int		i;
 
@@ -107,28 +106,11 @@ void	exec_simple_cmd(char **env, char **cmd)
 		free(path);
 		return ;
 	}
-	/*while (cmd[i] != NULL)
-		i++;
-	i = 0;
-	if (cmd[1] && cmd[2] && cmd[1][0] == '-')
-	{
-		arg = 
-		while (cmd[i] != NULL)
-		{
-			arg = strdup_arg_execve_flag(cmd[i], i);
-			i++;
-		}
-	}
-	else
-		arg = strdup_arg_execve(cmd[0], cmd[1]);
-	if (!arg)
-		return ;*/
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork "));
 	if (pid == 0)
 		execve(path, cmd, env);
 	wait(0);
-	//free_double_char(arg);
 	free(path);
 }
