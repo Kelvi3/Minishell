@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_builtins.c                                   :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/02 09:38:58 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/06 10:02:06 by lulaens          ###   ########.fr       */
+/*   Created: 2023/02/21 15:40:40 by lulaens           #+#    #+#             */
+/*   Updated: 2023/02/21 15:41:33 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-int	ft_len(char **str)
+int	ft_strcmp(char *s1, char *s2)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-int	ft_check_alpha_export(char *args)
-{
-	int	i;
-
-	i = 0;
-	while (args[i] != '=')
+	while (s1[i] || s2[i])
 	{
-		if (!(args[i] >= 'A' && args[i] <= 'Z')
-			|| !(args[i] >= 'a' && args[i] <= 'z'))
-			return (1);
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
 		i++;
 	}
 	return (0);

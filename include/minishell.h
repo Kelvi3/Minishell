@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:00:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/20 17:44:06 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 16:13:29 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,13 @@
 extern int	g_exit_code;
 
 /* TEST */
+int		ft_quote_value(char *line);
+char	*test_export(char *line);
 char	*ft_check_doll(char **cmd, t_list **envcp, int j);
 void	ft_add_envv(char **env);
+
+/* voir pour faire une copy de envcp dans un char **
+ dans la structure s_pipe */
 
 typedef struct s_pipe {
 	int		**pipefd;
@@ -41,6 +46,7 @@ typedef struct s_pipe {
 	char	**arg;
 }				t_pipe;
 /* TEST */
+void	ft_copy_envcp_in_struct(t_list **envcp);
 int		check_pipe(char **cmd);
 // ALL BUILTINS
 void	ft_builtins(char **cmd, char *line, t_list **envcp, t_list **export);
@@ -58,7 +64,7 @@ int		ft_value_k(char **cmd);
 void	ft_cd(char **cmd, t_list **envcp);
 
 /* PWD */
-void	ft_pwd(char **cmd);
+void	ft_pwd(char **cmd, t_list **envcp);
 
 /* EXPORT */
 void	ft_export(char **args, char *line, t_list **envcpp, t_list **export);
@@ -68,14 +74,15 @@ char	*ft_cpy_name(char *args);
 char	*ft_cpy_value(char *args);
 int		ft_check_name(char **args);
 int		ft_check_double(t_list *lst, char **args);
-t_list	*init_lst(t_list *env_lst, char **env);
+void	init_env(t_list **env_lst, char **env);
 
 /* UNSET */
-void	ft_unset(char **key, t_list **export);
+void	ft_unset(char **key, t_list **export, int flag);
 void	ft_unset_env(char **key, t_list **envcp);
 void	ft_swp(t_list **tmp, t_list **t_tmp, int flag);
 int		ft_check_len(char *key, t_list **lst);
 int		ft_check_lst_name(char *key, t_list **lst);
+int		ft_check_unset_arg(char *key, int flag);
 
 /* ENV */
 void	ft_env(t_list **envcp, char **cmd);
@@ -86,8 +93,8 @@ char	*current_path(void);
 void	condition_prompt(char *line);
 
 /* PARSE CMD */
-char	**parse_cmd(char *line, char **cmd);
-char	**parse_cmd_bis(char **cmd, char *line, int word);
+void	parse_cmd(t_list **lst);
+void	parse_cmd_bis(t_list **lst, int word);
 int		count_no_delim(char *line, int i);
 int		count_squote(char *line, int i);
 int		count_dquote(char *line, int i);

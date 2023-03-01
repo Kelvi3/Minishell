@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:38:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/16 10:26:17 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 09:46:29 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	ft_print_envcp(t_list *lst)
 	tmp = lst;
 	while (tmp)
 	{
-		if (tmp->value && tmp->name && tmp->name[0] != '_')
-			printf("declare -x %s=\"%s\"\n", tmp->name, tmp->value);
-		else if (tmp->name && !tmp->value)
+		if (!tmp->value)
 			printf("declare -x %s\n", tmp->name);
-		else if (tmp->name && tmp->value[0] == '\0')
+		else if (tmp->value && tmp->name && tmp->name[0] != '_')
+			printf("declare -x %s=\"%s\"\n", tmp->name, tmp->value);
+		else if (tmp->name && tmp->name[0] == '\0')
 			printf("declare -x %s=""\n", tmp->name);
 		tmp = tmp->next;
 	}
@@ -91,4 +91,59 @@ char	*ft_cpy_value(char *args)
 		j++;
 	}
 	return (NULL);
+}
+
+/* print error if return(0) rajouter char **cmd en param */
+int	ft_quote_value(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] != ' ')
+		i++;
+	while (line[i] && line[i] == ' ')
+		i++;
+	while (line[i] && ft_isalpha(line[i]))
+		i++;
+	i++;
+	if (line[i] == '"')
+		return (1);
+	return (0);
+}
+char	*test_export(char *line)
+{
+	int		i;
+	int		j;
+	int		c;
+	char	*value;
+
+	i = 0;
+	c = 0;
+	value = NULL;
+	while (line[i] && line[i] != ' ')
+		i++;
+	while (line[i] && line[i] == ' ')
+		i++;
+	while (line[i] && ft_isalpha(line[i]))
+		i++;
+	i++;
+	j = i;
+	if (line[i] == '"')
+	{
+		i++;
+		while (line[i] && line[i] != '"')
+			i++;
+		value = malloc(sizeof(char) * (i + 1));
+		if (!value)
+			return (NULL);
+	}
+	j++;
+	while (line[j] && line[j] != '"')
+	{
+		value[c] = line[j];
+		c++;
+		j++;
+	}
+	value[j] = '\0';
+	return (value);
 }

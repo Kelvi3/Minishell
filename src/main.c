@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:59:33 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 16:50:19 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:03:12 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,46 +16,56 @@
 
 int	g_exit_code = 0;
 
+static void	ft_init_lst(t_list **envcp, t_list **export, char **env)
+{
+	*envcp = NULL;
+	*export = NULL;
+	init_env(envcp, env);
+	init_env(export, env);
+}
+
 int	main(int argc, char **argv, char **env)
 {
-	char		*path;
-	char		*line;
-	char		**cmd;
-	t_list		*envcp;
+	t_list		*lst;
 	t_list		*export;
+	int			i;
 
-	(void) argc;
+	(void) argc;	
 	(void) argv;
-	line = NULL;
-	envcp = NULL;
-	export = NULL;
-	path = current_path();
-	cmd = NULL;
+	ft_init_lst(&lst, &export, env);
+	lst->path = current_path();
 	ft_signal();
-	envcp = init_lst(envcp, env);
-	export = init_lst(export, env);
 	while (1)
 	{
-		line = readline("$>");
-		if (line == NULL)
-			break ;
-		if (line[0] != '\0')
+		i = 0;
+		lst->line = readline("$>");
+		if (lst->line[0] != '\0')
 		{
-			cmd = parse_cmd(line, cmd);
-			if (is_pipe(cmd) == 1)
-				parse_pipe(cmd, env);
-			ft_check_line(line, envcp, export);
-			ft_builtins(cmd, line, &envcp, &export);
-			if (line)
-				add_history(line);
-			free_double_char(cmd);
-			free(line);
-			line = NULL;
+			if (lst->line == NULL)
+				break ;
+			parse_cmd(&lst);
+			while (lst->cmd[i] != NULL)
+			{
+				printf("cmd[%i] = %s\n", i, lst->cmd[i]);
+				i++;
+			}
+			if (is_pipe(lst->cmd) == 1)
+				parse_pipe(lst->cmd, env);
+			ft_check_line(lst->line, lst, export);
+			ft_builtins(lst->cmd, lst->line, &lst, &export);
+			add_history(lst->line);	
+			free_double_char(lst->cmd);
+			free(lst->line);
+			lst->line = NULL;
 		}
 	}
-/* probleme double free export hello*/
-//	free_lst(&envcp);
-//	free_lst(&export);
-	free(path);
+	free_lst(&lst);
+	free_lst(&export);
+	free(lst->path);
 	return (0);
 }
+
+/* probleme double free export hello*/
+/* free value de hello dans envcp alors que on lq print pas*/
+/* voir ft_add_param dans export*/
+//	printf("%s\n", envcp->next->name);

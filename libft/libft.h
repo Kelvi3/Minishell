@@ -6,22 +6,26 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:01:44 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/16 15:51:07 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 16:09:13 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <unistd.h>
 # include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_list
 {
+	char			**cmd;
+	char			*line;
+	char			*path;
 	char			*name;
 	char			*value;
 	void			*content;
 	struct s_list	*next;
+	struct s_pipe	*pipe;
 }					t_list;
 
 t_list		*ft_lstnew(void	*content);
@@ -35,6 +39,7 @@ void		ft_lstadd_back(t_list **lst, t_list *new);
 void		ft_lstadd_front(t_list **lst, t_list *new);
 long long	ft_atoi(const char *nptr);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
+int			ft_strcmp(char *s1, char *s2);
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);
 int			ft_isascii(int c);

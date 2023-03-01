@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:41:22 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/28 14:05:15 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:16:02 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,15 @@ void	no_pipe(char **cmd, char **env)
 			redirection = 1;
 		i++;
 	}
+	if (redirection == 0)
+		exec_simple_cmd(env, cmd);
+	/* strcmp(cmd[0], '<') */ /* probleme permission denied */
 	if (cmd[0][0] == '<' && check_file(cmd[1]) == 0)
 		args.infile = open(cmd[1], O_RDONLY);
 	if (i - 2 >= 0 && cmd[i - 2][0] == '>' && check_file(cmd[i - 1]) == 0)
 		args.outfile = open(cmd[i - 1], O_RDWR | O_CREAT | O_TRUNC, 0664);
 	if (i - 2 >= 0 && cmd[i - 2][0] == '>' && check_file(cmd[i - 1]) == 1)
 		return ;
-	if (redirection == 0)
-		exec_simple_cmd(env, cmd);
 	else if (i - 2 >= 0 && cmd[i - 2][0] == '>' && cmd[0][0] == '<'
 		&& args.infile >= 0 && args.outfile >= 0)
 		exec_no_pipe_outfile_infile(args, env, cmd);
@@ -87,6 +88,8 @@ void	no_pipe(char **cmd, char **env)
 	else if (i - 2 >= 0 && cmd[i - 2][0] == '>' && args.outfile >= 0)
 		exec_no_pipe_outfile(args, env, cmd);
 }
+
+/* compt nb pipe and condition if multi_pipe or no_pipe */
 
 void	parse_pipe(char **cmd, char **env)
 {
