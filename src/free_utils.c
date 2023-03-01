@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/01 09:02:44 by lulaens           #+#    #+#             */
+/*   Updated: 2023/03/01 09:02:45 by lulaens          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	free_double_char(char **arg)
@@ -5,7 +17,7 @@ void	free_double_char(char **arg)
 	int	i;
 
 	i = 0;
-	while (arg[i])
+	while (arg && arg[i])
 	{
 		free(arg[i]);
 		arg[i] = NULL;

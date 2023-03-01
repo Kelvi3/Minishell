@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 07:59:06 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/16 10:40:40 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/02/28 11:26:13 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ static int	ft_count_size(char *line, int len, int i)
 		return (len);
 	while (line[size] && line[size] != ' ')
 	{
-		if (line[size] == '"' || line[size] == 39)
+		if ((line[i] == '"' && line[size] == line[i])
+			|| (line[i] == 39 && line[size] == line[i]))
 			len--;
 		size++;
 	}
-	if (line[size] == ' ')
+	if (line[size] == ' ' || line[size] == '\0')
 		len--;
 	return (len);
 }
@@ -33,15 +34,22 @@ static int	ft_count_size(char *line, int len, int i)
 static char	*ft_inc(char *cmd, int len, char *line, int i)
 {
 	int		j;
+	char	c;
 
 	len = ft_count_size(line, len, i);
 	cmd = malloc(sizeof(char) * (len + 1));
 	if (!cmd)
 		return (NULL);
 	j = 0;
+	if (line[i] == '"')
+		c = '"';
+	else if (line[i] == 39)
+		c = 39;
+	else
+		c = '\0';
 	while (j < len)
 	{
-		if (line[i] != '"' && line[i] != 39)
+		if (line[i] != c)
 		{
 			cmd[j] = line[i];
 			j++;
@@ -79,12 +87,9 @@ char	**parse_cmd_bis(char **cmd, char *line, int word)
 	int			len;
 
 	len = 0;
-	i = 0;
 	cmd = malloc(sizeof(char *) * (word + 1));
 	if (!cmd)
 		return (NULL);
-	while (line[i] && line[i] == ' ')
-		i++;
 	word = 0;
 	i = count_len(line);
 	while (line && line[i] != '\0')
