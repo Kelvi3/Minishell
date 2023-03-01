@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:59:33 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/20 17:56:36 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 16:50:19 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,19 @@ int	main(int argc, char **argv, char **env)
 		line = readline("$>");
 		if (line == NULL)
 			break ;
-		cmd = parse_cmd(line, cmd);
-		if (is_pipe(cmd) == 1)
-			parse_pipe(cmd, env);
-		ft_check_line(line, envcp, export);
-		ft_builtins(cmd, line, &envcp, &export);
-		if (line)
-			add_history(line);
-		free_double_char(cmd);
-		free(line);
-		line = NULL;
+		if (line[0] != '\0')
+		{
+			cmd = parse_cmd(line, cmd);
+			if (is_pipe(cmd) == 1)
+				parse_pipe(cmd, env);
+			ft_check_line(line, envcp, export);
+			ft_builtins(cmd, line, &envcp, &export);
+			if (line)
+				add_history(line);
+			free_double_char(cmd);
+			free(line);
+			line = NULL;
+		}
 	}
 /* probleme double free export hello*/
 //	free_lst(&envcp);
