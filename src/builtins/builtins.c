@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:51:31 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/20 14:43:21 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/22 12:00:54 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	ft_builtins(char **cmd, char *line, t_list **envcp, t_list **export)
 {
 //	if (ft_check_pipe(cmd) == 0 || ft_check_redirection(cmd) == 0)
 //	{
+		/* add l'exec des var env dans tout les builtins */
 		if (ft_strncmp(cmd[0], "$", 1) == 0)
 			cmd[0] = ft_strdup(ft_check_doll(cmd, envcp, 0));
 		if (ft_strncmp(cmd[0], "echo", 5) == 0)
@@ -57,13 +58,13 @@ void	ft_builtins(char **cmd, char *line, t_list **envcp, t_list **export)
 		else if (ft_strncmp(cmd[0], "cd", 3) == 0)
 			ft_cd(cmd, envcp);
 		else if (ft_strncmp(cmd[0], "pwd", 4) == 0)
-			ft_pwd(cmd);
+			ft_pwd(cmd, envcp);
 		else if (ft_strncmp(cmd[0], "export", 7) == 0)
 			ft_export(cmd, line, envcp, export);
 		else if (ft_strncmp(cmd[0], "unset", 6) == 0)
 		{
-			ft_unset(cmd, export);
-			ft_unset_env(cmd, envcp);
+			ft_unset(cmd, export, 0);
+			ft_unset(cmd, envcp, 1);
 		}
 		else if (ft_strncmp(cmd[0], "env", 4) == 0)
 			ft_env(envcp, cmd);
@@ -71,8 +72,6 @@ void	ft_builtins(char **cmd, char *line, t_list **envcp, t_list **export)
 			ft_exit(cmd, envcp, export);
 //	}
 //	else
-//	{
 //		return ;
-//	}
 	/* else exec les redirection si checkredirection == 1 */
 }

@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:56:46 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/20 17:52:40 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/21 10:00:57 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,9 @@ void	ft_check_line(char *line, t_list *envcp, t_list *export)
 {
 	if (!line)
 	{
-		while (envcp)
-		{
-			free(envcp->name);
-			free(envcp->value);
-			envcp = envcp->next;
-		}
-		free(envcp);
-		while (export)
-		{
-			free(export->name);
-			free(export->value);
-			export = export->next;
-		}
-		free(export);
 	//	printf("%s\n", export->name);
-	/*	(void) export;
-		(void) envcp;*/
+		(void) export;
+		(void) envcp;
 		printf("\n");
 		exit(1);
 	}

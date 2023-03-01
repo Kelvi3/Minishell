@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:59:33 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/20 17:56:36 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/23 11:06:32 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 #include <unistd.h>
 
 int	g_exit_code = 0;
+
+static void	ft_init_lst(t_list **envcp, t_list **export)
+{
+	*envcp = NULL;
+	*export = NULL;
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -26,9 +32,9 @@ int	main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
+	//printf("%s\n", env[0]);
 	line = NULL;
-	envcp = NULL;
-	export = NULL;
+	ft_init_lst(&envcp, &export);
 	path = current_path();
 	cmd = NULL;
 	ft_signal();
@@ -40,6 +46,12 @@ int	main(int argc, char **argv, char **env)
 		if (line == NULL)
 			break ;
 		cmd = parse_cmd(line, cmd);
+	/*	int	i = 0;
+		while (cmd[i])
+		{
+			printf("cmd[%d] = %s\n", i, cmd[i]);
+			i++;
+		}*/
 		if (is_pipe(cmd) == 1)
 			parse_pipe(cmd, env);
 		ft_check_line(line, envcp, export);
@@ -51,8 +63,11 @@ int	main(int argc, char **argv, char **env)
 		line = NULL;
 	}
 /* probleme double free export hello*/
-//	free_lst(&envcp);
-//	free_lst(&export);
+/* free value de hello dans envcp alors que on lq print pas*/
+/* voir ft_add_param dans export*/
+//	printf("%s\n", envcp->next->name);
+	free_lst(&envcp);
+	free_lst(&export);
 	free(path);
 	return (0);
 }

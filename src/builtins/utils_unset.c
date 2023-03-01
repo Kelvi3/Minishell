@@ -6,35 +6,30 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:00:45 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/17 11:27:27 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/22 11:29:11 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// changer le nom de fonction
-int	ft_check_len(char *key, t_list **lst)
+int	ft_check_unset_arg(char *key, int flag)
 {
-	t_list	*tmp;
+	int	i;
 
-	tmp = *lst;
-//	printf("len = %ld //// %s\n", ft_strlen(key), tmp->name);
-//	printf("len = %ld\n", ft_strlen(tmp->name));
-	if (!ft_strchr(key, '='))
-		return (0);
-	while (tmp)
+	i = 0;
+	while (key[i])
 	{
-		if (ft_strncmp(key, tmp->name, ft_strlen(tmp->name)) == 0)
+		if (key[i] == '=')
 		{
-			if (ft_strncmp(ft_strchr(key, '=') + 1, tmp->value,
-					ft_strlen(tmp->value)) == 0)
+			if (flag == 0)
 			{
-				g_exit_code = 1;
-				ft_putstr_fd("bash: unset: not a valid identifier\n", 2);
-				return (1);
+				ft_putstr_fd("bash: unset: ", 2);
+				ft_putstr_fd(key, 2);
+				ft_putstr_fd(" not a valid identifier\n", 2);
 			}
+			return (1);
 		}
-		tmp = tmp->next;
+		i++;
 	}
 	return (0);
 }
@@ -66,8 +61,5 @@ void	ft_swp(t_list **tmp, t_list **t_tmp, int flag)
 		(*tmp)->name = (*tmp)->next->name;
 		*t_tmp = (*tmp)->next;
 		(*tmp)->next = (*t_tmp)->next;
-	//  FREE BUG
-	//	free((*tmp)->value);
-	//	free((*tmp)->name);
 	}
 }

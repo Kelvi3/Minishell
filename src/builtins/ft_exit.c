@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:43:07 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/17 15:17:41 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/02/21 12:12:41 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ static void	ft_error_exit(int flag, t_list **envcp, t_list **envv)
 {
 	if (flag == 0)
 	{
-		printf("exit\n");
 		ft_putstr_fd("bash : exit : numeric argument required\n", 2);
-		free_exit(envcp, envv);
 		exit(2);
 	}
 	if (flag == 1)
@@ -62,6 +60,7 @@ int	test(char *cmd, long digit, t_list **envcp, t_list **export)
 	free_exit(envcp, export);
 	return (digit);
 }
+
 int	ft_last_char(char *cmd)
 {
 	int	i;
@@ -80,14 +79,9 @@ int	ft_last_char(char *cmd)
 	}
 	return (0);
 }
-/* exit code = digit*/
-int	ft_exit(char **cmd, t_list **envcp, t_list **export)
-{
-	int			j;
-	long long	digit;
 
-	j = 0;
-	digit = 0;
+static int	ft_exit_condition(char **cmd, t_list **envcp, t_list **export)
+{
 	if ((ft_len(cmd) > 2 && ft_check_digit(cmd[1]) == 0
 			&& ft_check_digit(cmd[2]) == 0) || (ft_len(cmd) > 2
 			&& ft_check_digit(cmd[1]) == 0
@@ -97,6 +91,19 @@ int	ft_exit(char **cmd, t_list **envcp, t_list **export)
 		g_exit_code = 1;
 		return (0);
 	}
+	return (1);
+}
+/* exit code = digit*/
+
+int	ft_exit(char **cmd, t_list **envcp, t_list **export)
+{
+	int			j;
+	long long	digit;
+
+	j = 0;
+	digit = 0;
+	if (ft_exit_condition(cmd, envcp, export) == 0)
+		return (0);
 	else if (ft_len(cmd) > 2 && ft_check_digit(cmd[1]) == 1)
 	{
 		if (ft_check_digit(cmd[2]) == 0)
@@ -106,8 +113,11 @@ int	ft_exit(char **cmd, t_list **envcp, t_list **export)
 	else if ((ft_len(cmd) == 2 && ft_check_digit(cmd[1]) == 1))
 		ft_error_exit(0, envcp, export);
 	digit = test(cmd[1], digit, envcp, export);
-	if ((ft_strlen(cmd[1]) >= 20 && ft_last_char(cmd[1]) == 2)
-		|| (ft_strlen(cmd[1]) == 19 && ft_last_char(cmd[1]) == 1))
-		ft_error_exit(0, envcp, export);
+	if (cmd[1])
+	{
+		if ((ft_strlen(cmd[1]) >= 20 && ft_last_char(cmd[1]) == 2)
+			|| (ft_strlen(cmd[1]) == 19 && ft_last_char(cmd[1]) == 1))
+			ft_error_exit(0, envcp, export);
+	}
 	exit(digit % 256);
 }

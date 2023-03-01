@@ -17,14 +17,20 @@ void	free_double_char(char **arg)
 
 void	free_lst(t_list **lst)
 {
-	while (*lst)
+	t_list	*tmp;
+	t_list	*tmp1;
+
+	tmp1 = NULL;
+	tmp = *lst;
+	while (tmp)
 	{
-		free((*lst)->name);
-		free((*lst)->value);
-		*lst = (*lst)->next;
+		free(tmp->name);
+		if (tmp->value)
+			free(tmp->value);
+		tmp1 = tmp->next;
+		free(tmp);
+		tmp = tmp1;
 	}
-	free(*lst);
-	*lst = NULL;
 }
 
 void	free_double_int(int **arg, int len)

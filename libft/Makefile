@@ -6,7 +6,7 @@
 #    By: lulaens <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/29 14:15:24 by lulaens           #+#    #+#              #
-#    Updated: 2023/02/03 13:22:58 by lulaens          ###   ########.fr        #
+#    Updated: 2023/02/21 15:42:32 by lulaens          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC = ft_atoi.c \
 		ft_memcmp.c \
 		ft_strchr.c \
 		ft_strncmp.c \
+		ft_strcmp.c \
 		ft_toupper.c
 
 BONUS = ft_lstnew.c \
@@ -57,7 +58,7 @@ BONUS = ft_lstnew.c \
 		ft_lstiter.c \
 		ft_lstmap.c
 
-FLAGS = -Wall -Wextra -Werror 
+FLAGS = -Wall -Wextra -Werror -g 
 
 .c.o:
 	clang $(FLAGS) -c $< -o ${<:.c=.o}
