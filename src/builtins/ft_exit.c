@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:43:07 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/21 12:12:41 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 09:34:01 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	test(char *cmd, long digit, t_list **envcp, t_list **export)
 {
 	printf("exit\n");
 	if (cmd)
-		digit = atol(cmd);
+		digit = ft_atoi(cmd);
 	free_exit(envcp, export);
 	return (digit);
 }

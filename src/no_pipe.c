@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 09:32:19 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/28 12:08:58 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:18:18 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	exec_no_pipe_infile(t_pipe args, char **env, char **cmd)
 	free(args.path);
 }
 
+/* envoyer la copie de env au lieu du vrai env */
+
 void	exec_simple_cmd(char **env, char **cmd)
 {
 	int		pid;
@@ -102,6 +104,7 @@ void	exec_simple_cmd(char **env, char **cmd)
 	path = check_cmd(cmd[0], env);
 	if (!path)
 	{
+		g_exit_code = 127;
 		ft_put_error(": command not found\n", cmd[0]);
 		free(path);
 		return ;

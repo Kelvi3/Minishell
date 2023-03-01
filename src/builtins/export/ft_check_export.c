@@ -6,11 +6,19 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/20 11:27:49 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 12:47:11 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+
+static void	print_error(char *args)
+{
+	(void)args;
+//	ft_putstr_fd("bash: export: ", 2);
+//	ft_putstr_fd(args, 2);
+	ft_putstr_fd(" not a valid identifier\n", 2);
+}
 
 int	ft_check_name(char **args)
 {
@@ -21,12 +29,19 @@ int	ft_check_name(char **args)
 	while (args[i])
 	{
 		j = 0;
+	//	printf("%s\n", args[i]);
 		if (ft_isalpha(args[i][0]) == 0 && args[i][0] != '_')
+		{
+			print_error(args[i]);
 			return (1);
+		}
 		while (args[i][j] && args[i][j] != '=')
 		{
 			if (ft_isalnum(args[i][j]) == 0 && args[i][j] != '_')
+			{
+				print_error(args[i]);
 				return (1);
+			}
 			j++;
 		}
 		i++;

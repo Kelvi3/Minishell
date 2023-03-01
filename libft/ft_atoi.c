@@ -6,13 +6,20 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:17:49 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/16 16:09:29 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 09:35:41 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 static int	ft_isspace(const char *str, int i)
 {
 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	return (i);
+}
+
+static int	quote_dquote(const char *nptr, int i)
+{
+	while (nptr[i] == '\'' || nptr[i] == '"')
 		i++;
 	return (i);
 }
@@ -33,6 +40,7 @@ long long	ft_atoi(const char *nptr)
 		i++;
 	else if (nptr[i] == 43)
 		i++;
+	i = quote_dquote(nptr, i);
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
 		if (res * sign > 9223372036854775807

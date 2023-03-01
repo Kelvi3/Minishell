@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/20 17:56:58 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 15:16:17 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,33 +43,43 @@ void	ft_add_lst(t_list **env_lst, char *name, char *value)
 	t_list	*new_var;
 
 	new_var = NULL;
-	new_var = malloc(sizeof(t_list));
-	new_var->name = ft_strdup(name);
-//	printf("%s\n", new_var->name);
 	if (value)
+	{
+		new_var = malloc(sizeof(t_list));
+		new_var->name = ft_strdup(name);
 		new_var->value = ft_strdup(value);
-	new_var->next = NULL;
-	ft_lstadd_front(env_lst, new_var);
-	//	free(new_var->name);
-	//	free(new_var->value);
-//	if (new_var)
-//	{
-	//	new_var->name = NULL;
-	//	printf("test = %s\n", new_var->name);
-//	}
+		new_var->next = NULL;
+		ft_lstadd_front(env_lst, new_var);
+	}
+	if (!value)
+	{
+		new_var = malloc(sizeof(t_list));
+		new_var->name = ft_strdup(name);
+		new_var->value = NULL;
+		new_var->next = NULL;
+		ft_lstadd_front(env_lst, new_var);
+	}
 }
 
-t_list	*ft_add_param_env(t_list *new_env, char **args)
+t_list	*ft_add_param_env(t_list *new_env, char **args, char *line)
 {
 	int		i;
 	char	*name;
 	char	*value;
 
 	i = 1;
+	name = NULL;
+	value = NULL;
 	while (args[i])
 	{
 		name = ft_cpy_name(args[i]);
-		value = ft_cpy_value(args[i]);
+		if (ft_quote_value(line) == 1)
+		{
+			value = test_export(line);
+			i++;
+		}
+		else
+			value = ft_cpy_value(args[i]);
 		if (value)
 			ft_add_lst(&new_env, name, value);
 		else if (value == NULL)
@@ -82,7 +92,7 @@ t_list	*ft_add_param_env(t_list *new_env, char **args)
 	return (new_env);
 }
 
-t_list	*init_lst(t_list *env_lst, char **env)
+void	init_lst(t_list **env_lst, char **env)
 {
 	int		i;
 	int		j;
@@ -97,13 +107,12 @@ t_list	*init_lst(t_list *env_lst, char **env)
 	{
 		name = ft_cpy_name(env[i]);
 		value = ft_cpy_value(env[i]);
-		ft_add_lst(&env_lst, name, value);
+		ft_add_lst(env_lst, name, value);
 		i++;
 		free(name);
 		if (value)
 			free(value);
 	}
-	return (env_lst);
 }
 
 t_list	*ft_copy_lst(t_list *copy, t_list *envcp)
@@ -127,26 +136,25 @@ void	ft_export(char **args, char *line, t_list **envcpp, t_list **export)
 	t_list			*envcp;
 	t_list			*copy;
 
-	(void) line;
 	copy = *export;
 	envcp = *envcpp;
-	if (ft_check_name(args) == 1)
+	if (ft_quote_value(line) == 0)
 	{
-		g_exit_code = 1;
-		ft_putstr_fd("bash: export: not a valid identifier\n", 2);
-		return ;
+		if (ft_check_name(args) == 1)
+		{
+			g_exit_code = 1;
+			return ;
+		}
 	}
 	if (ft_len(args) > 1)
 	{
 		g_exit_code = 0;
 		if (ft_check_double(copy, args) == 0)
-			*export = ft_add_param_env(copy, args);
+			*export = ft_add_param_env(copy, args, line);
 		if (ft_check_double(envcp, args) == 0)
-			*envcpp = ft_add_param_env(envcp, args);
+			*envcpp = ft_add_param_env(envcp, args, line);
 	}
 	ft_sort_ascii(copy);
 	if (ft_len(args) == 1)
 		ft_print_envcp(copy);
-	free_lst(envcpp);
-	free_lst(export);
 }

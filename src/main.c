@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:59:33 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/23 11:06:32 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 15:34:54 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,47 +27,43 @@ int	main(int argc, char **argv, char **env)
 	char		*path;
 	char		*line;
 	char		**cmd;
-	t_list		*envcp;
+	t_list		*lst;
 	t_list		*export;
 
 	(void) argc;
 	(void) argv;
-	//printf("%s\n", env[0]);
-	line = NULL;
-	ft_init_lst(&envcp, &export);
+	ft_init_lst(&lst, &export);
 	path = current_path();
+	line = NULL;
 	cmd = NULL;
 	ft_signal();
-	envcp = init_lst(envcp, env);
-	export = init_lst(export, env);
+	init_lst(&lst, env);
+	init_lst(&export, env);
 	while (1)
 	{
 		line = readline("$>");
 		if (line == NULL)
 			break ;
-		cmd = parse_cmd(line, cmd);
-	/*	int	i = 0;
-		while (cmd[i])
-		{
-			printf("cmd[%d] = %s\n", i, cmd[i]);
-			i++;
-		}*/
-		if (is_pipe(cmd) == 1)
+		parse_cmd(line, &lst);
+	
+		/*printf("%s\n", lst->cmd[0]);
+		if (is_pipe(lst->cmd) == 1)
 			parse_pipe(cmd, env);
-		ft_check_line(line, envcp, export);
-		ft_builtins(cmd, line, &envcp, &export);
+		ft_check_line(line, lst, export);
+		ft_builtins(lst->cmd, line, &lst, &export);
 		if (line)
 			add_history(line);
 		free_double_char(cmd);
 		free(line);
-		line = NULL;
+		line = NULL;*/
 	}
-/* probleme double free export hello*/
-/* free value de hello dans envcp alors que on lq print pas*/
-/* voir ft_add_param dans export*/
-//	printf("%s\n", envcp->next->name);
-	free_lst(&envcp);
+	free_lst(&lst);
 	free_lst(&export);
 	free(path);
 	return (0);
 }
+
+/* probleme double free export hello*/
+/* free value de hello dans envcp alors que on lq print pas*/
+/* voir ft_add_param dans export*/
+//	printf("%s\n", envcp->next->name);
