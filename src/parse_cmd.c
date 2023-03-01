@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:47:12 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/01 15:39:50 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 16:12:36 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,22 +100,24 @@ static int	check_quotes(char *line)
 	return (0);
 }
 
-void	parse_cmd(char *line, t_list **lst)
+void	parse_cmd(t_list **lst)
 {
 	int			i;
 	int			word;
 	int			len;
+	t_list		*tmp;
 
+	tmp = *lst;
 	i = 0;
 	word = 0;
 	len = 0;
-	if (check_quotes(line) == 1)
+	if (check_quotes(tmp->line) == 1)
 		return ;
-	while (line[i] && line[i] == ' ')
+	while (tmp->line[i] && tmp->line[i] == ' ')
 		i++;
-	while (line && line[i] != '\0')
+	while (tmp->line && tmp->line[i] != '\0')
 	{
-		len = ft_sep(line, i, len);
+		len = ft_sep(tmp->line, i, len);
 		if (len == -1)
 			return ;
 		word++;
@@ -123,5 +125,5 @@ void	parse_cmd(char *line, t_list **lst)
 			i++;
 		i = i + len;
 	}
-	parse_cmd_bis(lst, line, word);
+	parse_cmd_bis(lst, word);
 }

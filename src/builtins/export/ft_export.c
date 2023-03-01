@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 15:16:17 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 16:05:20 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_list	*ft_add_param_env(t_list *new_env, char **args, char *line)
 	return (new_env);
 }
 
-void	init_lst(t_list **env_lst, char **env)
+void	init_env(t_list **env_lst, char **env)
 {
 	int		i;
 	int		j;

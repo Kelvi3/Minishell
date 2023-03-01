@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:00:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 15:41:03 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 16:13:29 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_cpy_name(char *args);
 char	*ft_cpy_value(char *args);
 int		ft_check_name(char **args);
 int		ft_check_double(t_list *lst, char **args);
-void	init_lst(t_list **env_lst, char **env);
+void	init_env(t_list **env_lst, char **env);
 
 /* UNSET */
 void	ft_unset(char **key, t_list **export, int flag);
@@ -93,8 +93,8 @@ char	*current_path(void);
 void	condition_prompt(char *line);
 
 /* PARSE CMD */
-void	parse_cmd(char *line, t_list **lst);
-char	**parse_cmd_bis(char **cmd, char *line, int word);
+void	parse_cmd(t_list **lst);
+void	parse_cmd_bis(t_list **lst, int word);
 int		count_no_delim(char *line, int i);
 int		count_squote(char *line, int i);
 int		count_dquote(char *line, int i);

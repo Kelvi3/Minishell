@@ -6,13 +6,13 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:53:24 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 15:02:38 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 16:00:34 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_copy_envcp_in_struct(t_list **envcp)
+/*void	ft_copy_envcp_in_struct(t_list **envcp)
 {
 	int		i;
 	t_list	*tmp;
@@ -26,7 +26,7 @@ void	ft_copy_envcp_in_struct(t_list **envcp)
 	(*envcp)->pipe->envcp[i] = ft_strjoin((*envcp)->pipe->envcp[i], tmp->name);
 	(*envcp)->pipe->envcp[i] = ft_strdup((*envcp)->name);	
 	//tmp->pipe->envcp[i] = ft_strjoin(tmp->pipe->envcp[i], "=");
-	/*while (tmp)
+	while (tmp)
 	{
 		if (tmp->name && tmp->value)
 		{	
@@ -36,5 +36,5 @@ void	ft_copy_envcp_in_struct(t_list **envcp)
 		}
 		tmp = tmp->next;
 		i++;
-	}*/
-}
+	}
+}*/

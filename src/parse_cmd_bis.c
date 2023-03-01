@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 07:59:06 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/28 11:26:13 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/01 16:13:13 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,30 +81,31 @@ static int	count_len(char *line)
 	return (i);
 }
 
-char	**parse_cmd_bis(char **cmd, char *line, int word)
+void	parse_cmd_bis(t_list **lst, int word)
 {
 	int			i;
 	int			len;
+	t_list		*tmp;
 
 	len = 0;
-	cmd = malloc(sizeof(char *) * (word + 1));
-	if (!cmd)
-		return (NULL);
+	tmp = *lst;
+	tmp->cmd = malloc(sizeof(char *) * (word + 1));
+	if (!tmp->cmd)
+		return ;
 	word = 0;
-	i = count_len(line);
-	while (line && line[i] != '\0')
+	i = count_len(tmp->line);
+	while (tmp->line && tmp->line[i] != '\0')
 	{
-		len = ft_sep(line, i, len);
+		len = ft_sep(tmp->line, i, len);
 		if (len == -1)
-			return (NULL);
+			return ;
 		if (len == 0)
 			i++;
 		if (len != 0)
-			cmd[word] = ft_inc(cmd[word], len, line, i);
+			tmp->cmd[word] = ft_inc(tmp->cmd[word], len, tmp->line, i);
 		if (len != 0)
 			word++;
 		i = i + len;
 	}
-	cmd[word] = NULL;
-	return (cmd);
+	tmp->cmd[word] = NULL;
 }
