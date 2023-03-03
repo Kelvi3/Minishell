@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:00:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 16:13:29 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/03 12:47:30 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,16 +124,21 @@ char	*if_dir(char *car, char *str);
 char	*check_cmd(char *cmd, char *const *envp);
 char	*fix_str(char *cmd, char c);
 char	*ft_strcat_cmd(char *s1, int size, char *s2);
-char	**strdup_arg_execve(char *cmd1, char *cmd2);
+char	**strdup_arg_execve(char **cmd, char *start);
 void	exec_no_pipe_outfile(t_pipe args, char **env, char **cmd);
 void	exec_simple_cmd(char **env, char **cmd);
 void	parse_pipe(char **cmd, char **env);
 void	exec_no_pipe_infile(t_pipe args, char **env, char **cmd);
 void	exec_no_pipe_outfile_infile(t_pipe args, char **env, char **cmd);
 void	exec_multi_cmd(char **env, char **cmd, t_pipe args);
+int		if_in_no_out(char **cmd);
+int		if_in_a_out(char **cmd);
+int		found_infile(char **cmd);
+int		check_file(char *file);
 
 /* ERROR */
 void	ft_put_error(char *str, char *cmd);
+void	ft_err_syntax(char **cmd);
 
 char	*ft_strtok(char *str, const char *delim);
 #endif

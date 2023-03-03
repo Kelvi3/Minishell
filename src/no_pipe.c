@@ -6,32 +6,41 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 09:32:19 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/01 11:18:18 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/02 12:23:29 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**strdup_arg_execve(char *cmd1, char *cmd2)
+char	**strdup_arg_execve(char **cmd, char *start)
 {
 	char	**arg;
+	int		i;
+	int		j;
 
-	arg = malloc(sizeof(char *) * 3);
+	j = 0;
+	i = 0;
+	while (cmd[i] != start)
+		i++;
+	while (cmd[i + j] != NULL && cmd[i + j][0] != '|' && cmd[i + j][0] != '<'
+			&& cmd[i + j][0] != '>')
+	{
+		j++;
+	}
+	arg = malloc(sizeof(char *) * (j + 1));
 	if (!arg)
 		return (NULL);
-	arg[0] = malloc(sizeof(char) * (ft_strlen(cmd1) + 1));
-	if (!arg[0])
-		return (NULL);
-	arg[0] = ft_strdup(cmd1);
-	arg[1] = NULL;
-	if (cmd2 != NULL && cmd2[0] == '-')
-	{		
-		arg[1] = malloc(sizeof(char) * (ft_strlen(cmd2) + 1));
-		if (!arg[1])
+	j = 0;
+	while (cmd[i + j] != NULL && cmd[i + j][0] != '|' && cmd[i + j][0] != '<'
+			&& cmd[i + j][0] != '>')
+	{
+		arg[j] = malloc(sizeof(char) * (ft_strlen(cmd[i + j]) + 1));
+		if (!arg[j])
 			return (NULL);
-		arg[1] = ft_strdup(cmd2);
+		arg[j] = ft_strdup(cmd[i + j]);
+		j++;
 	}
-	arg[2] = NULL;
+	arg[j] = NULL;
 	return (arg);
 }
 
@@ -73,10 +82,13 @@ void	exec_no_pipe_infile(t_pipe args, char **env, char **cmd)
 	int		pipefd[2];
 
 	pipe(pipefd);
-	arg = strdup_arg_execve(cmd[2], cmd[3]);
+	arg = strdup_arg_execve(cmd, cmd[0]);
 	if (!arg)
 		return ;
-	args.path = check_cmd(cmd[2], env);
+	if (cmd[0][0] == '<')
+		args.path = check_cmd(cmd[2], env);
+	else
+		args.path = check_cmd(cmd[0], env);
 	if (!args.path)
 		return ;
 	pid = fork();

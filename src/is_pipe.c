@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:41:22 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/01 11:16:02 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/03 12:55:46 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int	check_file(char *file)
 {
 	if (access(file, F_OK) == -1)
 	{
-		ft_put_error(": no such file or directory\n", file);
+		ft_put_error(": No such file or directory\n", file);
 		return (1);
 	}
-	if (access(file, X_OK) == -1)
+	if (access(file, R_OK) == -1)
 	{
 		ft_put_error(": Permission denied\n", file);
 		return (1);
@@ -73,19 +73,19 @@ void	no_pipe(char **cmd, char **env)
 	}
 	if (redirection == 0)
 		exec_simple_cmd(env, cmd);
-	/* strcmp(cmd[0], '<') */ /* probleme permission denied */
-	if (cmd[0][0] == '<' && check_file(cmd[1]) == 0)
-		args.infile = open(cmd[1], O_RDONLY);
+	if (redirection == 0)
+		return ;
+	if (if_in_no_out(cmd) == -1)
+		return ;
+	if (if_in_no_out(cmd) > 0 && check_file(cmd[found_infile(cmd)]) == 0)
+		args.infile = open(cmd[found_infile(cmd)], O_RDONLY);
 	if (i - 2 >= 0 && cmd[i - 2][0] == '>' && check_file(cmd[i - 1]) == 0)
 		args.outfile = open(cmd[i - 1], O_RDWR | O_CREAT | O_TRUNC, 0664);
-	if (i - 2 >= 0 && cmd[i - 2][0] == '>' && check_file(cmd[i - 1]) == 1)
-		return ;
-	else if (i - 2 >= 0 && cmd[i - 2][0] == '>' && cmd[0][0] == '<'
-		&& args.infile >= 0 && args.outfile >= 0)
+	if (if_in_a_out(cmd) > 1 && args.infile > 0 && args.outfile > 0)
 		exec_no_pipe_outfile_infile(args, env, cmd);
-	else if (cmd[0][0] == '<' && args.infile >= 0 && cmd[2] != NULL)
+	else if (if_in_no_out(cmd) > 0 && args.infile >= 0)
 		exec_no_pipe_infile(args, env, cmd);
-	else if (i - 2 >= 0 && cmd[i - 2][0] == '>' && args.outfile >= 0)
+	else if (if_in_no_out(cmd) == 0 && args.outfile >= 0)
 		exec_no_pipe_outfile(args, env, cmd);
 }
 
@@ -112,6 +112,21 @@ void	parse_pipe(char **cmd, char **env)
 
 int	is_pipe(char **cmd)
 {
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i][0] == '|' || cmd[i][0] == '>'
+			|| ft_strncmp(cmd[0], ">>", 2) == 0
+			|| (cmd[i][0] == '<' && cmd[1] == NULL))
+		{
+			ft_err_syntax(cmd);
+			g_exit_code = 2;
+			return (0);
+		}
+		i++;
+	}
 	if (ft_strncmp(cmd[0], "echo", 4) != 0
 		&& ft_strncmp(cmd[0], "exit", 4) != 0
 		&& ft_strncmp(cmd[0], "env", 3) != 0
