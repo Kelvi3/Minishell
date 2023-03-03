@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:47:12 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/01 16:12:36 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/02 14:05:13 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,26 +80,6 @@ int	count_no_delim(char *line, int i)
 	return (j);
 }
 
-static int	check_quotes(char *line)
-{
-	int	i;
-	int	c_dquote;
-	int	c_squote;
-
-	i = 0;
-	c_dquote = 0;
-	c_squote = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] == 39)
-			c_squote++;
-		if (line[i] == '"')
-			c_dquote++;
-		i++;
-	}
-	return (0);
-}
-
 void	parse_cmd(t_list **lst)
 {
 	int			i;
@@ -111,8 +91,6 @@ void	parse_cmd(t_list **lst)
 	i = 0;
 	word = 0;
 	len = 0;
-	if (check_quotes(tmp->line) == 1)
-		return ;
 	while (tmp->line[i] && tmp->line[i] == ' ')
 		i++;
 	while (tmp->line && tmp->line[i] != '\0')

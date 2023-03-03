@@ -6,118 +6,126 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 08:56:40 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/20 17:47:47 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/03 12:59:21 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-
-/* si ya une redirection dans cote ou dcote ecrire la redirection */
-
-void	ft_dquote(char **cmd, char *line, t_list **envcp, int i)
+int	pass_dquote_squote(t_list **envcp, int i)
 {
-	int	k;
+	t_list	*lst;
 
-	k = ft_value_k(cmd);
-	while (line[i])
-	{
-		if (line[i] == '$' && line[i + 1] != '?' && ft_isalpha(line[i + 1]))
-		{
-			printf("%s", ft_check_doll(cmd, envcp, k));
-			if (k == 1)
-				i += ft_len_var(line);
-			else
-				i += ft_len_var(line) + 1;
-		}
-		if (line[i] == '$' && line[i + 1] == '?')
-		{
-			printf("%d", g_exit_code);
-			i += 2;
-		}
-		if (line[i] == ' ')
-			k++;
-		if (line[i] != '"')
-			printf("%c", line[i]);
+	lst = *envcp;
+	while (lst->line[i] == '\'' || lst->line[i] == '"')
 		i++;
-	}
+	return (i);
 }
 
-void	ft_squote(char *line, int i)
-{
-	while (line[i])
-	{
-		if (line[i] != '\'')
-			printf("%c", line[i]);
-		i++;
-	}
-}
+/* parse cmd echo */
 
-void	ft_noquote(char *line, int i)
+char	*ft_check_after(t_list **envcp, int i)
 {
-	while (line[i])
+	t_list	*lst;
+	char	*tmp;
+	int		j;
+
+	j = 0;
+	tmp = malloc(sizeof(char) * (5));
+	if (!tmp)
+		return (NULL);
+	lst = *envcp;
+	tmp[j++] = lst->line[i++];
+	i = pass_dquote_squote(envcp, i);
+	if (lst->line[i] == 'c')
+		tmp[j++] = lst->line[i++];
+	i = pass_dquote_squote(envcp, i);
+	if (lst->line[i] == 'h')
+		tmp[j++] = lst->line[i++];
+	i = pass_dquote_squote(envcp, i);
+	if (lst->line[i] == 'o')
+		tmp[j++] = lst->line[i++];
+	tmp[j] = '\0';
+	return (tmp);
+}
+/* compter nombre de cote ou guillemet pour print jusk ce nombre */
+
+int	check_param_n(t_list **envcp, int i)
+{
+	t_list	*lst;
+
+	lst = *envcp;
+	i = pass_dquote_squote(envcp, i);
+	if (lst->line[i] == '-')
 	{
-		if (line[i] == '$' && line[i + 1] == '?')
+		i++;
+		while (lst->line[i] && lst->line[i] != ' ')
 		{
-			printf("%d", g_exit_code);
-			i += 2;
-		}
-		if (line[i] && line[i] != '\'' && line[i] != '"')
-			printf("%c", line[i]);
-		while (line[i] == ' ')
-		{
+			if (lst->line[i] != 'n')
+				return (0);
 			i++;
-			if (line[i] != ' ')
+		}
+	}
+	else
+		return (0);
+	return (i);
+}
+void	print_echo(t_list **envcp, int i)
+{
+	t_list	*lst;
+	int		count;
+	int		space;
+	int		flag;
+
+	flag = 0;
+	count = 0;
+	lst = *envcp;
+	space = count_nb_space(envcp, i);
+	i = pass_dquote_squote(envcp, i);
+	while (lst->line[i] && lst->line[i] != ' ')
+		i++;
+	while (lst->line[i] && lst->line[i] == ' ')
+		i++;
+	/* check si ya un -n, flag == 0 pour le \n */
+	if (check_param_n(envcp, i) != 0)
+	{
+		i = check_param_n(envcp, i);
+		while (lst->line[i] && lst->line[i] == ' ')
+			i++;
+		flag = 1;
+	}
+	/* retourner i a chaque print, ou envoyer un l'adresse */
+	if (lst->line[i] == '"')
+		print_dquote(envcp, i, count, space);
+	else if (lst->line[i] == '\'')
+		print_squote(envcp, i);
+	else
+		print_noquote(envcp, i, space);
+	if (flag == 0)
+		printf("\n");
+}
+
+void	ft_echo(t_list **envcp)
+{
+	t_list	*lst;
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	lst = *envcp;
+	tmp = NULL;
+	while (lst->line[i])
+	{
+		if (lst->line[i] == 'e')
+		{
+			tmp = ft_check_after(envcp, i);
+			if (ft_strcmp(tmp, "echo") == 0)
 			{
-				i--;
+				print_echo(envcp, i);
 				break ;
-			}
+			}	
 		}
 		i++;
 	}
-}
-
-void	ft_check_quote(char *line, char **cmd, t_list **envcp, int i)
-{
-	if (ft_check_n(cmd[1]) == 0)
-	{
-		i = ft_pass_n(line, i);
-		if (line[i] == '"')
-			ft_dquote(cmd, line, envcp, i);
-		else if (line[i] == '\'')
-			ft_squote(line, i);
-		else
-			ft_noquote(line, i);
-	}
-	if (ft_check_n(cmd[1]) == 1)
-	{
-		while (line[i] && line[i] == ' ')
-			i++;
-		if (line[i] == '"')
-			ft_dquote(cmd, line, envcp, i);
-		else if (line[i] == '\'')
-			ft_squote(line, i);
-		else
-			ft_noquote(line, i);
-		printf("\n");
-	}
-}
-
-void	ft_echo(char **cmd, t_list **envcp, char *line)
-{
-	int	i;
-
-	i = check_cote_echo(line);
-	if (i == 0)
-	{
-		ft_putstr_fd("error\n", 2);
-		return ;
-	}
-	if (!line[i + 1])
-	{
-		printf("\n");
-		return ;
-	}
-	ft_check_quote(line, cmd, envcp, i);
-	return ;
+	free(tmp);
 }
