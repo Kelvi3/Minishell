@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:59:33 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/03 12:20:59 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/03 13:10:00 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int argc, char **argv, char **env)
 	ft_signal();
 	while (1)
 	{
+		i = 0;
 		lst->line = readline("$>");
 		if (lst->line == NULL)
 			break ;
@@ -59,7 +60,7 @@ int	main(int argc, char **argv, char **env)
 		free_double_char(lst->cmd);
 		free(lst->line);
 		lst->line = NULL;
-	}
+		}
 	free_lst(&lst);
 	free_lst(&export);
 	free(lst->path);
