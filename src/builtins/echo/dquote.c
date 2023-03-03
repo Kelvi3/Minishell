@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 11:47:00 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/03 12:28:41 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/03 14:35:07 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	count_nb_space(t_list **envcp, int i)
 	return (count);
 }
 
-void	print_dquote(t_list **envcp, int i, int count, int space)
+int	print_dquote(t_list **envcp, int i, int space)
 {
 	t_list	*lst;
 	int	k;
@@ -61,7 +61,7 @@ void	print_dquote(t_list **envcp, int i, int count, int space)
 	i = pass_dquote_squote(envcp, i);
 	k = ft_value_k(lst->cmd);
 	(void)space;
-	while (lst->line[i] && count != count_nb_dquote(envcp, i))
+	while (lst->line[i] && count_nb_dquote(envcp, i) != 0)
 	{
 		/* var d'env ex : $PWD */
 		if (lst->line[i] == '$' && lst->line[i + 1] != '?'
@@ -83,4 +83,5 @@ void	print_dquote(t_list **envcp, int i, int count, int space)
 			printf("%c", lst->line[i]);
 		i++;
 	}
+	return (i);
 }

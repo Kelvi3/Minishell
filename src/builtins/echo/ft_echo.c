@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 08:56:40 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/03 12:59:21 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/03 15:42:01 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,23 +70,29 @@ int	check_param_n(t_list **envcp, int i)
 		return (0);
 	return (i);
 }
-void	print_echo(t_list **envcp, int i)
+
+int	pass_space(t_list **envcp, int i)
 {
 	t_list	*lst;
-	int		count;
-	int		space;
-	int		flag;
 
-	flag = 0;
-	count = 0;
 	lst = *envcp;
-	space = count_nb_space(envcp, i);
-	i = pass_dquote_squote(envcp, i);
 	while (lst->line[i] && lst->line[i] != ' ')
 		i++;
 	while (lst->line[i] && lst->line[i] == ' ')
 		i++;
-	/* check si ya un -n, flag == 0 pour le \n */
+	return (i);
+}
+void	print_echo(t_list **envcp, int i)
+{
+	t_list	*lst;
+	int		space;
+	int		flag;
+
+	flag = 0;
+	lst = *envcp;
+	space = count_nb_space(envcp, i);
+	i = pass_dquote_squote(envcp, i);
+	i += pass_space(envcp, i);
 	if (check_param_n(envcp, i) != 0)
 	{
 		i = check_param_n(envcp, i);
@@ -94,17 +100,26 @@ void	print_echo(t_list **envcp, int i)
 			i++;
 		flag = 1;
 	}
-	/* retourner i a chaque print, ou envoyer un l'adresse */
 	if (lst->line[i] == '"')
-		print_dquote(envcp, i, count, space);
+		i = print_dquote(envcp, i, space);
 	else if (lst->line[i] == '\'')
-		print_squote(envcp, i);
+		i = print_squote(envcp, i);
 	else
-		print_noquote(envcp, i, space);
+		i = print_noquote(envcp, i, space);
 	if (flag == 0)
 		printf("\n");
 }
 
+int	ft_check_pipe(t_list **envcp, int i)
+{
+	t_list	*lst;
+
+	lst = *envcp;
+	while (lst->line[i] && lst->line[i] == ' ')
+		i++;
+	i = pass_dquote_squote(envcp, i);
+	
+}
 void	ft_echo(t_list **envcp)
 {
 	t_list	*lst;
@@ -121,6 +136,8 @@ void	ft_echo(t_list **envcp)
 			tmp = ft_check_after(envcp, i);
 			if (ft_strcmp(tmp, "echo") == 0)
 			{
+				if (ft_check_pipe(envcp, i) == 1)
+					return ;
 				print_echo(envcp, i);
 				break ;
 			}	
