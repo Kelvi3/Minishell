@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 15:29:58 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/09 14:38:30 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/01 17:20:52 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ void	exec_no_pipe_outfile(t_pipe args, char **env, char **cmd)
 	int		pipefd[2];
 
 	pipe(pipefd);
-	if (cmd[1][0] == '-')
-		arg = strdup_arg_execve(cmd[0], cmd[1]);
-	else
-		arg = strdup_arg_execve(cmd[0], NULL);
+	arg = strdup_arg_execve(cmd, cmd[0]);
 	if (!arg)
 		return ;
 	args.path = check_cmd(cmd[0], env);
@@ -94,10 +91,7 @@ void	exec_no_pipe_outfile_infile(t_pipe args, char **env, char **cmd)
 {
 	char	**arg;
 
-	if (cmd[3][0] == '-')
-		arg = strdup_arg_execve(cmd[2], cmd[3]);
-	else
-		arg = strdup_arg_execve(cmd[2], NULL);
+	arg = strdup_arg_execve(cmd, cmd[2]);
 	if (!arg)
 		return ;
 	args.path = check_cmd(cmd[2], env);

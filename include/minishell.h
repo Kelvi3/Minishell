@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:00:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/03 12:47:30 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/03 13:51:53 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,19 @@ typedef struct s_pipe {
 void	ft_copy_envcp_in_struct(t_list **envcp);
 int		check_pipe(char **cmd);
 // ALL BUILTINS
-void	ft_builtins(char **cmd, char *line, t_list **envcp, t_list **export);
+void	ft_builtins(t_list **envcp, t_list **export);
 
 /* ECHO */
-void	ft_echo(char **cmd, t_list **envcp, char *line);
+void	ft_echo(t_list **envcp);
+/* utils */
+int		pass_dquote_squote(t_list **envcp, int i);
+/* dquote */
+int		count_nb_space(t_list **envcp, int i);
+void	print_dquote(t_list **envcp, int i, int count, int space);
+/* squote */
+void	print_squote(t_list **envcp, int i);
+/* noquote */
+void	print_noquote(t_list **envcp, int i, int space);
 void	ft_print_var(char **cmd, t_list **envcp);
 int		check_cote_echo(char *line);
 int		ft_check_n(char *cmd);
@@ -61,13 +70,13 @@ int		ft_len_var(char *line);
 int		ft_value_k(char **cmd);
 
 /* CD */
-void	ft_cd(char **cmd, t_list **envcp);
+void	ft_cd(t_list **envcp);
 
 /* PWD */
-void	ft_pwd(char **cmd, t_list **envcp);
+void	ft_pwd(void);
 
 /* EXPORT */
-void	ft_export(char **args, char *line, t_list **envcpp, t_list **export);
+void	ft_export(t_list **envcpp, t_list **export);
 void	ft_print_envcp(t_list *lst);
 void	ft_swap_lst(t_list **tmp_i, t_list **tmp_j);
 char	*ft_cpy_name(char *args);
@@ -85,11 +94,14 @@ int		ft_check_lst_name(char *key, t_list **lst);
 int		ft_check_unset_arg(char *key, int flag);
 
 /* ENV */
-void	ft_env(t_list **envcp, char **cmd);
+void	ft_env(t_list **envcp);
 
 /* EXIT */
 int		ft_exit(char **cmd, t_list **envcp, t_list **export);
+int		ft_check_digit(char *cmd);
+int		exit_atol(char *cmd, long digit, t_list **envcp, t_list **export);
 char	*current_path(void);
+void	free_exit(t_list **envcp, t_list **export);
 void	condition_prompt(char *line);
 
 /* PARSE CMD */
@@ -102,7 +114,7 @@ int		ft_sep(char *line, int i, int len);
 
 /* SIGNAL */
 void	ft_signal(void);
-void	ft_check_line(char *line, t_list *envcp, t_list *export);
+void	ft_check_line(t_list *lst, t_list *export);
 
 //////
 char	*current_path(void);

@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 16:05:20 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 16:55:16 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ t_list	*ft_add_param_env(t_list *new_env, char **args, char *line)
 	char	*value;
 
 	i = 1;
-	name = NULL;
-	value = NULL;
 	while (args[i])
 	{
 		name = ft_cpy_name(args[i]);
@@ -131,30 +129,30 @@ t_list	*ft_copy_lst(t_list *copy, t_list *envcp)
 /* probleme parsing (export HELLO="123 A-") */
 /* arg[1] = HELLO=123  arg[2] = A- */
 
-void	ft_export(char **args, char *line, t_list **envcpp, t_list **export)
+void	ft_export(t_list **envcpp, t_list **export)
 {
 	t_list			*envcp;
 	t_list			*copy;
 
 	copy = *export;
 	envcp = *envcpp;
-	if (ft_quote_value(line) == 0)
+	if (ft_quote_value(envcp->line) == 0)
 	{
-		if (ft_check_name(args) == 1)
+		if (ft_check_name(envcp->cmd) == 1)
 		{
 			g_exit_code = 1;
 			return ;
 		}
 	}
-	if (ft_len(args) > 1)
+	if (ft_len(envcp->cmd) > 1)
 	{
 		g_exit_code = 0;
-		if (ft_check_double(copy, args) == 0)
-			*export = ft_add_param_env(copy, args, line);
-		if (ft_check_double(envcp, args) == 0)
-			*envcpp = ft_add_param_env(envcp, args, line);
+		if (ft_check_double(copy, envcp->cmd) == 0)
+			*export = ft_add_param_env(copy, envcp->cmd, envcp->line);
+		if (ft_check_double(envcp, envcp->cmd) == 0)
+			*envcpp = ft_add_param_env(envcp, envcp->cmd, envcp->line);
 	}
 	ft_sort_ascii(copy);
-	if (ft_len(args) == 1)
+	if (ft_len(envcp->cmd) == 1)
 		ft_print_envcp(copy);
 }

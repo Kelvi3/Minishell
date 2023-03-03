@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:56:46 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/21 10:00:57 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 16:17:11 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void	ft_signal(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	ft_check_line(char *line, t_list *envcp, t_list *export)
+void	ft_check_line(t_list *lst, t_list *export)
 {
-	if (!line)
+	if (!lst->line)
 	{
 	//	printf("%s\n", export->name);
 		(void) export;
-		(void) envcp;
+		(void) lst;
 		printf("\n");
 		exit(1);
 	}

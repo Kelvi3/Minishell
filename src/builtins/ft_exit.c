@@ -6,31 +6,11 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:43:07 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 09:34:01 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/01 17:08:40 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static int	ft_check_digit(char *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i])
-	{
-		if (cmd[0] != '+' && cmd[0] != '-' && ft_isdigit(cmd[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	free_exit(t_list **envcp, t_list **export)
-{
-	free_lst(envcp);
-	free_lst(export);
-}
 
 static void	ft_error_exit(int flag, t_list **envcp, t_list **envv)
 {
@@ -50,15 +30,6 @@ static void	ft_error_exit(int flag, t_list **envcp, t_list **envv)
 		printf("exit\n");
 		ft_putstr_fd("bash : exit : too many arguments\n", 2);
 	}
-}
-
-int	test(char *cmd, long digit, t_list **envcp, t_list **export)
-{
-	printf("exit\n");
-	if (cmd)
-		digit = ft_atoi(cmd);
-	free_exit(envcp, export);
-	return (digit);
 }
 
 int	ft_last_char(char *cmd)
@@ -112,7 +83,7 @@ int	ft_exit(char **cmd, t_list **envcp, t_list **export)
 	}
 	else if ((ft_len(cmd) == 2 && ft_check_digit(cmd[1]) == 1))
 		ft_error_exit(0, envcp, export);
-	digit = test(cmd[1], digit, envcp, export);
+	digit = exit_atol(cmd[1], digit, envcp, export);
 	if (cmd[1])
 	{
 		if ((ft_strlen(cmd[1]) >= 20 && ft_last_char(cmd[1]) == 2)

@@ -1,31 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   utils_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/01 09:51:49 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 17:10:12 by lulaens          ###   ########.fr       */
+/*   Created: 2023/03/01 17:03:39 by lulaens           #+#    #+#             */
+/*   Updated: 2023/03/01 17:08:22 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include <stdlib.h>
 
-void	ft_pwd(void)
+int	ft_check_digit(char *cmd)
 {
-	char	*line;
+	int	i;
 
-	g_exit_code = 0;
-	line = malloc(sizeof(char) * (PATH_MAX + 1));
-	if (!line)
-		return ;
-	line[PATH_MAX + 1] = '\0';
-	line = getcwd(line, PATH_MAX);
-	if (line == NULL)
-		ft_putstr_fd("Error getcwd\n", 2);
-	printf("%s\n", line);
-	if (line)
-		free(line);
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[0] != '+' && cmd[0] != '-' && ft_isdigit(cmd[i]) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	exit_atol(char *cmd, long digit, t_list **envcp, t_list **export)
+{
+	printf("exit\n");
+	if (cmd)
+		digit = ft_atoi(cmd);
+	free_exit(envcp, export);
+	return (digit);
+}
+
+void	free_exit(t_list **envcp, t_list **export)
+{
+	free_lst(envcp);
+	free_lst(export);
 }

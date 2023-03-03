@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:59:33 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/02 12:23:05 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/03 13:53:40 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int argc, char **argv, char **env)
 	t_list		*export;
 	int			i;
 
+	i = 0;
 	(void) argc;	
 	(void) argv;
 	ft_init_lst(&lst, &export, env);
@@ -39,16 +40,21 @@ int	main(int argc, char **argv, char **env)
 	{
 		i = 0;
 		lst->line = readline("$>");
-		if (lst->line[0] != '\0')
+		if (lst->line == NULL)
+			break ;
+		parse_cmd(&lst);
+		/* check les $a $PWD etc.. juste apres le parsing */
+	/*	while (lst->cmd[i] != NULL)
 		{
+<<<<<<< HEAD
 			if (lst->line == NULL)
 				break ;
 			parse_cmd(&lst);
-			/*while (lst->cmd[i] != NULL)
+			while (lst->cmd[i] != NULL)
 			{
 				printf("cmd[%i] = %s\n", i, lst->cmd[i]);
 				i++;
-			}*/
+			}
 			if (is_pipe(lst->cmd) == 1)
 				parse_pipe(lst->cmd, env);
 			ft_check_line(lst->line, lst, export);
@@ -57,7 +63,18 @@ int	main(int argc, char **argv, char **env)
 			free_double_char(lst->cmd);
 			free(lst->line);
 			lst->line = NULL;
-		}
+=======*/
+			i++;
+		i = 0;
+		if (is_pipe(lst->cmd) == 1)
+			parse_pipe(lst->cmd, env);
+		ft_check_line(lst, export);
+		ft_builtins(&lst, &export);
+		if (lst->line)
+			add_history(lst->line);
+		free_double_char(lst->cmd);
+		free(lst->line);
+		lst->line = NULL;
 	}
 	free_lst(&lst);
 	free_lst(&export);
