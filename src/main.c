@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:59:33 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/03 13:10:00 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/03 15:43:12 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,6 @@ int	main(int argc, char **argv, char **env)
 		if (lst->line == NULL)
 			break ;
 		parse_cmd(&lst);
-		/* check les $a $PWD etc.. juste apres le parsing */
-	/*	while (lst->cmd[i] != NULL)
-		{
-			printf("len = %ld\n", ft_strlen(lst->cmd[i]));
-			printf("cmd[%i] = %s\n", i, lst->cmd[i]);
-			i++;
-		}*/
-		i = 0;
 		if (is_pipe(lst->cmd) == 1)
 			parse_pipe(lst->cmd, env);
 		ft_check_line(lst, export);
@@ -60,7 +52,7 @@ int	main(int argc, char **argv, char **env)
 		free_double_char(lst->cmd);
 		free(lst->line);
 		lst->line = NULL;
-		}
+	}
 	free_lst(&lst);
 	free_lst(&export);
 	free(lst->path);

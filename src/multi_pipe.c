@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 09:35:42 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/02/15 15:41:53 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/01 17:48:02 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	exec_multi_cmd(char **env, char **cmd, t_pipe args)
 		args.path = check_cmd(cmd[args.c_index], env);
 		if (!args.path)
 			return ;
-		args.arg = strdup_arg_execve(cmd[args.c_index], cmd[args.c_index + 1]);
+		args.arg = strdup_arg_execve(cmd, cmd[args.c_index]);
 		exec_multi_pipe(env, args, i, pipefd);
 		i++;
 		if (i != args.nb_pipe)
@@ -105,5 +105,5 @@ void	exec_multi_cmd(char **env, char **cmd, t_pipe args)
 			args.c_index++;
 	}
 	close_pipe(args, pipefd);
-	free_double_int(args.pipefd, args.nb_pipe);
+	free_double_int(pipefd, args.nb_pipe);
 }
