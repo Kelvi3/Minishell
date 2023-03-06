@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 07:59:06 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/03 13:51:28 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/06 10:51:52 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_count_size(char *line, int len, int i)
 			len--;
 		size++;
 	}
-	if (line[size] == ' ' || line[size] == '\0')
+	if (line[size] == ' ' || (line[i] != '"' && line[i] != 39))
 		len--;
 	return (len);
 }
