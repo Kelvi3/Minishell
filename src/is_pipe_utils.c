@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 10:02:38 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/03 09:52:07 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:51:03 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ int	found_infile(char **cmd)
 	while (cmd[i] != NULL)
 		i++;
 	i--;
-	while (i > 0)
+	while (i >= 0)
 	{
 		if (cmd[i][0] == '<')
 		{
-			if (access(cmd[i + 2], F_OK) != -1)
+			if (access(cmd[i + 2], F_OK) == 0)
 				return (i + 2);
 			return (i + 1);
 		}

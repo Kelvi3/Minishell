@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 09:35:42 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/01 17:48:02 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/08 11:23:53 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 int	next_path(char **cmd, int index)
 {
+	if (cmd[index][0] == '<')
+		return (index + 2);
+	if (cmd[index][0] == '|')
+		return (index + 1);
+	if (index == 0)
+		return (index);
 	while (cmd[index][0] != '|' && cmd[index] != NULL)
 		index++;
-	return (index);
+	return (index + 1);
 }
 
 void	close_pipe(t_pipe args, int **pipefd)
@@ -26,8 +32,8 @@ void	close_pipe(t_pipe args, int **pipefd)
 	i = 0;
 	while (args.nb_pipe > i)
 	{
-		close(pipefd[0][i]);
-		close(pipefd[1][i]);
+		close(pipefd[i][0]);
+		close(pipefd[i][1]);
 		i++;
 	}
 }
@@ -72,8 +78,6 @@ void	exec_multi_pipe(char **env, t_pipe args, int i, int **pipefd)
 		execve(args.path, args.arg, env);
 		exit(0);
 	}
-	free_double_char(args.arg);
-	free(args.path);
 }
 
 void	exec_multi_cmd(char **env, char **cmd, t_pipe args)
@@ -83,6 +87,7 @@ void	exec_multi_cmd(char **env, char **cmd, t_pipe args)
 
 	args.nb_pipe = args.nb_pipe + 1;
 	args.c_index = 0;
+	args.path = NULL;
 	pipefd = init_pipe(args);
 	i = 0;
 	while (args.nb_pipe > i)
@@ -93,17 +98,35 @@ void	exec_multi_cmd(char **env, char **cmd, t_pipe args)
 	i = 0;
 	while (i < args.nb_pipe)
 	{
-		args.path = check_cmd(cmd[args.c_index], env);
-		if (!args.path)
-			return ;
-		args.arg = strdup_arg_execve(cmd, cmd[args.c_index]);
-		exec_multi_pipe(env, args, i, pipefd);
+		if (cmd[args.c_index] != NULL)
+		{
+			args.path = check_cmd(cmd[next_path(cmd, args.c_index)], env);
+			if (!args.path)
+				return ;
+			args.arg = strdup_arg_execve(cmd, cmd[next_path(cmd, args.c_index)]);
+		}
+		else
+		{
+			args.path = NULL;
+			args.arg = NULL;
+		}
+		if (args.outfile >= 0 && args.infile < 0)
+			exec_multi_outfile(env, args, i, pipefd);
+		else if (args.outfile >= 0 && args.infile >= 0)
+			exec_multi_outfile_infile(env, args, i, pipefd);
+		else if (args.infile >= 0 && args.outfile < 0)
+			exec_multi_infile(env, args, i, pipefd);
+		else
+			exec_multi_pipe(env, args, i, pipefd);
 		i++;
 		if (i != args.nb_pipe)
+		{
 			args.c_index = next_path(cmd, args.c_index);
-		if (i != args.nb_pipe)
 			args.c_index++;
+		}
 	}
+	free(args.path);
+	free_double_char(args.arg);
 	close_pipe(args, pipefd);
 	free_double_int(pipefd, args.nb_pipe);
 }

@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 07:59:06 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/08 09:36:47 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/08 10:03:43 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static char	*ft_inc(char *cmd, int len, t_list **lst, int i)
 	t_list	*tmp;
 
 	tmp = *lst;
+	c = '\0';
 	len = ft_count_size(lst, len, i);
 	tmp->flag = 0;
 	cmd = malloc(sizeof(char) * (len + 1));
@@ -58,11 +59,9 @@ static char	*ft_inc(char *cmd, int len, t_list **lst, int i)
 		c = 39;
 		tmp->flag = 1;
 	}
-	if (tmp->line[i] == '\0')
-		c = '\0';
 	while (j < len)
 	{
-		if (tmp->line[i] != c)
+		if (tmp->line && tmp->line[i] != c)
 		{
 			cmd[j] = tmp->line[i];
 			j++;
@@ -107,7 +106,7 @@ void	parse_cmd_bis(t_list **lst, int word)
 		return ;
 	word = 0;
 	i = count_len(tmp->line);
-	while (tmp->line && tmp->line[i] != '\0')
+	while (ft_strlento(tmp->line, '\0') > i)
 	{
 		len = ft_sep(tmp->line, i, len);
 		if (len == -1)

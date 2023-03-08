@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:27:04 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/03 13:08:42 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/03 15:55:52 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	ft_err_syntax(char **cmd)
 			if ((ft_strncmp(cmd[i], "|", 1) == 0 && cmd[i - 1][0] == '<')
 				|| (ft_strncmp(cmd[i], "|", 1) == 0 && cmd[i - 1][0] == '>')
 				|| (ft_strncmp(cmd[i], "|", 1) == 0 && cmd[i - 1][0] == '|'))
-				{
-					write(2, " syntax error near unexpected token `|'", 39);
-					return ;
-				}
+			{
+				write(2, " syntax error near unexpected token `|'", 39);
+				return ;
+			}
 		}
 		i++;
 	}

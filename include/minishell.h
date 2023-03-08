@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:00:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/08 13:21:24 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/08 13:41:05 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,10 +143,14 @@ void	parse_pipe(char **cmd, char **env);
 void	exec_no_pipe_infile(t_pipe args, char **env, char **cmd);
 void	exec_no_pipe_outfile_infile(t_pipe args, char **env, char **cmd);
 void	exec_multi_cmd(char **env, char **cmd, t_pipe args);
+void	exec_multi_outfile_infile(char **env, t_pipe args, int i, int **pipefd);
+void	exec_multi_infile(char **env, t_pipe args, int i, int **pipefd);
+void	exec_multi_outfile(char **env, t_pipe args, int i, int **pipefd);
 int		if_in_no_out(char **cmd);
 int		if_in_a_out(char **cmd);
 int		found_infile(char **cmd);
 int		check_file(char *file);
+void	close_pipe(t_pipe args, int **pipefd);
 
 /* ERROR */
 void	ft_put_error(char *str, char *cmd);

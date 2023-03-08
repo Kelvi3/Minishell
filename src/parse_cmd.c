@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:47:12 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/03 16:02:50 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/08 13:36:44 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,27 @@ int	count_no_delim(char *line, int i)
 	j = 1;
 	while (line[i] != ' ' && line[i] != '\0')
 	{
-		if (line[i] == '<' && line[i + 1] != '<')
+		if ((line[i] == '<' && line[i + 1] != '<')
+			|| (line[i] == '>' && line[i + 1] != '>'))
+		{
 			return (j);
+		}
+		if (line[i + 1] == '|' && line[i + 1] != ' ')
+		{
+			j++;
+			return (j);
+		}
 		i++;
 		j++;
 	}
-	if (line[i] != ' ' && line[i] != 39 && line[i] != '"' && line[i] != '\0'
-		&& line[i] != '<')
+	/*if (line[i] != ' ' && line[i] != 39 && line[i] != '"' && line[i] != '\0'
+		&& line[i] != '<' && line[i] != '>')
 	{
 		printf("Syntaxe: error\n");
 		return (-1);
 	}
 	if (j == 1 && line[i] != '<')
-		return (0);
+		return (0);*/
 	return (j);
 }
 
@@ -93,7 +101,7 @@ void	parse_cmd(t_list **lst)
 	len = 0;
 	while (tmp->line[i] && tmp->line[i] == ' ')
 		i++;
-	while (tmp->line && tmp->line[i] != '\0')
+	while (ft_strlento(tmp->line, '\0') > i)
 	{
 		len = ft_sep(tmp->line, i, len);
 		if (len == -1)
@@ -103,5 +111,6 @@ void	parse_cmd(t_list **lst)
 			i++;
 		i = i + len;
 	}
+	printf("word = %i\n", word);
 	parse_cmd_bis(lst, word);
 }
