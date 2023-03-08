@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:00:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/07 11:36:26 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/08 13:21:24 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,18 @@ void	ft_add_envv(char **env);
  dans la structure s_pipe */
 
 typedef struct s_pipe {
-	int		**pipefd;
-	int		infile;
-	int		outfile;
-	char	*path;
-	int		nb_pipe;
-	int		nb_cmd;
-	int		c_index;
-	char	**arg;
+	int				**pipefd;
+	int				infile;
+	int				outfile;
+	char			*path;
+	int				nb_pipe;
+	int				nb_cmd;
+	int				c_index;
+	char			**arg;
+	struct s_list	*exec;
 }				t_pipe;
+
+char	**cpy_env_execve(t_list **list);
 /* TEST */
 void	ft_copy_envcp_in_struct(t_list **envcp);
 int		check_pipe(char **cmd);
