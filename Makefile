@@ -6,7 +6,7 @@
 #    By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 09:57:15 by tcazenav          #+#    #+#              #
-#    Updated: 2023/03/07 11:37:53 by lulaens          ###   ########.fr        #
+#    Updated: 2023/03/08 09:57:39 by lulaens          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,8 @@ SRC =	./src/builtins/export/ft_check_export.c \
 		./src/strtok.c \
 		./src/exec_var_value.c \
 		./src/envcp_for_pipe.c \
-		./src/is_pipe_utils.c
+		./src/is_pipe_utils.c \
+		./src/cpy_env_execve.c
 
 CFLAGS = -Wall -Wextra -Werror -g3
 
