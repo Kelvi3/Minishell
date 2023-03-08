@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:59:33 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/03 15:43:12 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/08 09:39:55 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ int	main(int argc, char **argv, char **env)
 		if (lst->line == NULL)
 			break ;
 		parse_cmd(&lst);
+		/*while (lst->cmd[i])
+		{
+			printf("cmd[%i] = '%s'\n", i, lst->cmd[i]);
+			i++;
+		}*/
 		if (is_pipe(lst->cmd) == 1)
 			parse_pipe(lst->cmd, env);
 		ft_check_line(lst, export);
