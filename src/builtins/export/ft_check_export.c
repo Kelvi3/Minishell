@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/03 15:39:16 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/03 15:52:19 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_check_name(char **args)
 	int	j;
 
 	i = 1;
-	while (args[i] && args[i] != '|')
+	while (args[i] && args[i][0] != '|')
 	{
 		j = 0;
 	//	printf("%s\n", args[i]);

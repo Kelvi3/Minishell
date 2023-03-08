@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:00:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/03 15:51:17 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/07 11:36:26 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,18 @@ void	ft_builtins(t_list **envcp, t_list **export);
 
 /* ECHO */
 void	ft_echo(t_list **envcp);
+int		ft_len_echo_arg(t_list **envcp, int i);
 /* utils */
+int		pass_space(t_list **envcp, int i);
 int		pass_dquote_squote(t_list **envcp, int i);
-/* dquote */
-int		count_nb_space(t_list **envcp, int i);
-int		print_dquote(t_list **envcp, int i, int space);
-/* squote */
-int		print_squote(t_list **envcp, int i);
-/* noquote */
-int		print_noquote(t_list **envcp, int i, int space);
+/* syntax */
+int		ft_check_syntax(t_list **envcp, int i);
 void	ft_print_var(char **cmd, t_list **envcp);
 int		check_cote_echo(char *line);
 int		ft_check_n(char *cmd);
 int		ft_pass_n(char *line, int i);
 int		ft_len_var(char *line);
-int		ft_value_k(char **cmd);
+int		ft_value_count(char **cmd);
 
 /* CD */
 void	ft_cd(t_list **envcp);

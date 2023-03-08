@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/03 15:10:04 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/04 11:01:19 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ t_list	*ft_add_param_env(t_list *new_env, char **args, char *line)
 	char	*value;
 
 	i = 1;
-	while (args[i] && (args[i][0] != '|' || args[i][0] != '<'
-			|| args[i][0] != '>'))
+	while (args[i] && args[i][0] != '|')
 	{
 		name = ft_cpy_name(args[i]);
 		if (ft_quote_value(line) == 1)
