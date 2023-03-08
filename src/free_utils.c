@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 09:02:44 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 17:45:53 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:44:38 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,15 @@ void	free_lst(t_list **lst)
 
 	tmp1 = NULL;
 	tmp = *lst;
-	while (tmp)
+	while (tmp->next)
 	{
-		free(tmp->name);
+		if (tmp->name)
+			free(tmp->name);
 		if (tmp->value)
 			free(tmp->value);
 		tmp1 = tmp->next;
-		free(tmp);
+		if (tmp)
+			free(tmp);
 		tmp = tmp1;
 	}
 }

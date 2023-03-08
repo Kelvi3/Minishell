@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 12:04:30 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/03 12:08:21 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/03 14:36:09 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,16 @@ static int	count_nb_squote(t_list **envcp, int i)
 	return (count);
 }
 
-void	print_squote(t_list **envcp, int i)
+int	print_squote(t_list **envcp, int i)
 {
 	t_list	*lst;
-	int		count;
 
-	count = 0;
 	lst = *envcp;
-	while (lst->line[i] && count != count_nb_squote(envcp, i))
+	while (lst->line[i] && count_nb_squote(envcp, i) != 0)
 	{
 		if (lst->line[i] != '\'')
 			printf("%c", lst->line[i]);
 		i++;
 	}
+	return (i);
 }

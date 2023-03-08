@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:01:44 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 16:09:13 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/07 14:59:49 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 typedef struct s_list
 {
 	char			**cmd;
+	char			*echo;
+	int				size;
+	int				flag;
+	int				len;
 	char			*line;
 	char			*path;
 	char			*name;

@@ -6,7 +6,7 @@
 #    By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 09:57:15 by tcazenav          #+#    #+#              #
-#    Updated: 2023/03/06 12:10:04 by tcazenav         ###   ########.fr        #
+#    Updated: 2023/03/08 09:41:02 by tcazenav         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,8 @@ SRC =	./src/builtins/export/ft_check_export.c \
 		./src/builtins/ft_cd.c \
 		./src/builtins/echo/ft_echo.c \
 		./src/builtins/echo/parse_echo.c \
-		./src/builtins/echo/utils_echo.c \
-		./src/builtins/echo/dquote.c \
-		./src/builtins/echo/squote.c \
-		./src/builtins/echo/noquote.c \
+		./src/builtins/echo/syntax.c \
+		./src/builtins/echo/count_len.c \
 		./src/builtins/ft_env.c \
 		./src/builtins/ft_exit.c \
 		./src/builtins/utils_exit.c \

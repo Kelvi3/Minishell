@@ -6,52 +6,65 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 07:59:06 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/06 10:51:52 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/08 09:36:47 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	ft_count_size(char *line, int len, int i)
+static int	ft_count_size(t_list **lst, int len, int i)
 {
 	int		size;
+	int		len_var;
+	t_list	*tmp;
 
+	tmp = *lst;
 	size = i;
+	len_var = 0;
 	if (len == 1)
 		return (len);
-	while (line[size] && line[size] != ' ')
+	while (tmp->line[size] && tmp->line[size] != ' ')
 	{
-		if ((line[i] == '"' && line[size] == line[i])
-			|| (line[i] == 39 && line[size] == line[i]))
+		if ((tmp->line[i] == '"' && tmp->line[size] == tmp->line[i])
+			|| (tmp->line[i] == 39 && tmp->line[size] == tmp->line[i]))
 			len--;
 		size++;
 	}
-	if (line[size] == ' ' || (line[i] != '"' && line[i] != 39))
+	if ((tmp->line[size] == ' ') || (tmp->line[i] != '"' && tmp->line[i] != 39))
 		len--;
 	return (len);
 }
 
-static char	*ft_inc(char *cmd, int len, char *line, int i)
+static char	*ft_inc(char *cmd, int len, t_list **lst, int i)
 {
 	int		j;
 	char	c;
+	t_list	*tmp;
 
-	len = ft_count_size(line, len, i);
+	tmp = *lst;
+	len = ft_count_size(lst, len, i);
+	tmp->flag = 0;
 	cmd = malloc(sizeof(char) * (len + 1));
 	if (!cmd)
 		return (NULL);
 	j = 0;
-	if (line[i] == '"')
+	if (tmp->line[i] == '"')
+	{	
 		c = '"';
-	else if (line[i] == 39)
+		tmp->flag = 2;
+	}
+	if (tmp->line[i] == 39)
+	{	
 		c = 39;
-	else
+		tmp->flag = 1;
+	}
+	if (tmp->line[i] == '\0')
 		c = '\0';
 	while (j < len)
 	{
-		if (line[i] != c)
+		if (tmp->line[i] != c)
 		{
-			cmd[j] = line[i];
+			cmd[j] = tmp->line[i];
 			j++;
 		}
 		i++;
@@ -102,7 +115,7 @@ void	parse_cmd_bis(t_list **lst, int word)
 		if (len == 0)
 			i++;
 		if (len != 0)
-			tmp->cmd[word] = ft_inc(tmp->cmd[word], len, tmp->line, i);
+			tmp->cmd[word] = ft_inc(tmp->cmd[word], len, lst, i);
 		if (len != 0)
 			word++;
 		i = i + len;
