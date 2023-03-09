@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:01:44 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/07 14:59:49 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/08 13:06:38 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_list
 {
 	char			**cmd;
 	char			*echo;
+	char			**envcpy;
 	int				size;
 	int				flag;
 	int				len;
@@ -30,6 +31,7 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 	struct s_pipe	*pipe;
+	struct s_data	*data;
 }					t_list;
 
 t_list		*ft_lstnew(void	*content);
@@ -72,7 +74,7 @@ char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char		*ft_strtrim(char const *s1, char const *set);
 char		*ft_strnstr(const char *big, const char *little, size_t len);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
-char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_strjoin(char *s1, char *s2);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strnstr(const char *big, const char *little, size_t len);
 char		*ft_strdup(const char *s);

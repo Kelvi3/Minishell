@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/04 11:01:19 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/08 13:16:03 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void	ft_export(t_list **envcpp, t_list **export)
 		if (ft_check_double(envcp, envcp->cmd) == 0)
 			*envcpp = ft_add_param_env(envcp, envcp->cmd, envcp->line);
 	}
+	envcp->envcpy = cpy_env_execve(envcpp);
 	ft_sort_ascii(copy);
 	if (ft_len(envcp->cmd) == 1)
 		ft_print_envcp(copy);

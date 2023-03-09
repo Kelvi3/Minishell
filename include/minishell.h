@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:00:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/08 13:41:05 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/09 10:36:33 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,13 @@ int		check_pipe(char **cmd);
 void	ft_builtins(t_list **envcp, t_list **export);
 
 /* ECHO */
+void	var_value(t_list **envcp);
 void	ft_echo(t_list **envcp);
 int		ft_len_echo_arg(t_list **envcp, int i);
+void	cpy_var_env(t_list *lst, int *i, int *j, int *c);
+void	check_flag_for_quote(t_list *lst, int *i, int *j);
+void	ft_cpy_cmd(t_list **envcp, int i);
+char	*search_varrr(t_list **envcp, int len_ar, int start, int i);
 /* utils */
 int		pass_space(t_list **envcp, int i);
 int		pass_dquote_squote(t_list **envcp, int i);

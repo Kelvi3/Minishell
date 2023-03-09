@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:59:33 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/08 13:43:15 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/09 14:11:54 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,11 @@ int	main(int argc, char **argv, char **env)
 		lst->line = readline("$>");
 		if (lst->line == NULL)
 			break ;
+		if (lst->line[0] == '\0')
+			continue;
 		parse_cmd(&lst);
-		/*while (lst->cmd[i])
+		var_value(&lst);
+	/*	while (lst->cmd[i])
 		{
 			printf("cmd[%i] = '%s'\n", i, lst->cmd[i]);
 			i++;

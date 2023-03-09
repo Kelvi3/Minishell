@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:41:22 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/08 13:41:27 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/09 14:27:13 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void	multi_pipe(char **cmd, char **env, int nb_pipe)
 	args.nb_pipe = nb_pipe;
 	if (if_in_no_out(cmd) > 0 && check_file(cmd[found_infile(cmd)]) == 0)
 		args.infile = open(cmd[found_infile(cmd)], O_RDONLY);
-	if (i - 2 >= 0 && cmd[i - 2][0] == '>' && check_file(cmd[i - 1]) == 0)
+	if (i - 2 >= 0 && (cmd[i - 2][0] == '>' && cmd[i - 2][1] == '>'))
+		args.outfile = open(cmd[i - 1], O_RDWR | O_CREAT | O_APPEND, 0664);
+	if (i - 2 >= 0 && cmd[i - 2][0] == '>' && !cmd[i - 2][1]
+		&& check_file(cmd[i - 1]) == 0)
 		args.outfile = open(cmd[i - 1], O_RDWR | O_CREAT | O_TRUNC, 0664);
 	if (if_in_no_out(cmd) == -1)
 		return ;
@@ -68,6 +71,11 @@ void	no_pipe(char **cmd, char **env)
 			redirection = 1;
 		i++;
 	}
+	/* probleme cmd[i - 2] == un espace vide */
+//	printf("i = %d\n", i);
+//	printf("cmd[i - 1] = %s\n", cmd[i - 1]);
+//	printf("cmd[i - 2] = %s\n", cmd[i - 2]);
+	//printf("check cmd[i - 1] %d\n", check_file(cmd[i - 1]));
 	if (redirection == 0)
 		exec_simple_cmd(env, cmd);
 	if (redirection == 0)
@@ -76,7 +84,9 @@ void	no_pipe(char **cmd, char **env)
 		return ;
 	if (if_in_no_out(cmd) > 0 && check_file(cmd[found_infile(cmd)]) == 0)
 		args.infile = open(cmd[found_infile(cmd)], O_RDONLY);
-	if (i - 2 >= 0 && cmd[i - 2][0] == '>' && check_file(cmd[i - 1]) == 0)
+	if (i - 2 >= 0 && (cmd[i - 2][0] == '>' && cmd[i - 2][1] == '>'))
+		args.outfile = open(cmd[i - 1], O_RDWR | O_CREAT | O_APPEND, 0664);
+	if (i - 2 >= 0 && cmd[i - 2][0] == '>' && !cmd[i - 2][1])
 		args.outfile = open(cmd[i - 1], O_RDWR | O_CREAT | O_TRUNC, 0664);
 	if (if_in_a_out(cmd) > 1 && args.infile > 0 && args.outfile > 0)
 		exec_no_pipe_outfile_infile(args, env, cmd);
@@ -85,7 +95,9 @@ void	no_pipe(char **cmd, char **env)
 	else if (if_in_no_out(cmd) == 0 && args.outfile >= 0)
 		exec_no_pipe_outfile(args, env, cmd);
 	else
+	{
 		g_exit_code = 1;
+	}
 }
 
 /* compt nb pipe and condition if multi_pipe or no_pipe */

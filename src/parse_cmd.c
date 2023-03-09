@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:47:12 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/08 13:36:44 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/09 14:09:06 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	count_no_delim(char *line, int i)
 		if ((line[i] == '<' && line[i + 1] != '<')
 			|| (line[i] == '>' && line[i + 1] != '>'))
 		{
+			j++;
 			return (j);
 		}
 		if (line[i + 1] == '|' && line[i + 1] != ' ')
@@ -111,6 +112,6 @@ void	parse_cmd(t_list **lst)
 			i++;
 		i = i + len;
 	}
-	printf("word = %i\n", word);
+//	printf("word = %i\n", word);
 	parse_cmd_bis(lst, word);
 }

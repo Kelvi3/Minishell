@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:33:03 by lulaens           #+#    #+#             */
-/*   Updated: 2022/10/22 13:27:26 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/08 10:43:00 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*ft_strcat(const char *s1, const char *s2, char *str)
 	return (str);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	size;
 	char	*str;
@@ -58,5 +58,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!str)
 		return (NULL);
 	str = ft_strcat(s1, s2, str);
+	if (s1)
+		free(s1);
 	return (str);
 }

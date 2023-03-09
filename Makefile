@@ -6,7 +6,7 @@
 #    By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 09:57:15 by tcazenav          #+#    #+#              #
-#    Updated: 2023/03/08 13:40:27 by lulaens          ###   ########.fr        #
+#    Updated: 2023/03/08 15:04:00 by lulaens          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRC =	./src/builtins/export/ft_check_export.c \
 		./src/builtins/builtins.c \
 		./src/builtins/ft_cd.c \
 		./src/builtins/echo/ft_echo.c \
-		./src/builtins/echo/parse_echo.c \
+		./src/builtins/echo/cpy_var_env_echo.c \
+		./src/builtins/echo/cpy_all_echo.c \
 		./src/builtins/echo/syntax.c \
 		./src/builtins/echo/count_len.c \
 		./src/builtins/ft_env.c \
@@ -28,6 +29,7 @@ SRC =	./src/builtins/export/ft_check_export.c \
 		./src/builtins/ft_unset.c \
 		./src/builtins/utils_builtins.c \
 		./src/builtins/utils_unset.c \
+		./src/var_value_in_cmd.c \
 		./src/check_cmd.c \
 		./src/check_cmd_bis.c \
 		./src/condition_prompt.c \

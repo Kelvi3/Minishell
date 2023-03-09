@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 11:34:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/07 13:16:11 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/08 14:32:35 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,20 @@ int	check_zero(t_list **envcp, int j, int i)
 	return (j);
 }
 
+void	count_len_var(t_list *lst, int *i, int *j, int *len_var)
+{
+	if (lst->cmd[*i][*j])
+	{
+		*j += 1;
+		lst->size++;
+	}
+	while (lst->cmd[*i][*j] && ft_isalpha(lst->cmd[*i][*j]))
+	{
+		*len_var += 1;
+		*j += 1;
+	}
+}
+
 int	ft_len_echo_arg(t_list **envcp, int i)
 {
 	t_list	*lst;
@@ -86,13 +100,7 @@ int	ft_len_echo_arg(t_list **envcp, int i)
 		j = doll(envcp, j, i);
 		if (lst->cmd[i][j] == '$' && lst->cmd[i][j + 1] != '?')
 		{
-			lst->size++;
-			j++;
-			while (lst->cmd[i][j] && ft_isalpha(lst->cmd[i][j]))
-			{
-				len_var++;
-				j++;
-			}
+			count_len_var(lst, &i, &j, &len_var);
 			size += search_var2(envcp, len_var, j - len_var + 1, i);
 			len_var = 0;
 		}

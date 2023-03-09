@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:28:11 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 16:58:05 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/08 13:18:56 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 
 void	swap_unset_args(char *key, t_list *tmp, t_list *t_tmp)
 {
-//	if (tmp->next == NULL)
-//		return ;
 	while (ft_strcmp(key, tmp->next->name) != 0
 		&& ft_strcmp(key, tmp->name) != 0)
 		tmp = tmp->next;
@@ -63,4 +61,5 @@ void	ft_unset(char **key, t_list **export, int flag)
 			i++;
 		}
 	}
+	(*export)->envcpy = cpy_env_execve(export);
 }
