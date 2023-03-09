@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 09:35:42 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/08 11:23:53 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/09 13:04:39 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	next_path(char **cmd, int index)
 {
-	if (cmd[index][0] == '<')
-		return (index + 2);
 	if (cmd[index][0] == '|')
 		return (index + 1);
 	if (index == 0)
@@ -110,6 +108,7 @@ void	exec_multi_cmd(char **env, char **cmd, t_pipe args)
 			args.path = NULL;
 			args.arg = NULL;
 		}
+		printf("path = %s args.arg = %s\n", args.path, args.arg[0]);
 		if (args.outfile >= 0 && args.infile < 0)
 			exec_multi_outfile(env, args, i, pipefd);
 		else if (args.outfile >= 0 && args.infile >= 0)

@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 07:59:06 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/08 10:03:43 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/09 10:58:52 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	ft_count_size(t_list **lst, int len, int i)
 			len--;
 		size++;
 	}
-	if ((tmp->line[size] == ' ') || (tmp->line[i] != '"' && tmp->line[i] != 39))
+	if (tmp->line[i + len - 1] == '|')
 		len--;
 	return (len);
 }
@@ -69,6 +69,7 @@ static char	*ft_inc(char *cmd, int len, t_list **lst, int i)
 		i++;
 	}
 	cmd[j] = '\0';
+	//printf("len = %i cmd = %s\n", len, cmd);
 	return (cmd);
 }
 
@@ -79,7 +80,9 @@ int	ft_sep(char *line, int i, int len)
 	else if (line[i] == '"')
 		len = count_dquote(line, i);
 	else
+	{
 		len = count_no_delim(line, i);
+	}
 	return (len);
 }
 
@@ -118,6 +121,12 @@ void	parse_cmd_bis(t_list **lst, int word)
 		if (len != 0)
 			word++;
 		i = i + len;
+		if (len > 1 && tmp->line[i - 1] == '|'
+			&& count_squote(tmp->line, i) == count_dquote(tmp->line, i))
+			i--;
+		if (tmp->line[i] == ' '
+			&& count_squote(tmp->line, i) == count_dquote(tmp->line, i))
+			i++;
 	}
 	tmp->cmd[word] = NULL;
 }

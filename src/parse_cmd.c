@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:47:12 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/09 14:09:06 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/09 14:51:36 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	count_no_delim(char *line, int i)
 	int	j;
 
 	j = 1;
+	if (line[i] == '|')
+		return (1);
 	while (line[i] != ' ' && line[i] != '\0')
 	{
 		if ((line[i] == '<' && line[i + 1] != '<')
@@ -70,23 +72,20 @@ int	count_no_delim(char *line, int i)
 			j++;
 			return (j);
 		}
-		if (line[i + 1] == '|' && line[i + 1] != ' ')
+		if (line[i + 1] == '|' && line[i] != ' ')
 		{
-			j++;
-			return (j);
+			return (j + 1);
 		}
 		i++;
 		j++;
 	}
-	/*if (line[i] != ' ' && line[i] != 39 && line[i] != '"' && line[i] != '\0'
+	if (line[i] != ' ' && line[i] != 39 && line[i] != '"' && line[i] != '\0'
 		&& line[i] != '<' && line[i] != '>')
 	{
 		printf("Syntaxe: error\n");
 		return (-1);
 	}
-	if (j == 1 && line[i] != '<')
-		return (0);*/
-	return (j);
+	return (j - 1);
 }
 
 void	parse_cmd(t_list **lst)
@@ -107,10 +106,17 @@ void	parse_cmd(t_list **lst)
 		len = ft_sep(tmp->line, i, len);
 		if (len == -1)
 			return ;
-		word++;
-		if (len == 0)
+		if (len != 0)
+			word++;
+		if (len != 0)
 			i++;
 		i = i + len;
+		if (len > 1 && tmp->line[i - 1] == '|'
+			&& count_squote(tmp->line, i) == count_dquote(tmp->line, i))
+			i--;
+		if (tmp->line[i] == ' '
+			&& count_squote(tmp->line, i) == count_dquote(tmp->line, i))
+			i++;
 	}
 //	printf("word = %i\n", word);
 	parse_cmd_bis(lst, word);
