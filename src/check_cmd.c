@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 10:26:51 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/03 13:16:50 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/08 13:59:53 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int	found_inenv(char *const *envp)
 	int	z;
 
 	z = 0;
-	while (*envp[z])
+	while (envp[z] != NULL)
 	{
 		if (envp[z][0] == 'P' && envp[z][1] == 'A' && envp[z][2] == 'T'
 				&& envp[z][3] == 'H')
