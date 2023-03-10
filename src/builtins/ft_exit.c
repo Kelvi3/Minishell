@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:43:07 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 17:08:40 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 10:45:42 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,16 @@ static int	ft_exit_condition(char **cmd, t_list **envcp, t_list **export)
 	}
 	return (1);
 }
-/* exit code = digit*/
+
+int	check_after_cmd(char **cmd)
+{
+	int	i;
+
+	i = 1;
+	if (ft_strcmp(cmd[i], "|") == 0)
+		return (1);
+	return (0);
+}
 
 int	ft_exit(char **cmd, t_list **envcp, t_list **export)
 {
@@ -73,6 +82,9 @@ int	ft_exit(char **cmd, t_list **envcp, t_list **export)
 
 	j = 0;
 	digit = 0;
+	if ((*envcp)->cmd[1])
+		if (ft_strcmp((*envcp)->cmd[1], "|") == 0)
+			return (0);
 	if (ft_exit_condition(cmd, envcp, export) == 0)
 		return (0);
 	else if (ft_len(cmd) > 2 && ft_check_digit(cmd[1]) == 1)

@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 10:26:51 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/09 14:52:17 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/09 14:57:34 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*if_dir(char *car, char *str)
 
 /* parcourir la copie de env (t_list *envcp) */
 
- int	found_inenv(char *const *envp)
+int	found_inenv(char *const *envp)
 {
 	int	z;
 

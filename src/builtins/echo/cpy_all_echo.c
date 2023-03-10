@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:43:12 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/09 12:14:45 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 09:19:56 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,15 @@ void	ft_cpy_cmd(t_list **envcp, int i)
 	int		c;
 
 	lst = *envcp;
-	lst->echo = malloc(sizeof(char) * (lst->size + 1));
+	lst->echo = calloc(sizeof(char), (lst->size + 1));
 	if (!lst->echo)
 		return ;
 	len_var = 0;
 	j = 0;
 	c = 0;
-	while (lst->cmd[i] && ft_strcmp(lst->cmd[i], "|")
-		&& ft_strcmp(lst->cmd[i], "<") && ft_strcmp(lst->cmd[i], ">"))
+	while (lst->cmd[i] && ft_strncmp(lst->cmd[i], "|", 1)
+		&& ft_strcmp(lst->cmd[i], "<") && ft_strcmp(lst->cmd[i], ">")
+		&& ft_strcmp(lst->cmd[i], "<<") && ft_strcmp(lst->cmd[i], ">>"))
 	{
 		j = 0;
 		while (lst->cmd[i][j])

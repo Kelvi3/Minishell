@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 08:56:40 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/09 12:10:55 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 11:12:24 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,12 @@ void	check_flag_for_quote(t_list *lst, int *i, int *j)
 	}
 }
 
-void	ft_echo(t_list **envcp)
+void	ft_echo(t_list **envcp, int i)
 {
 	t_list	*lst;
-	int		i;
 	int		flag;
 
-	i = 1;
+	i += 1;
 	flag = 0;
 	lst = *envcp;
 	lst->len = 0;
@@ -93,5 +92,6 @@ void	ft_echo(t_list **envcp)
 	printf("%s", lst->echo);
 	if (flag == 0)
 		printf("\n");
+	free(lst->echo);
 	g_exit_code = 0;
 }

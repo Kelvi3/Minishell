@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:00:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/09 10:36:33 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 11:19:20 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_builtins(t_list **envcp, t_list **export);
 
 /* ECHO */
 void	var_value(t_list **envcp);
-void	ft_echo(t_list **envcp);
+void	ft_echo(t_list **envcp, int i);
 int		ft_len_echo_arg(t_list **envcp, int i);
 void	cpy_var_env(t_list *lst, int *i, int *j, int *c);
 void	check_flag_for_quote(t_list *lst, int *i, int *j);
@@ -81,7 +81,7 @@ void	ft_cd(t_list **envcp);
 void	ft_pwd(void);
 
 /* EXPORT */
-void	ft_export(t_list **envcpp, t_list **export);
+void	ft_export(t_list **envcpp, t_list **export, int i);
 void	ft_print_envcp(t_list *lst);
 void	ft_swap_lst(t_list **tmp_i, t_list **tmp_j);
 char	*ft_cpy_name(char *args);
@@ -91,15 +91,14 @@ int		ft_check_double(t_list *lst, char **args);
 void	init_env(t_list **env_lst, char **env);
 
 /* UNSET */
-void	ft_unset(char **key, t_list **export, int flag);
-void	ft_unset_env(char **key, t_list **envcp);
+void	ft_unset(char **key, t_list **export, int flag, int i);
 void	ft_swp(t_list **tmp, t_list **t_tmp, int flag);
 int		ft_check_len(char *key, t_list **lst);
 int		ft_check_lst_name(char *key, t_list **lst);
 int		ft_check_unset_arg(char *key, int flag);
 
 /* ENV */
-void	ft_env(t_list **envcp);
+void	ft_env(t_list **envcp, int i);
 
 /* EXIT */
 int		ft_exit(char **cmd, t_list **envcp, t_list **export);
