@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 09:35:42 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/09 13:04:39 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/13 12:25:58 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ void	exec_multi_pipe(char **env, t_pipe args, int i, int **pipefd)
 			dup2(pipefd[i][1], STDOUT_FILENO);
 		}
 		close_pipe(args, pipefd);
-		execve(args.path, args.arg, env);
+		if (is_builtins(args.arg[0]) == 0)
+			make_builtins(args, i);
+		else
+			execve(args.path, args.arg, env);
 		exit(0);
 	}
 }
@@ -108,14 +111,13 @@ void	exec_multi_cmd(char **env, char **cmd, t_pipe args)
 			args.path = NULL;
 			args.arg = NULL;
 		}
-		printf("path = %s args.arg = %s\n", args.path, args.arg[0]);
 		if (args.outfile >= 0 && args.infile < 0)
 			exec_multi_outfile(env, args, i, pipefd);
 		else if (args.outfile >= 0 && args.infile >= 0)
 			exec_multi_outfile_infile(env, args, i, pipefd);
 		else if (args.infile >= 0 && args.outfile < 0)
 			exec_multi_infile(env, args, i, pipefd);
-		else
+		else if (cmd[args.c_index + 2] != cmd[found_infile(cmd)])
 			exec_multi_pipe(env, args, i, pipefd);
 		i++;
 		if (i != args.nb_pipe)

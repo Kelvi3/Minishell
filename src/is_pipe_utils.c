@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 10:02:38 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/06 12:51:03 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:02:59 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,35 @@ int	found_infile(char **cmd)
 		i--;
 	}
 	return (0);
+}
+
+int	is_builtins(char *cmd)
+{
+	if (ft_strncmp(cmd, "echo", 4) != 0
+		&& ft_strncmp(cmd, "exit", 4) != 0
+		&& ft_strncmp(cmd, "env", 3) != 0
+		&& ft_strncmp(cmd, "unset", 5) != 0
+		&& ft_strncmp(cmd, "export", 6) != 0
+		&& ft_strncmp(cmd, "pwd", 3) != 0
+		&& ft_strncmp(cmd, "cd", 2) != 0)
+		return (1);
+	return (0);
+}
+
+void	make_builtins(t_pipe args, int i)
+{
+	printf("MAKE BUILTINS\n");
+	if (ft_strncmp(args.arg[0], "echo", 4) == 0)
+		ft_echo(&args.exec, i);
+	if (ft_strncmp(args.arg[0], "exit", 4) == 0)
+		ft_exit(args.arg, &args.exec, &args.exec);
+	if (ft_strncmp(args.arg[0], "env", 3) == 0)
+		ft_env(&args.exec, i);
+	//if (ft_strncmp(args.arg[0], "unset", 5) == 0)
+	if (ft_strncmp(args.arg[0], "export", 6) == 0)
+		ft_export(&args.exec, &args.exec, i);
+	if (ft_strncmp(args.arg[0], "pwd", 3) == 0)
+		ft_pwd();
+	if (ft_strncmp(args.arg[0], "cd", 2) == 0)
+		ft_cd(&args.exec);
 }

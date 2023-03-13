@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:51:31 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/09 13:13:31 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 11:19:06 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,20 @@ void	ft_builtins(t_list **envcp, t_list **export)
 		printf("%s\n", lst->cmd[0]);
 	}
 	if (ft_strcmp(lst->cmd[0], "echo") == 0)
-		ft_echo(envcp);
+		ft_echo(envcp, 0);
 	else if (ft_strcmp(lst->cmd[0], "cd") == 0)
 		ft_cd(envcp);
 	else if (ft_strcmp(lst->cmd[0], "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(lst->cmd[0], "export") == 0)
-		ft_export(envcp, export);
+		ft_export(envcp, export, 0);
 	else if (ft_strcmp(lst->cmd[0], "unset") == 0)
 	{
-		ft_unset(lst->cmd, export, 0);
-		ft_unset(lst->cmd, envcp, 1);
+		ft_unset(lst->cmd, export, 0, 0);
+		ft_unset(lst->cmd, envcp, 1, 0);
 	}
 	else if (ft_strcmp(lst->cmd[0], "env") == 0)
-		ft_env(envcp);
+		ft_env(envcp, 0);
 	else if (ft_strcmp(lst->cmd[0], "exit") == 0)
 		ft_exit(lst->cmd, envcp, export);
 }

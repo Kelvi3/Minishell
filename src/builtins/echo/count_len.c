@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 11:34:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/08 14:32:35 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 09:24:32 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,21 @@ int	ft_len_echo_arg(t_list **envcp, int i)
 	size = 0;
 	j = 0;
 	len_var = 0;
-	while (lst->cmd[i][j])
+	while (lst->cmd[i])
 	{
-		j = doll(envcp, j, i);
-		if (lst->cmd[i][j] == '$' && lst->cmd[i][j + 1] != '?')
+		j = 0;
+		while (lst->cmd[i][j])
 		{
-			count_len_var(lst, &i, &j, &len_var);
-			size += search_var2(envcp, len_var, j - len_var + 1, i);
-			len_var = 0;
+			j = doll(envcp, j, i);
+			if (lst->cmd[i][j] == '$' && lst->cmd[i][j + 1] != '?')
+			{
+				count_len_var(lst, &i, &j, &len_var);
+				size += search_var2(envcp, len_var, j - len_var + 1, i);
+				len_var = 0;
+			}
+			j = check_zero(envcp, j, i);
 		}
-		j = check_zero(envcp, j, i);
+		i++;
 	}
 	lst->size += size;
 	return (lst->size);

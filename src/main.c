@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:59:33 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/10 11:21:07 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/13 09:07:16 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int argc, char **argv, char **env)
 		ft_builtins(&lst, &export);
 		if (lst->line)
 			add_history(lst->line);
-		free_double_char(lst->cmd);
+		//free_double_char(lst->cmd);
 		free(lst->line);
 		lst->line = NULL;
 	}

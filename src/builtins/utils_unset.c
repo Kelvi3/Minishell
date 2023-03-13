@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:00:45 by lulaens           #+#    #+#             */
-/*   Updated: 2023/02/22 11:29:11 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 09:35:51 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ int	ft_check_unset_arg(char *key, int flag)
 	i = 0;
 	while (key[i])
 	{
-		if (key[i] == '=')
+		if (key[i] == '=' || key[i] == '-')
 		{
 			if (flag == 0)
 			{
-				ft_putstr_fd("bash: unset: ", 2);
-				ft_putstr_fd(key, 2);
+			//	ft_putstr_fd("bash: unset: ", 2);
+			//	ft_putstr_fd(key, 2);
+				g_exit_code = 1;
 				ft_putstr_fd(" not a valid identifier\n", 2);
 			}
 			return (1);

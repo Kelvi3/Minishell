@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 15:29:58 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/01 17:20:52 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/10 14:42:15 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,21 @@ void	exec_no_pipe(t_pipe args, char **arg, char **env)
 void	exec_no_pipe_outfile_infile(t_pipe args, char **env, char **cmd)
 {
 	char	**arg;
+	int		i;
 
-	arg = strdup_arg_execve(cmd, cmd[2]);
+	i = 0;
+	while (cmd[i])
+		i++;
+	while (i > 0)
+	{
+		if (cmd[i][0] == '<')
+			break ;
+		i--;
+	}
+	arg = strdup_arg_execve(cmd, cmd[i + 1]);
 	if (!arg)
 		return ;
-	args.path = check_cmd(cmd[2], env);
+	args.path = check_cmd(cmd[i + 1], env);
 	if (!args.path)
 		return ;
 	exec_no_pipe(args, arg, env);

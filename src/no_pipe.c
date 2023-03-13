@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 09:32:19 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/08 13:41:41 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 15:58:27 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,30 @@ void	exec_no_pipe_infile(t_pipe args, char **env, char **cmd)
 	int		pid;
 	char	**arg;
 	int		pipefd[2];
+	int		i;
 
 	pipe(pipefd);
-	arg = strdup_arg_execve(cmd, cmd[0]);
-	if (!arg)
-		return ;
-	if (cmd[0][0] == '<')
-		args.path = check_cmd(cmd[2], env);
-	else
+	i = 0;
+	while (cmd[i])
+		i++;
+	while (i > 0)
+	{
+		if (cmd[i - 1][0] == '<')
+			break ;
+		i--;
+	}
+	if (cmd[i + 1] == NULL
+		|| (cmd[found_infile(cmd)] == cmd[i + 1] && cmd[i + 2] == NULL))
+	{
+		arg = strdup_arg_execve(cmd, cmd[0]);
 		args.path = check_cmd(cmd[0], env);
-	if (!args.path)
+	}
+	else
+	{
+		arg = strdup_arg_execve(cmd, cmd[i + 1]);
+		args.path = check_cmd(cmd[i + 1], env);
+	}
+	if (!arg || !args.path)
 		return ;
 	pid = fork();
 	if (pid < 0)

@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:41:22 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/09 14:27:13 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/13 15:38:53 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_file(char *file)
 		ft_put_error(": No such file or directory\n", file);
 		return (1);
 	}
-	if (access(file, R_OK) == -1)
+	else if (access(file, R_OK) == -1)
 	{
 		ft_put_error(": Permission denied\n", file);
 		return (1);
@@ -46,12 +46,20 @@ void	multi_pipe(char **cmd, char **env, int nb_pipe)
 	if (if_in_no_out(cmd) == -1)
 		return ;
 	else
-		exec_multi_cmd(env, cmd, args);
-	i = 0;
-	while (i <= args.nb_pipe)
 	{
-		waitpid(-1, NULL, 0);
-		i++;
+		exec_multi_cmd(env, cmd, args);
+		if (if_in_no_out(cmd) > 0 && args.infile < 0)
+				args.nb_pipe -= 1;
+		if (i - 2 >= 0 && args.outfile < 0 && cmd[i - 2][0] == '>')
+			args.nb_pipe -= 1;
+		i = 0;
+		while (i <= args.nb_pipe)
+		{
+			waitpid(-1, NULL, 0);
+			i++;
+		}
+		if (i == 0)
+			g_exit_code = 0;
 	}
 }
 
@@ -69,13 +77,23 @@ void	no_pipe(char **cmd, char **env)
 	{
 		if (cmd[i][0] == '<' || cmd[i][0] == '>')
 			redirection = 1;
+		if (cmd[i][0] == '<' && cmd[i][1] == '\0')
+			open(cmd[i + 1], O_RDONLY);
+		else if (cmd[i][0] == '>' && cmd[i][1] == '>')
+			open(cmd[i + 1], O_RDWR | O_CREAT | O_APPEND, 0664);
+		else if (cmd[i][0] == '>')
+			open(cmd[i + 1], O_RDWR | O_CREAT | O_TRUNC, 0664);
+		if (cmd[i][0] == '<' || cmd[i][0] == '>'
+			|| (cmd[i][0] == '>' && cmd[i][1] == '>'))
+		{
+			if (check_file(cmd[i + 1]))
+			{
+				g_exit_code = 1;
+				return ;
+			}
+		}
 		i++;
 	}
-	/* probleme cmd[i - 2] == un espace vide */
-//	printf("i = %d\n", i);
-//	printf("cmd[i - 1] = %s\n", cmd[i - 1]);
-//	printf("cmd[i - 2] = %s\n", cmd[i - 2]);
-	//printf("check cmd[i - 1] %d\n", check_file(cmd[i - 1]));
 	if (redirection == 0)
 		exec_simple_cmd(env, cmd);
 	if (redirection == 0)
@@ -95,9 +113,7 @@ void	no_pipe(char **cmd, char **env)
 	else if (if_in_no_out(cmd) == 0 && args.outfile >= 0)
 		exec_no_pipe_outfile(args, env, cmd);
 	else
-	{
 		g_exit_code = 1;
-	}
 }
 
 /* compt nb pipe and condition if multi_pipe or no_pipe */

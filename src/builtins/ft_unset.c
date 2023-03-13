@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:28:11 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/08 13:18:56 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 11:10:43 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,12 @@ int	unset_first_value(char *key, t_list *tmp, t_list *t_tmp, int i)
 	return (i);
 }
 
-void	ft_unset(char **key, t_list **export, int flag)
+void	ft_unset(char **key, t_list **export, int flag, int i)
 {
-	int		i;
 	t_list	*t_tmp;
 	t_list	*tmp;
 
-	i = 1;
+	i += 1;
 	if (ft_len(key) == 1)
 		return ;
 	t_tmp = NULL;
