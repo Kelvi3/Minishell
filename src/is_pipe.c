@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:41:22 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/14 06:21:13 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/14 08:33:56 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,26 @@ void	no_pipe(char **cmd, char **env)
 {
 	int		i;
 	int		redirection;
+	int		fd;
 	t_pipe	args;
 
 	i = 0;
 	redirection = 0;
 	args.infile = -1;
 	args.outfile = -1;
+	fd = -1;
 	while (cmd[i])
 	{
 		if (cmd[i][0] == '<' || cmd[i][0] == '>')
 			redirection = 1;
 		if (cmd[i][0] == '<' && cmd[i][1] == '\0')
-			open(cmd[i + 1], O_RDONLY);
+			fd = open(cmd[i + 1], O_RDONLY);
 		else if (cmd[i][0] == '>' && cmd[i][1] == '>')
-			open(cmd[i + 1], O_RDWR | O_CREAT | O_APPEND, 0664);
+			fd = open(cmd[i + 1], O_RDWR | O_CREAT | O_APPEND, 0664);
 		else if (cmd[i][0] == '>')
-			open(cmd[i + 1], O_RDWR | O_CREAT | O_TRUNC, 0664);
+			fd = open(cmd[i + 1], O_RDWR | O_CREAT | O_TRUNC, 0664);
+		if (fd >= 0)
+			close(fd);
 		if (cmd[i][0] == '<' || cmd[i][0] == '>'
 			|| (cmd[i][0] == '>' && cmd[i][1] == '>'))
 		{
@@ -114,6 +118,10 @@ void	no_pipe(char **cmd, char **env)
 		exec_no_pipe_outfile(args, env, cmd);
 	else
 		g_exit_code = 1;
+	if (args.infile >= 0)
+		close(args.infile);
+	if (args.outfile >= 0)
+		close(args.outfile);
 }
 
 /* compt nb pipe and condition if multi_pipe or no_pipe */
