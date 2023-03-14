@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/14 10:53:43 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/14 11:09:10 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_sort_ascii(t_list *lst)
 	}
 }
 /* voir pour changer avec lstaddback et lstnew */
-void	ft_add_lst(t_data **env_lst, char *name, char *value)
+void	ft_add_lst(t_list **env_lst, char *name, char *value)
 {
 	t_list	*new_var;
 
@@ -61,7 +61,7 @@ void	ft_add_lst(t_data **env_lst, char *name, char *value)
 	}
 }
 
-t_data	*ft_add_param_env(t_data *new_env, char **args, char *line, int i)
+t_list	*ft_add_param_env(t_list *new_env, char **args, char *line, int i)
 {
 	char	*name;
 	char	*value;
@@ -155,23 +155,23 @@ int	check_after_export(char **cmd)
 
 void	ft_export(t_data **data)
 {
-	t_data			*tmp;
+	t_data	*tmp;
+	int		i;
 
+	i = 1;
 	tmp = *data;
-	copy = *export;
-	envcp = *envcpp;
-	if (check_pipex(envcp->cmd) == 1 && check_after_export(envcp->cmd) == 0)
+	if (check_pipex(tmp->cmd) == 1 && check_after_export(tmp->cmd) == 0)
 	{
 		g_exit_code = 1;
 		return ;
 	}
-	if (check_pipex(envcp->cmd) == 1 && check_after_export(envcp->cmd) == 1)
+	if (check_pipex(tmp->cmd) == 1 && check_after_export(tmp->cmd) == 1)
 	{
-		ft_sort_ascii(copy);
-		if (ft_len(envcp->cmd) == 1)
-			ft_print_envcp(copy);
+		ft_sort_ascii(tmp->export);
+		if (ft_len(tmp->cmd) == 1)
+			ft_print_envcp(tmp->export);
 	}
-	if (ft_quote_value(envcp->line) == 0)
+	if (ft_quote_value(tmp->line) == 0)
 	{
 		if (ft_check_name(tmp->cmd) == 1)
 		{
@@ -183,9 +183,9 @@ void	ft_export(t_data **data)
 	{
 		g_exit_code = 0;
 		if (ft_check_double(tmp->envcp, tmp->cmd) == 0)
-			tmp->export = ft_add_param_env(tmp->export, tmp->cmd, tmp->line);
+			tmp->export = ft_add_param_env(tmp->export, tmp->cmd, tmp->line, i);
 		if (ft_check_double(tmp->envcp, tmp->cmd) == 0)
-			tmp->envcp = ft_add_param_env(tmp->envcp, tmp->cmd, tmp->line);
+			tmp->envcp = ft_add_param_env(tmp->envcp, tmp->cmd, tmp->line, i);
 	}
 	//(*data)->envcpy = cpy_env_execve(*data);
 	ft_sort_ascii(tmp->export);

@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:08:10 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/14 10:46:05 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/14 11:10:52 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ static int	check_after_cmd(char **cmd, int i)
 	return (0);
 }
 
-void	ft_env(t_data **envcp, int i)
+void	ft_env(t_data **envcp)
 {
 	t_data	*tmp;
+	int		i;
 
+	i = 1;
 	tmp = *envcp;
 	if (ft_len(tmp->cmd) > 1 && check_after_cmd(tmp->cmd, i) == 0)
 	{
