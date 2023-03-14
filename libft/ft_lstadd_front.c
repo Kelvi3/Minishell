@@ -6,13 +6,13 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:38:33 by lulaens           #+#    #+#             */
-/*   Updated: 2022/10/18 12:49:08 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:37:19 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstadd_front(t_struct **lst, t_struct *new)
 {
 	if (!new)
 		return ;

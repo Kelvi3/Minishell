@@ -6,7 +6,7 @@
 #    By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 09:57:15 by tcazenav          #+#    #+#              #
-#    Updated: 2023/03/08 15:04:00 by lulaens          ###   ########.fr        #
+#    Updated: 2023/03/10 15:12:30 by lulaens          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,9 @@ SRC =	./src/builtins/export/ft_check_export.c \
 		./src/exec_var_value.c \
 		./src/envcp_for_pipe.c \
 		./src/is_pipe_utils.c \
-		./src/cpy_env_execve.c
+		./src/cpy_env_execve.c \
+		./src/ft_lstaddfront.c \
+		./src/ft_lstsize.c \
 
 CFLAGS = -Wall -Wextra -Werror -g3
 

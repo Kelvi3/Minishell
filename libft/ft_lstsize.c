@@ -6,13 +6,13 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 14:03:24 by lulaens           #+#    #+#             */
-/*   Updated: 2022/10/18 12:50:05 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:43:12 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_lstsize(t_list *lst)
+int	ft_lstsize(t_struct *lst)
 {
 	int	i;
 

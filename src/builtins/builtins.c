@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:51:31 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/09 13:13:31 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/14 10:23:21 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,32 +48,26 @@ int	ft_check_redirection(char **cmd)
 
 /* add l'exec des var env dans tout les builtins */
 
-void	ft_builtins(t_list **envcp, t_list **export)
+void	ft_builtins(t_data **data)
 {
-	t_list	*lst;
+	t_data *lst;
 
-	lst = *envcp;
-	if (ft_strcmp(lst->cmd[0], "$") == 0)
-	{
-		lst->cmd[0] = ft_strdup(ft_check_doll(lst->cmd, envcp, 0));
-		/* fonctionne que pour PWD */
-		printf("%s\n", lst->cmd[0]);
-	}
+	lst = *data;
 	if (ft_strcmp(lst->cmd[0], "echo") == 0)
-		ft_echo(envcp);
+		ft_echo(&lst);
 	else if (ft_strcmp(lst->cmd[0], "cd") == 0)
-		ft_cd(envcp);
+		ft_cd(&lst);
 	else if (ft_strcmp(lst->cmd[0], "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(lst->cmd[0], "export") == 0)
-		ft_export(envcp, export);
+		ft_export(data);
 	else if (ft_strcmp(lst->cmd[0], "unset") == 0)
 	{
-		ft_unset(lst->cmd, export, 0);
-		ft_unset(lst->cmd, envcp, 1);
+		ft_unset(lst->cmd, &lst->export, 0, &lst);
+		ft_unset(lst->cmd, &lst->envcp, 1, &lst);
 	}
 	else if (ft_strcmp(lst->cmd[0], "env") == 0)
-		ft_env(envcp);
+		ft_env(&lst);
 	else if (ft_strcmp(lst->cmd[0], "exit") == 0)
-		ft_exit(lst->cmd, envcp, export);
+		ft_exit(lst->cmd, &lst->envcp, &lst->export);
 }

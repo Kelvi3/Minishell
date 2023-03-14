@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_lstaddfront.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/12 09:50:24 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/10 14:38:10 by lulaens          ###   ########.fr       */
+/*   Created: 2023/03/10 14:26:17 by lulaens           #+#    #+#             */
+/*   Updated: 2023/03/10 15:44:20 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-void	ft_lstdelone(t_struct *lst, void (*del)(void *))
+void	ft_lstaddfront(t_list **lst, t_list *new)
 {
-	if (!lst || !del)
+	if (!new)
 		return ;
-	del(lst->content);
-	free(lst);
+	if (lst)
+	{
+		new->next = *lst;
+		*lst = new;
+	}
+	else
+		new->next = NULL;
 }

@@ -6,13 +6,13 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 11:41:15 by lulaens           #+#    #+#             */
-/*   Updated: 2022/10/18 12:47:35 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:38:23 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+void	ft_lstiter(t_struct *lst, void (*f)(void *))
 {
 	if (!lst || !f)
 		return ;

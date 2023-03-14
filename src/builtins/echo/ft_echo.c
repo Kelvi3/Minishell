@@ -6,15 +6,15 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 08:56:40 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/09 12:10:55 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:47:33 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-int	check_param_n(t_list **envcp, int i)
+int	check_param_n(t_data **envcp, int i)
 {
-	t_list	*lst;
+	t_data	*lst;
 	int		j;
 
 	j = 0;
@@ -34,7 +34,7 @@ int	check_param_n(t_list **envcp, int i)
 	return (i);
 }
 
-char	*ft_cpy(t_list *lst, int c, char *tmp)
+char	*ft_cpy(t_data *lst, int c, char *tmp)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ char	*ft_cpy(t_list *lst, int c, char *tmp)
 	return (lst->echo);
 }
 
-void	check_flag_for_quote(t_list *lst, int *i, int *j)
+void	check_flag_for_quote(t_data *lst, int *i, int *j)
 {
 	while (lst->cmd[*i][*j] == '"' && lst->flag != 1)
 		*j += 1;
@@ -61,9 +61,9 @@ void	check_flag_for_quote(t_list *lst, int *i, int *j)
 	}
 }
 
-void	ft_echo(t_list **envcp)
+void	ft_echo(t_data **envcp)
 {
-	t_list	*lst;
+	t_data	*lst;
 	int		i;
 	int		flag;
 
@@ -93,5 +93,6 @@ void	ft_echo(t_list **envcp)
 	printf("%s", lst->echo);
 	if (flag == 0)
 		printf("\n");
+	free(lst->echo);
 	g_exit_code = 0;
 }

@@ -6,41 +6,41 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 11:34:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/08 14:32:35 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:51:49 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-int	search_var2(t_list **envcp, int len_var, int start, int i)
+int	search_var2(t_data **envcp, int len_var, int start, int i)
 {
-	t_list	*lst;
+	t_data	*lst;
 	char	*var;
 
 	lst = *envcp;
 	var = NULL;
 	var = ft_substr(lst->cmd[i], start - 1, len_var);
-	while (lst->next)
+	while (lst->envcp->next)
 	{
-		if (ft_strcmp(lst->name, var) == 0)
+		if (ft_strcmp(lst->envcp->name, var) == 0)
 		{
 			free(var);
-			return (ft_strlen(lst->value));
+			return (ft_strlen(lst->envcp->value));
 		}
-		lst = lst->next;
+		lst->envcp = lst->envcp->next;
 	}
-	if (ft_strcmp(lst->name, var) == 0)
+	if (ft_strcmp(lst->envcp->name, var) == 0)
 	{
 		free(var);
-		return (ft_strlen(lst->value));
+		return (ft_strlen(lst->envcp->value));
 	}
 	free(var);
-	return (ft_strlen(lst->value));
+	return (ft_strlen(lst->envcp->value));
 }
 
-int	doll(t_list **envcp, int j, int i)
+int	doll(t_data **envcp, int j, int i)
 {
-	t_list	*lst;
+	t_data	*lst;
 
 	lst = *envcp;
 	if (lst->cmd[i][j] == '$' && (lst->cmd[i][j + 1] == ' '
@@ -57,9 +57,9 @@ int	doll(t_list **envcp, int j, int i)
 	return (j);
 }
 
-int	check_zero(t_list **envcp, int j, int i)
+int	check_zero(t_data **envcp, int j, int i)
 {
-	t_list	*lst;
+	t_data	*lst;
 
 	lst = *envcp;
 	if (lst->cmd[i][j] != '\0')
@@ -70,7 +70,7 @@ int	check_zero(t_list **envcp, int j, int i)
 	return (j);
 }
 
-void	count_len_var(t_list *lst, int *i, int *j, int *len_var)
+void	count_len_var(t_data *lst, int *i, int *j, int *len_var)
 {
 	if (lst->cmd[*i][*j])
 	{
@@ -84,9 +84,9 @@ void	count_len_var(t_list *lst, int *i, int *j, int *len_var)
 	}
 }
 
-int	ft_len_echo_arg(t_list **envcp, int i)
+int	ft_len_echo_arg(t_data **envcp, int i)
 {
-	t_list	*lst;
+	t_data	*lst;
 	int		len_var;
 	int		j;
 	int		size;
@@ -95,16 +95,21 @@ int	ft_len_echo_arg(t_list **envcp, int i)
 	size = 0;
 	j = 0;
 	len_var = 0;
-	while (lst->cmd[i][j])
+	while (lst->cmd[i])
 	{
-		j = doll(envcp, j, i);
-		if (lst->cmd[i][j] == '$' && lst->cmd[i][j + 1] != '?')
+		j = 0;
+		while (lst->cmd[i][j])
 		{
-			count_len_var(lst, &i, &j, &len_var);
-			size += search_var2(envcp, len_var, j - len_var + 1, i);
-			len_var = 0;
+			j = doll(envcp, j, i);
+			if (lst->cmd[i][j] == '$' && lst->cmd[i][j + 1] != '?')
+			{
+				count_len_var(lst, &i, &j, &len_var);
+				size += search_var2(envcp, len_var, j - len_var + 1, i);
+				len_var = 0;
+			}
+			j = check_zero(envcp, j, i);
 		}
-		j = check_zero(envcp, j, i);
+		i++;
 	}
 	lst->size += size;
 	return (lst->size);

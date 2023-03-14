@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:00:26 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/09 10:36:33 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/14 10:16:48 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,30 @@ extern int	g_exit_code;
 /* TEST */
 int		ft_quote_value(char *line);
 char	*test_export(char *line);
-char	*ft_check_doll(char **cmd, t_list **envcp, int j);
 void	ft_add_envv(char **env);
 
 /* voir pour faire une copy de envcp dans un char **
  dans la structure s_pipe */
+
+typedef struct s_list
+{
+	char			*name;
+	char			*value;
+	struct s_list	*next;
+}				t_list;
+
+typedef struct s_data
+{
+	char		**cmd;
+	char		*echo;
+	char		**envcpy;
+	int			size;
+	int			flag;
+	int			len;
+	char		*line;
+	t_list		*envcp;
+	t_list		*export;
+}				t_data;
 
 typedef struct s_pipe {
 	int				**pipefd;
@@ -47,24 +66,27 @@ typedef struct s_pipe {
 	struct s_list	*exec;
 }				t_pipe;
 
-char	**cpy_env_execve(t_list **list);
+int		ft_lst_size(t_list *lst);
+void	ft_lstaddfront(t_list **lst, t_list *new);
+char	*ft_doll_env(char **cmd, t_data **envcp, int j);
+char	**cpy_env_execve(t_data *data);
 /* TEST */
 void	ft_copy_envcp_in_struct(t_list **envcp);
 int		check_pipe(char **cmd);
 // ALL BUILTINS
-void	ft_builtins(t_list **envcp, t_list **export);
+void	ft_builtins(t_data **data);
 
 /* ECHO */
-void	var_value(t_list **envcp);
-void	ft_echo(t_list **envcp);
-int		ft_len_echo_arg(t_list **envcp, int i);
-void	cpy_var_env(t_list *lst, int *i, int *j, int *c);
-void	check_flag_for_quote(t_list *lst, int *i, int *j);
-void	ft_cpy_cmd(t_list **envcp, int i);
-char	*search_varrr(t_list **envcp, int len_ar, int start, int i);
+void	var_value(t_data **envcp);
+void	ft_echo(t_data **envcp);
+int		ft_len_echo_arg(t_data **envcp, int i);
+void	cpy_var_env(t_data *lst, int *i, int *j, int *c);
+void	check_flag_for_quote(t_data *lst, int *i, int *j);
+void	ft_cpy_cmd(t_data **envcp, int i);
+char	*search_varrr(t_data **envcp, int len_ar, int start, int i);
 /* utils */
-int		pass_space(t_list **envcp, int i);
-int		pass_dquote_squote(t_list **envcp, int i);
+int		pass_space(t_data **envcp, int i);
+int		pass_dquote_squote(t_data **envcp, int i);
 /* syntax */
 int		ft_check_syntax(t_list **envcp, int i);
 void	ft_print_var(char **cmd, t_list **envcp);
@@ -75,13 +97,13 @@ int		ft_len_var(char *line);
 int		ft_value_count(char **cmd);
 
 /* CD */
-void	ft_cd(t_list **envcp);
+void	ft_cd(t_data **envcp);
 
 /* PWD */
 void	ft_pwd(void);
 
 /* EXPORT */
-void	ft_export(t_list **envcpp, t_list **export);
+void	ft_export(t_data **envcp);
 void	ft_print_envcp(t_list *lst);
 void	ft_swap_lst(t_list **tmp_i, t_list **tmp_j);
 char	*ft_cpy_name(char *args);
@@ -91,7 +113,7 @@ int		ft_check_double(t_list *lst, char **args);
 void	init_env(t_list **env_lst, char **env);
 
 /* UNSET */
-void	ft_unset(char **key, t_list **export, int flag);
+void	ft_unset(char **key, t_list **export, int flag, t_data **data);
 void	ft_unset_env(char **key, t_list **envcp);
 void	ft_swp(t_list **tmp, t_list **t_tmp, int flag);
 int		ft_check_len(char *key, t_list **lst);
@@ -99,7 +121,7 @@ int		ft_check_lst_name(char *key, t_list **lst);
 int		ft_check_unset_arg(char *key, int flag);
 
 /* ENV */
-void	ft_env(t_list **envcp);
+void	ft_env(t_data **envcp);
 
 /* EXIT */
 int		ft_exit(char **cmd, t_list **envcp, t_list **export);
@@ -110,8 +132,8 @@ void	free_exit(t_list **envcp, t_list **export);
 void	condition_prompt(char *line);
 
 /* PARSE CMD */
-void	parse_cmd(t_list **lst);
-void	parse_cmd_bis(t_list **lst, int word);
+void	parse_cmd(t_data **lst);
+void	parse_cmd_bis(t_data **lst, int word);
 int		count_no_delim(char *line, int i);
 int		count_squote(char *line, int i);
 int		count_dquote(char *line, int i);
@@ -119,7 +141,7 @@ int		ft_sep(char *line, int i, int len);
 
 /* SIGNAL */
 void	ft_signal(void);
-void	ft_check_line(t_list *lst, t_list *export);
+void	ft_check_line(t_data *lst, t_data *export);
 
 //////
 char	*current_path(void);

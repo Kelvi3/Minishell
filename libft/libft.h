@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 12:01:44 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/08 13:06:38 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:39:45 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,20 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_list
+typedef struct s_struct
 {
-	char			**cmd;
-	char			*echo;
-	char			**envcpy;
-	int				size;
-	int				flag;
-	int				len;
-	char			*line;
-	char			*path;
-	char			*name;
-	char			*value;
 	void			*content;
-	struct s_list	*next;
-	struct s_pipe	*pipe;
-	struct s_data	*data;
-}					t_list;
+	struct s_struct	*next;
+}					t_struct;
 
-t_list		*ft_lstnew(void	*content);
-t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-t_list		*ft_lstlast(t_list *lst);
-int			ft_lstsize(t_list *lst);
-void		ft_lstiter(t_list *lst, void (*f)(void *));
-void		ft_lstclear(t_list **lst, void (*del)(void *));
-void		ft_lstdelone(t_list *lst, void (*del)(void *));
-void		ft_lstadd_back(t_list **lst, t_list *new);
-void		ft_lstadd_front(t_list **lst, t_list *new);
+t_struct		*ft_lstnew(void	*content);
+t_struct		*ft_lstlast(t_struct *lst);
+int			ft_lstsize(t_struct *lst);
+void		ft_lstiter(t_struct *lst, void (*f)(void *));
+void		ft_lstclear(t_struct **lst, void (*del)(void *));
+void		ft_lstdelone(t_struct *lst, void (*del)(void *));
+void		ft_lstadd_back(t_struct **lst, t_struct *new);
+void		ft_lstadd_front(t_struct **lst, t_struct *new);
 long long	ft_atoi(const char *nptr);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_strcmp(char *s1, char *s2);

@@ -6,15 +6,15 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:03:34 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/09 11:23:37 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 15:06:05 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	var_value(t_list **envcp)
+void	var_value(t_data **envcp)
 {
-	t_list	*lst;
+	t_data	*lst;
 	char	*tmp;
 	char	*tmp1;
 	int		len_var;

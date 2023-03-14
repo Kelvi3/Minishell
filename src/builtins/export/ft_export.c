@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/08 13:16:03 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/14 10:27:00 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_add_lst(t_list **env_lst, char *name, char *value)
 		new_var->name = ft_strdup(name);
 		new_var->value = ft_strdup(value);
 		new_var->next = NULL;
-		ft_lstadd_front(env_lst, new_var);
+		ft_lstaddfront(env_lst, new_var);
 	}
 	if (!value)
 	{
@@ -57,7 +57,7 @@ void	ft_add_lst(t_list **env_lst, char *name, char *value)
 		new_var->name = ft_strdup(name);
 		new_var->value = NULL;
 		new_var->next = NULL;
-		ft_lstadd_front(env_lst, new_var);
+		ft_lstaddfront(env_lst, new_var);
 	}
 }
 
@@ -105,10 +105,13 @@ void	init_env(t_list **env_lst, char **env)
 		name = ft_cpy_name(env[i]);
 		value = ft_cpy_value(env[i]);
 		ft_add_lst(env_lst, name, value);
+//		if (name)
+//			free(name);
 		i++;
-		free(name);
-		if (value)
-			free(value);
+//		if (value)
+//			free(value);
+		value = NULL;
+		name = NULL;
 	}
 }
 
@@ -128,31 +131,43 @@ t_list	*ft_copy_lst(t_list *copy, t_list *envcp)
 /* probleme parsing (export HELLO="123 A-") */
 /* arg[1] = HELLO=123  arg[2] = A- */
 
-void	ft_export(t_list **envcpp, t_list **export)
+int	check_pipex(t_data *data)
 {
-	t_list			*envcp;
-	t_list			*copy;
+	int		i;
 
-	copy = *export;
-	envcp = *envcpp;
-	if (ft_quote_value(envcp->line) == 0)
+	i = 1;
+	while (data->cmd[i])
 	{
-		if (ft_check_name(envcp->cmd) == 1)
+		if (data->cmd[i][0] == '|')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	ft_export(t_data **data)
+{
+	t_data			*tmp;
+
+	tmp = *data;
+	if (ft_quote_value(tmp->line) == 0)
+	{
+		if (ft_check_name(tmp->cmd) == 1)
 		{
 			g_exit_code = 1;
 			return ;
 		}
 	}
-	if (ft_len(envcp->cmd) > 1)
+	if (ft_len(tmp->cmd) > 1)
 	{
 		g_exit_code = 0;
-		if (ft_check_double(copy, envcp->cmd) == 0)
-			*export = ft_add_param_env(copy, envcp->cmd, envcp->line);
-		if (ft_check_double(envcp, envcp->cmd) == 0)
-			*envcpp = ft_add_param_env(envcp, envcp->cmd, envcp->line);
+		if (ft_check_double(tmp->envcp, tmp->cmd) == 0)
+			tmp->export = ft_add_param_env(tmp->export, tmp->cmd, tmp->line);
+		if (ft_check_double(tmp->envcp, tmp->cmd) == 0)
+			tmp->envcp = ft_add_param_env(tmp->envcp, tmp->cmd, tmp->line);
 	}
-	envcp->envcpy = cpy_env_execve(envcpp);
-	ft_sort_ascii(copy);
-	if (ft_len(envcp->cmd) == 1)
-		ft_print_envcp(copy);
+	//(*data)->envcpy = cpy_env_execve(*data);
+	ft_sort_ascii(tmp->export);
+	if (ft_len(tmp->cmd) == 1)
+		ft_print_envcp(tmp->export);
 }

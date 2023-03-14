@@ -6,17 +6,17 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 07:59:06 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/09 10:58:52 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:04:54 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	ft_count_size(t_list **lst, int len, int i)
+static int	ft_count_size(t_data **lst, int len, int i)
 {
 	int		size;
 	int		len_var;
-	t_list	*tmp;
+	t_data	*tmp;
 
 	tmp = *lst;
 	size = i;
@@ -35,11 +35,11 @@ static int	ft_count_size(t_list **lst, int len, int i)
 	return (len);
 }
 
-static char	*ft_inc(char *cmd, int len, t_list **lst, int i)
+static char	*ft_inc(char *cmd, int len, t_data **lst, int i)
 {
 	int		j;
 	char	c;
-	t_list	*tmp;
+	t_data	*tmp;
 
 	tmp = *lst;
 	c = '\0';
@@ -96,11 +96,11 @@ static int	count_len(char *line)
 	return (i);
 }
 
-void	parse_cmd_bis(t_list **lst, int word)
+void	parse_cmd_bis(t_data **lst, int word)
 {
 	int			i;
 	int			len;
-	t_list		*tmp;
+	t_data		*tmp;
 
 	len = 0;
 	tmp = *lst;

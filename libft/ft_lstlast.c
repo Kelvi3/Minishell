@@ -6,13 +6,13 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 14:14:12 by lulaens           #+#    #+#             */
-/*   Updated: 2022/10/11 15:30:06 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:38:35 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstlast(t_list *lst)
+t_struct	*ft_lstlast(t_struct *lst)
 {
 	if (!lst)
 		return (NULL);

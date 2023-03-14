@@ -6,13 +6,13 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:43:12 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/09 12:14:45 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:49:14 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-void	cpy_char(t_list *lst, int *i, int *j, int *c)
+void	cpy_char(t_data *lst, int *i, int *j, int *c)
 {
 	if (lst->cmd[*i][*j])
 	{
@@ -22,7 +22,7 @@ void	cpy_char(t_list *lst, int *i, int *j, int *c)
 	}
 }
 
-void	cpy_simple_doll(t_list *lst, int *i, int *j, int *c)
+void	cpy_simple_doll(t_data *lst, int *i, int *j, int *c)
 {
 	if (lst->cmd[*i][*j] == '$' && (lst->cmd[*i][*j + 1] == ' '
 		|| !lst->cmd[*i][*j + 1]))
@@ -33,7 +33,7 @@ void	cpy_simple_doll(t_list *lst, int *i, int *j, int *c)
 	}
 }
 
-void	cpy_exit_code(t_list *lst, int *i, int *j, int *c)
+void	cpy_exit_code(t_data *lst, int *i, int *j, int *c)
 {
 	char	*tmp;
 	int		t;
@@ -61,7 +61,7 @@ void	cpy_exit_code(t_list *lst, int *i, int *j, int *c)
 	}
 }
 
-void	cpy_all(t_list *lst, int *i, int *j, int *c)
+void	cpy_all(t_data *lst, int *i, int *j, int *c)
 {
 	cpy_simple_doll(lst, i, j, c);
 	cpy_exit_code(lst, i, j, c);
@@ -70,22 +70,23 @@ void	cpy_all(t_list *lst, int *i, int *j, int *c)
 	cpy_char(lst, i, j, c);
 }
 
-void	ft_cpy_cmd(t_list **envcp, int i)
+void	ft_cpy_cmd(t_data **data, int i)
 {
-	t_list	*lst;
+	t_data	*lst;
 	int		len_var;
 	int		j;
 	int		c;
 
-	lst = *envcp;
-	lst->echo = malloc(sizeof(char) * (lst->size + 1));
+	lst = *data;
+	lst->echo = calloc(sizeof(char), (lst->size + 1));
 	if (!lst->echo)
 		return ;
 	len_var = 0;
 	j = 0;
 	c = 0;
-	while (lst->cmd[i] && ft_strcmp(lst->cmd[i], "|")
-		&& ft_strcmp(lst->cmd[i], "<") && ft_strcmp(lst->cmd[i], ">"))
+	while (lst->cmd[i] && ft_strncmp(lst->cmd[i], "|", 1)
+		&& ft_strcmp(lst->cmd[i], "<") && ft_strcmp(lst->cmd[i], ">")
+		&& ft_strcmp(lst->cmd[i], "<<") && ft_strcmp(lst->cmd[i], ">>"))
 	{
 		j = 0;
 		while (lst->cmd[i][j])

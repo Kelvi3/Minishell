@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 11:50:00 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/04 10:10:10 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:20:59 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ char	*ft_test_cpy(char *cmd, int i)
 	return (name);
 }
 
-char	*ft_check_doll(char **cmd, t_list **envcp, int j)
+char	*ft_doll_env(char **cmd, t_data **envcp, int j)
 {
 	size_t		i;
 	char		*value;
 	char		*name;
-	t_list		*tmp;
+	t_data		*tmp;
 
 	i = 0;
 	value = NULL;
@@ -63,17 +63,18 @@ char	*ft_check_doll(char **cmd, t_list **envcp, int j)
 			i++;
 			name = ft_test_cpy(cmd[j], i);
 			tmp = *envcp;
-			while (tmp)
+			while (tmp->envcp)
 			{
-				if (ft_strncmp(name, tmp->name, ft_strlen(tmp->name)) == 0)
+				if (ft_strncmp(name, tmp->envcp->name,
+						ft_strlen(tmp->envcp->name)) == 0)
 				{
 					if (!value)
-						value = ft_strdup(tmp->value);
+						value = ft_strdup(tmp->envcp->value);
 					else
-						value = ft_strjoin(value, tmp->value);
+						value = ft_strjoin(value, tmp->envcp->value);
 					break ;
 				}
-				tmp = tmp->next;
+				tmp->envcp = tmp->envcp->next;
 			}
 			free(name);
 		}

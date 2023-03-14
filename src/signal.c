@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 10:56:46 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 16:17:11 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 15:08:28 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_signal(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	ft_check_line(t_list *lst, t_list *export)
+void	ft_check_line(t_data *lst, t_data *export)
 {
 	if (!lst->line)
 	{

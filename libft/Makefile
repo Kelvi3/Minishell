@@ -6,7 +6,7 @@
 #    By: lulaens <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/29 14:15:24 by lulaens           #+#    #+#              #
-#    Updated: 2023/02/21 15:42:32 by lulaens          ###   ########.fr        #
+#    Updated: 2023/03/10 14:39:40 by lulaens          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,6 @@ BONUS = ft_lstnew.c \
 		ft_lstdelone.c \
 		ft_lstclear.c \
 		ft_lstiter.c \
-		ft_lstmap.c
 
 FLAGS = -Wall -Wextra -Werror -g 
 

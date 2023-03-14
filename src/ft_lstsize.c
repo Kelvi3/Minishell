@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/12 09:50:24 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/10 14:38:10 by lulaens          ###   ########.fr       */
+/*   Created: 2023/03/10 15:11:42 by lulaens           #+#    #+#             */
+/*   Updated: 2023/03/10 15:12:15 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-void	ft_lstdelone(t_struct *lst, void (*del)(void *))
+int	ft_lst_size(t_list *lst)
 {
-	if (!lst || !del)
-		return ;
-	del(lst->content);
-	free(lst);
+	int	i;
+
+	i = 0;
+	if (!lst)
+		return (0);
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }

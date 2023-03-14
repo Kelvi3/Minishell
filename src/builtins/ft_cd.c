@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:28:05 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/01 17:10:31 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:45:11 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 // chemin absolu : depuis la racine ~
 // chemin relatif : depuis le repertoire courant
 // manque : cd ~../
-void	ft_cd(t_list **envcp)
+void	ft_cd(t_data **envcp)
 {
-	t_list	*lst;
+	t_data	*lst;
 
 	lst = *envcp;
 	if (ft_len(lst->cmd) > 2)
@@ -28,11 +28,10 @@ void	ft_cd(t_list **envcp)
 		ft_putstr_fd("cd : too many arguments\n", 2);
 		return ;
 	}
-	/* recup var $ */
 	if (ft_strncmp(lst->cmd[1], "$", 1) == 0)
 	{
 		g_exit_code = 0;
-		if(chdir(ft_check_doll(lst->cmd, envcp, 1)) == -1)
+		if(chdir(ft_doll_env(lst->cmd, envcp, 1)) == -1)
 			ft_putstr_fd("cd : No such file or directory\n", 2);
 		return ;
 	}

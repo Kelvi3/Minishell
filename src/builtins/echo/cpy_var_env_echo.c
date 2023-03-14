@@ -6,15 +6,15 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:54:03 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/09 10:25:19 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:50:13 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-char	*search_varrr(t_list **envcp, int len_var, int start, int i)
+char	*search_varrr(t_data **envcp, int len_var, int start, int i)
 {
-	t_list	*lst;
+	t_data	*lst;
 	char	*var;
 	char	*value;
 
@@ -22,21 +22,21 @@ char	*search_varrr(t_list **envcp, int len_var, int start, int i)
 	lst = *envcp;
 	var = NULL;
 	var = ft_substr(lst->cmd[i], start - 1, len_var);
-	while (lst->next)
+	while (lst->envcp->next)
 	{
-		if (ft_strcmp(lst->name, var) == 0)
+		if (ft_strcmp(lst->envcp->name, var) == 0)
 		{
 			free(var);
-			value = ft_strdup(lst->value);
+			value = ft_strdup(lst->envcp->value);
 			if (value)
 				return (value);
 		}
-		lst = lst->next;
+		lst->envcp = lst->envcp->next;
 	}
-	if (ft_strcmp(lst->name, var) == 0)
+	if (ft_strcmp(lst->envcp->name, var) == 0)
 	{
 		free(var);
-		value = ft_strdup(lst->value);
+		value = ft_strdup(lst->envcp->value);
 		if (value)
 			return (value);
 	}
@@ -44,7 +44,7 @@ char	*search_varrr(t_list **envcp, int len_var, int start, int i)
 	return (NULL);
 }
 
-void	cpy_var_env(t_list *lst, int *i, int *j, int *c)
+void	cpy_var_env(t_data *lst, int *i, int *j, int *c)
 {
 	int		len_var;
 	int		t;
