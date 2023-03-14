@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 10:02:38 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/10 13:02:59 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/14 06:10:09 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,13 @@ int	found_infile(char **cmd)
 				return (i + 2);
 			return (i + 1);
 		}
+		else if (ft_strncmp(cmd[i], "cat", 3) == 0)
+		{
+			if (access(cmd[i + 1], F_OK) == 0)
+				return (i + 1);
+			g_exit_code = 1;
+			return (i);
+		}
 		i--;
 	}
 	return (0);
@@ -89,7 +96,7 @@ int	is_builtins(char *cmd)
 
 void	make_builtins(t_pipe args, int i)
 {
-	printf("MAKE BUILTINS\n");
+	//printf("MAKE BUILTINS\n");
 	if (ft_strncmp(args.arg[0], "echo", 4) == 0)
 		ft_echo(&args.exec, i);
 	if (ft_strncmp(args.arg[0], "exit", 4) == 0)
