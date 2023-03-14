@@ -6,13 +6,11 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:51:31 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/14 10:23:21 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/14 10:59:01 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include <readline/history.h>
-#include <unistd.h>
 
 /* fonction qui check si y'a un pipe apres + une redirection apres la commande */
 /* si ya minimum 1 pipe apres , ne pas executer le premiere commande */

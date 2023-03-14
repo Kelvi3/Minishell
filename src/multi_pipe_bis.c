@@ -6,7 +6,7 @@
 /*   By: tcazenav <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 09:35:57 by tcazenav          #+#    #+#             */
-/*   Updated: 2023/03/08 08:48:00 by tcazenav         ###   ########.fr       */
+/*   Updated: 2023/03/10 12:39:41 by tcazenav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ void	exec_multi_outfile_infile(char **env, t_pipe args, int i, int **pipefd)
 			dup2(pipefd[i][1], STDOUT_FILENO);
 		}
 		close_pipe(args, pipefd);
-		execve(args.path, args.arg, env);
+		if (is_builtins(args.arg[0]) == 0)
+			make_builtins(args, i);
+		else
+			execve(args.path, args.arg, env);
 		exit(0);
 	}
 }
@@ -64,7 +67,10 @@ void	exec_multi_outfile(char **env, t_pipe args, int i, int **pipefd)
 			dup2(pipefd[i][1], STDOUT_FILENO);
 		}
 		close_pipe(args, pipefd);
-		execve(args.path, args.arg, env);
+		if (is_builtins(args.arg[0]) == 0)
+			make_builtins(args, i);
+		else
+			execve(args.path, args.arg, env);
 		exit(0);
 	}
 }
@@ -91,7 +97,10 @@ void	exec_multi_infile(char **env, t_pipe args, int i, int **pipefd)
 			dup2(pipefd[i][1], STDOUT_FILENO);
 		}
 		close_pipe(args, pipefd);
-		execve(args.path, args.arg, env);
+		if (is_builtins(args.arg[0]) == 0)
+			make_builtins(args, i);
+		else
+			execve(args.path, args.arg, env);
 		exit(0);
 	}
 }

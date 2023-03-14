@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:59:33 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/14 10:17:29 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/14 10:43:00 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,6 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		parse_cmd(&data);
 		var_value(&data);
-		/*while (data->cmd[i])
-		{
-			printf("cmd[%i] = '%s'\n", i, data->cmd[i]);
-			i++;
-		}*/
-		i = 0;
 		if (is_pipe(data->cmd) == 1)
 			parse_pipe(data->cmd, data->envcpy);
 		//ft_check_line(data, export);

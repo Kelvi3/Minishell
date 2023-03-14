@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 10:18:25 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/14 10:27:00 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/14 10:53:43 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	ft_sort_ascii(t_list *lst)
 	}
 }
 /* voir pour changer avec lstaddback et lstnew */
-void	ft_add_lst(t_list **env_lst, char *name, char *value)
+void	ft_add_lst(t_data **env_lst, char *name, char *value)
 {
 	t_list	*new_var;
 
 	new_var = NULL;
 	if (value)
 	{
-		new_var = malloc(sizeof(t_list));
+		new_var = malloc(sizeof(t_data));
 		new_var->name = ft_strdup(name);
 		new_var->value = ft_strdup(value);
 		new_var->next = NULL;
@@ -53,7 +53,7 @@ void	ft_add_lst(t_list **env_lst, char *name, char *value)
 	}
 	if (!value)
 	{
-		new_var = malloc(sizeof(t_list));
+		new_var = malloc(sizeof(t_data));
 		new_var->name = ft_strdup(name);
 		new_var->value = NULL;
 		new_var->next = NULL;
@@ -61,13 +61,11 @@ void	ft_add_lst(t_list **env_lst, char *name, char *value)
 	}
 }
 
-t_list	*ft_add_param_env(t_list *new_env, char **args, char *line)
+t_data	*ft_add_param_env(t_data *new_env, char **args, char *line, int i)
 {
-	int		i;
 	char	*name;
 	char	*value;
 
-	i = 1;
 	while (args[i] && args[i][0] != '|')
 	{
 		name = ft_cpy_name(args[i]);
@@ -131,17 +129,27 @@ t_list	*ft_copy_lst(t_list *copy, t_list *envcp)
 /* probleme parsing (export HELLO="123 A-") */
 /* arg[1] = HELLO=123  arg[2] = A- */
 
-int	check_pipex(t_data *data)
+int	check_pipex(char **cmd)
 {
 	int		i;
 
 	i = 1;
-	while (data->cmd[i])
+	while (cmd[i])
 	{
-		if (data->cmd[i][0] == '|')
+		if (ft_strcmp(cmd[i], "|") == 0)
 			return (1);
 		i++;
 	}
+	return (0);
+}
+
+int	check_after_export(char **cmd)
+{
+	int	i;
+
+	i = 1;
+	if (ft_strcmp(cmd[i], "|") == 0)
+		return (1);
 	return (0);
 }
 
@@ -150,7 +158,20 @@ void	ft_export(t_data **data)
 	t_data			*tmp;
 
 	tmp = *data;
-	if (ft_quote_value(tmp->line) == 0)
+	copy = *export;
+	envcp = *envcpp;
+	if (check_pipex(envcp->cmd) == 1 && check_after_export(envcp->cmd) == 0)
+	{
+		g_exit_code = 1;
+		return ;
+	}
+	if (check_pipex(envcp->cmd) == 1 && check_after_export(envcp->cmd) == 1)
+	{
+		ft_sort_ascii(copy);
+		if (ft_len(envcp->cmd) == 1)
+			ft_print_envcp(copy);
+	}
+	if (ft_quote_value(envcp->line) == 0)
 	{
 		if (ft_check_name(tmp->cmd) == 1)
 		{

@@ -6,7 +6,7 @@
 /*   By: lulaens <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 08:56:40 by lulaens           #+#    #+#             */
-/*   Updated: 2023/03/10 14:47:33 by lulaens          ###   ########.fr       */
+/*   Updated: 2023/03/14 10:56:53 by lulaens          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_echo(t_data **envcp)
 	int		i;
 	int		flag;
 
-	i = 1;
+	i += 1;
 	flag = 0;
 	lst = *envcp;
 	lst->len = 0;
